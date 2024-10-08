@@ -58,6 +58,7 @@
     "@adonisjs/shield": "^8.1.1",
     "@adonisjs/static": "^1.1.1",
     "@adonisjs/vite": "^3.0.0",
+    "@anthropic-ai/sdk": "^0.28.0",
     "@google/generative-ai": "^0.21.0",
     "@vinejs/vine": "^2.1.0",
     "dotenv": "^16.4.5",

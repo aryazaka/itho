@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITHO Academy Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #F9F5E9;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .sidebar {
+            background-color: #f2c94c;
+            width: 60px;
+            padding-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            height: 100vh;
+            transition: width 0.3s;
+            overflow: hidden;
+        }
+
+        .sidebar.expanded {
+            width: 200px;
+        }
+
+        .icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #FFF;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .icon img {
+            transition: transform 0.3s;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 40px;
+        }
+
+        .header h1, .header p {
+            font-size: 24px; 
+            margin-left: 100px; 
+        }
+
+        .highlight {
+            color: #f2c94c;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 15px 20px;
+            border-radius: 20px;
+            margin-left: 100px;
+            margin-right: 190px;
+        }
+
+        .footer input {
+            border: none;
+            background: none;
+            color: #FFFFFF;
+            font-size: 16px;
+            outline: none;
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .header h1, .header p {
+                margin-left: 0;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .footer input {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="icon" title="Home"><img src="../web_ai/img/home.png" alt="Home"></div>
+            <div class="icon" title="Settings"><img src="../web_ai/img/setting.png" alt="Settings"></div>
+            <div class="icon" title="History"><img src="../web_ai/img/history.png" alt="History"></div>
+            <div class="icon" title="Profile"><img src="../web_ai/img/profil.png" alt="Profile"></div>
+            <div class="icon" title="Toggle Sidebar" id="toggle-sidebar" style="margin-top: 380px;">
+                <img src="../web_ai/img/panah.png" alt="Toggle Sidebar">
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header">
+                <h1>Halo, <span class="highlight">Riyadatunnisa!</span></h1>
+                <p>Ada Yang Bisa Kami Bantu?</p>
+            </div>
+            <div class="footer">
+                <i class="fas fa-image"></i>
+                <input type="text" placeholder="Masukan Pertanyaan">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+        </div>
+    </div>
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const toggleButton = document.getElementById('toggle-sidebar');
+        const iconImage = toggleButton.querySelector('img');
+
+        toggleButton.addEventListener('click', function() {
+            sidebar.classList.toggle('expanded');
+            const isExpanded = sidebar.classList.contains('expanded');
+
+            // Change icon direction
+            iconImage.style.transform = isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+/* Container utama untuk formulir pendaftaran */
+.registration-container {
+    background-color: #ffe058; /* Warna latar belakang kontainer */
+    border: 2px solid #000; /* Garis tepi hitam */
+    border-radius: 30px; /* Sudut melengkung */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15); /* Efek bayangan */
+    padding: 30px; /* Padding di dalam kontainer */
+    width: 390px; /* Lebar tetap */
+    max-width: 1000px; /* Lebar maksimum */
+    text-align: center; /* Teks di tengah */
+    position: relative; /* Untuk posisi elemen anak */
+    overflow: hidden; /* Sembunyikan elemen yang melampaui batas */
+}
+/* Gaya untuk judul */
+.registration-container h2 {
+    margin-bottom: 40px; /* Jarak bawah */
+    animation: fadeIn 0.5s ease-in; /* Animasi muncul */
+}
+/* Tombol tutup */
+.close-btn {
+    position: absolute; /* Posisi absolut di dalam kontainer */
+    top: 10px; /* Jarak dari atas */
+    right: 10px; /* Jarak dari kanan */
+    background: none; /* Tanpa latar belakang */
+    border: none; /* Tanpa garis tepi */
+    cursor: pointer; /* Tunjukkan kursor pointer */
+    font-size: 40px; /* Ukuran font */
+    color: #000; /* Warna teks */
+    transition: transform 0.3s; /* Transisi saat hover */
+    text-decoration: none;
+}
+.close-btn:hover {
+    transform: scale(1.2); /* Efek zoom saat hover */
+    
+}
+/* Wrapper untuk input */
+.input-wrapper {
+    position: relative; /* Untuk posisi elemen anak */
+    margin-bottom: 30px; /* Jarak bawah */
+    animation: fadeIn 0.5s ease-in; /* Animasi muncul */
+}
+/* Gaya untuk elemen input */
+.input-wrapper input {
+    width: 90%; /* Lebar input */
+    padding: 10px 20px 10px 45px; /* Padding dalam input */
+    border: 1px solid #ccc; /* Garis tepi abu-abu */
+    border-radius: 30px; /* Sudut melengkung */
+    background-color: #FFED9A; /* Warna latar belakang input */
+    transition: border-color 0.3s ease; /* Transisi saat border berubah */
+}
+/* Gaya untuk input yang tidak valid */
+.input-wrapper input.invalid {
+    border-color: red; /* Border merah untuk input tidak valid */
+}
+/* Ikon di dalam input */
+.input-wrapper i {
+    position: absolute; /* Posisi absolut di dalam input */
+    left: 30px; /* Jarak dari kiri */
+    top: 50%; /* Vertikal tengah */
+    transform: translateY(-50%); /* Pusatkan secara vertikal */
+    color: #999; /* Warna ikon */
+}
+/* Label untuk input */
+.input-wrapper label {
+    position: absolute; /* Posisi absolut di dalam input */
+    left: 52px; /* Jarak dari kiri */
+    top: 9px; /* Jarak dari atas */
+    color: #999; /* Warna label */
+    pointer-events: none; /* Nonaktifkan interaksi pada label */
+    transition: 0.3s ease; /* Transisi saat bergerak */
+}
+/* Gaya saat input fokus */
+.input-wrapper input:focus {
+    border-color: #000; /* Border hitam saat fokus */
+    outline: none; /* Hapus outline default */
+}
+/* Gaya label saat input fokus atau tidak kosong */
+.input-wrapper input:focus + label,
+.input-wrapper input:not(:placeholder-shown) + label {
+    top: -20px; /* Pindahkan label ke atas */
+    left: 50px; /* Pindahkan label ke kiri */
+    font-size: 12px; /* Ukuran font lebih kecil */
+    color: #000; /* Warna label hitam */
+}
+/* Pesan kesalahan di samping input */
+.error-message {
+    color: red; /* Warna merah untuk pesan kesalahan */
+    font-size: 12px; /* Ukuran font kecil */
+    position: absolute; /* Posisi absolut di dalam input */
+    right: 15px; /* Jarak dari kanan */
+    top: 50%; /* Vertikal tengah */
+    transform: translateY(-50%); /* Pusatkan secara vertikal */
+    display: none; /* Sembunyikan secara default */
+}
+/* Gaya untuk tautan "Ingat Kata Sandi?" */
+.password-reminder {
+    text-align: center; /* Teks rata kiri */
+    font-size: 12px; /* Ukuran font kecil */
+    color: #000; /* Warna teks */
+    margin-bottom: 22px; /* Jarak bawah */
+    margin-top: 0px;
+}
+.password-reminder a {
+    color: inherit; /* Warna tautan mengikuti warna induk */
+    text-decoration: none; /* Tanpa garis bawah */
+}
+/* Tombol daftarkan */
+.submit-btn {
+    background-color: #000; /* Warna latar belakang hitam */
+    color: #fff; /* Warna teks putih */
+    border: none; /* Tanpa garis tepi */
+    padding: 10px; /* Padding dalam tombol */
+    border-radius: 30px; /* Sudut melengkung */
+    cursor: pointer; /* Tunjukkan kursor pointer */
+    width: 100%; /* Lebar penuh */
+    transition: background-color 0.3s, transform 0.2s; /* Transisi saat hover */
+}
+.submit-btn:hover {
+    background-color: #333; /* Warna lebih gelap saat hover */
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+/* Gaya untuk bagian media sosial */
+.social-login {
+    margin-top: 20px; /* Jarak atas */
+    font-size: 14px; /* Ukuran font */
+}
+.social-login span {
+    display: block; /* Tampilkan sebagai blok */
+    margin-bottom: 10px; /* Jarak bawah */
+    font-weight: bold; /* Cetak tebal */
+    animation: fadeIn 0.5s ease-in; /* Animasi muncul */
+}
+/* Gaya untuk ikon media sosial */
+.social-icons {
+    display: flex; /* Flexbox untuk horizontal */
+    justify-content: center; /* Pusatkan secara horizontal */
+}
+.social-icons a {
+    margin: 0 10px;
+    /*Jarakantaraikon*/text-decoration: none;
+    /*Tanpagarisbawah*/font-size: 24px;
+    /*Ukuranikon*/color: #000;
+    /*Warnaikonhitam*/border-radius: 50%;
+    /*Sudutmelengkung*/border: 2px solid #000;
+    /*Garistepihitam*/padding: 10px;
+    /*Paddingdalamikon*/transition: background-color 0.3s;
+    -webkit-transition: background-color 0.3s;
+    -moz-transition: background-color 0.3s;
+    -ms-transition: background-color 0.3s;
+    -o-transition: background-color 0.3s;
+}
+.social-icons a:hover {
+    background-color: #ffd000; /* Warna abu-abu saat hover */
+}
+/* Animasi untuk fade in */
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Mulai dengan transparan */
+        transform: translateY(-10px); /* Mulai sedikit ke atas */
+    }
+    to {
+        opacity: 1; /* Akhirnya terlihat */
+        transform: translateY(0); /* Kembali ke posisi normal */
+    }
+}
+
+
+  .btn.transparent1 {
+    margin: 0;
+    background: none;
+    border: 2px solid #FCCC3D;
+    width: 110px;
+    height: 41px;
+    font-weight: 600;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    margin-left: 10px;
+    transition: all 0.3s ease;
+    
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+}
+
+
+.panel1 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-around;
+    text-align: center;
+    z-index: 6;
+  }
+  
+  .left-panel1 {
+    pointer-events: all;
+    padding: 3rem 17% 2rem 12%;
+  }
+  
+  .right-panel1 {
+    pointer-events: none;
+    padding: 2rem 30% 2rem 5%;
+  }
+  
+  .panel1 .content {
+    color: #000000;
+    transition: transform 0.9s ease-in-out;
+    transition-delay: 0.6s;
+    margin-top: -0px;
+    margin-right: 290px;
+    margin-bottom: -50px;
+  }
+  
+  .panel1 h3 {
+    font-weight: 600;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+
+  .container.sign-up-mode .left-panel1 .image,
+  .container.sign-up-mode .left-panel1 .content {
+    transform: translateY(-900px);
+    -webkit-transform: translateY(-900px);
+    -moz-transform: translateY(-900px);
+    -ms-transform: translateY(-900px);
+    -o-transform: translateY(-900px);
+}
+
+  .container.sign-up-mode .right-panel1 .image,
+  .container.sign-up-mode .right-panel1  .content {
+    transform: translateY(0px);
+  }
+
+  .right-panel1 .image,
+  .right-panel1 .content {
+    transform: translateY(300px);
+  }
+  .panel1.content {
+    padding: 0.5rem 1rem;
+  }
+  
+  .btn.transparent1:hover {
+    background-color: #FCCC3D; /* Mengubah warna latar belakang saat hover */
+    color: rgb(255, 98, 0); /* Mengubah warna teks saat hover */
+    transform: scale(1.05); /* Sedikit memperbesar tombol */
+  }
+

@@ -1,12 +1,12 @@
 import type { HttpContext } from '@adonisjs/core/http'
 
-export default class HomeController {
+export default class LoginController {
   /**
    * Display a list of resource
    */
   async index({view}: HttpContext) {
-    return view.render('home/index', [
-      
+    return view.render('login/index', [
+
     ])
   }
 

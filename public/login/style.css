@@ -1,0 +1,614 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* tabel login */
+.login-container {
+  background-color: #ffe058;
+  border: 2px solid #000;
+  border-radius: 30px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 30px;
+  width: 390px;
+  max-width: 1000px;
+  max-padding: 1000px;
+  text-align: center;
+  position: relative;
+  
+}
+/* .login-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3), 0 8px 30px rgba(0, 0, 0, 0.2);
+} */
+.login-container h2 {
+  margin-bottom: 60px;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 40px; /* Increased size (tanda X)*/
+  color: #000;
+  transition: transform 0.3s; /* Animation on hover */
+}
+.close-button:hover {
+  transform: scale(1.2); /* Enlarge on hover */
+}
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+.input-group input {
+  width: 97%;
+  padding: 5px 5px 12px 45px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  transition: border-color 0.3s;
+  padding-left: 50px;
+  background-color: #FFED9A;
+}
+.input-group input.invalid {
+  border-color: red;
+}
+.input-group i {
+  position: absolute;
+  left: 20px;
+  top: 45%;
+  transform: translateY(-50%);
+  color: #999;
+  transition: all 0.3s ease;
+}
+.input-group label {
+  position: absolute;
+  left: 52px;
+  top: 5px;
+  transition: all 0.3s ease;
+  color: #999;
+  pointer-events: none;
+}
+.input-group input:focus {
+  border-color: #000;
+  outline: none;
+}
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -24px; /*untuk animasi jarak nama pengguna dan kata sandi*/
+  font-size: 14px;
+  color: #666;
+}
+.error-indicator {
+  color: red;
+  font-size: 15px;
+  position: absolute;
+  right: 38px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+}
+.forgot-password {
+  text-align: right;
+  font-size: 12px;
+  color: #000000;
+  margin-bottom: 22px;
+}
+.forgot-password a {
+    color: inherit; /* Menggunakan warna teks yang ada */
+    text-decoration: none; /* Menghilangkan garis bawah jika ada */
+}
+.login-button {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 30px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+.login-button:hover {
+  background-color: #333;
+}
+.register-link {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.social-login {
+  margin-top: 20px;
+  font-size: 12px;
+}
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: -2000px;
+}
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  /*Diameterlingkaran*/height: 40px;
+  /*Diameterlingkaran*/border-radius: 50%;
+  background-color: (0, 0%, 100%);
+  /*Warnalatarbelakanglingkaran*/border: 2px solid #000;
+  /*Warnadanketebalanborder*/box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  /*Animasiperubahanwarna*/text-decoration: none;
+ 
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  -ms-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+}
+.social-icon:hover {
+  background-color: #FCCC3D; /* Warna saat hover */
+}
+.social-icons i {
+  font-size: 18px; /* Ukuran ikon */
+  color: #000;
+}
+.eye-container {
+  position: absolute;
+  right: 30px;
+  top: 47%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  width: 30px; /* Lebar kontainer mata */
+  height: 40px; /* Tinggi kontainer mata agar bulat */
+}
+.eye {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+.pupil {
+  width: 10px; /* Ukuran pupil */
+  height: 10px; /* Ukuran pupil */
+  background: black;
+  border-radius: 50%;
+  position: absolute;
+  transition: transform 0.4s;
+}
+.pupil.hidden {
+  transform: scale(0); /* Menyembunyikan pupil */
+}
+.eye.closed {
+  background: #000000; /* Warna bola mata saat tertutup */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+body,
+input {
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  background-color: #FCCC3D;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.forms-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.signin-signup {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 75%;
+  width: 50%;
+  transition: 1s 0.7s ease-in-out;
+  display: grid;
+  grid-template-columns: 1fr;
+  z-index: 5;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0rem 5rem;
+  transition: all 0.2s 0.7s;
+  overflow: hidden;
+  grid-column: 1 / 2;
+  grid-row: 1 / 2;
+}
+
+form.sign-up-form {
+  opacity: 0;
+  z-index: 1;
+}
+
+form.sign-in-form {
+  z-index: 2;
+}
+/* 
+.title {
+  font-size: 2.2rem;
+  color: #444;
+  margin-bottom: 10px;
+} */
+/* 
+.input-field {
+  max-width: 380px;
+  width: 100%;
+  background-color: #f0f0f0;
+  margin: 10px 0;
+  height: 55px;
+  border-radius: 55px;
+  display: grid;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  position: relative;
+}
+
+.input-field i {
+  text-align: center;
+  line-height: 55px;
+  color: #acacac;
+  transition: 0.5s;
+  font-size: 1.1rem;
+}
+
+.input-field input {
+  background: none;
+  outline: none;
+  border: none;
+  line-height: 1;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.input-field input::placeholder {
+  color: #aaa;
+  font-weight: 500;
+}
+
+.social-text {
+  padding: 0.7rem 0;
+  font-size: 1rem;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+}
+
+.social-icon {
+  height: 46px;
+  width: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0.45rem;
+  color: #333;
+  border-radius: 50%;
+  border: 1px solid #333;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: 0.3s;
+} */
+
+.social-icon:hover {
+  color: #4481eb;
+  border-color: #4481eb;
+}
+
+.btn {
+  width: 150px;
+  background-color: #5995fd;
+  border: none;
+  outline: none;
+  height: 49px;
+  border-radius: 49px;
+  color: #000000;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin: 10px 0;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.btn:hover {
+  background-color: #4d84e2;
+}
+.panels-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container:before {
+  content: "";
+  position: absolute;
+  height: 1800px;
+  width: 2000px;
+  top: -10%;
+  right: 48%;
+  transform: translateY(-50%);
+  background-image: linear-gradient(-45deg, #ffffff 0%, #ffffff 100%);  /*warna utama*/
+  transition: 1.8s ease-in-out;
+  border-radius: 50%;
+  z-index: 6;
+}
+
+.image {
+  width: 69%;
+  transition: transform 1.1s ease-in-out;
+  transition-delay: 0.4s;
+  padding-left: -1000px;
+  max-padding: 1000px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-around;
+  text-align: center;
+  z-index: 6;
+}
+
+.left-panel {
+  pointer-events: all;
+  padding: 3rem 17% 2rem 12%;
+}
+
+.right-panel {
+  pointer-events: none;
+  padding: 2rem 30% 2rem 5%;
+}
+
+.panel .content {
+  color: #000000;
+  transition: transform 0.9s ease-in-out;
+  transition-delay: 0.6s;
+  margin-top: 20px;
+  margin-right: -50px;
+  margin-bottom: -100px;
+}
+
+.panel h3 {
+  font-weight: 600;
+  line-height: 1;
+  font-size: 1.5rem;
+}
+
+.panel p {
+  font-size: 0.95rem;
+  padding: 0.7rem 0;
+}
+
+/* untuk daftar */
+.btn.transparent {
+  margin: 0;
+  background: none;
+  border: 2px solid #FCCC3D;
+  width: 110px;
+  height: 41px;
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  margin-left: 2px;
+  transition: all 0.3s ease; /* Menambahkan transisi halus */
+  /* margin-bottom: 20px; */
+}
+.btn.transparent:hover {
+  background-color: #FCCC3D; /* Mengubah warna latar belakang saat hover */
+  color: rgb(255, 98, 0); /* Mengubah warna teks saat hover */
+  transform: scale(1.05); /* Sedikit memperbesar tombol */
+}
+
+.right-panel .image,
+.right-panel .content {
+  transform: translateX(900px);
+  -webkit-transform: translateX(900px);
+  -moz-transform: translateX(900px);
+  -ms-transform: translateX(900px);
+  -o-transform: translateX(900px);
+}
+
+/* ANIMATION */
+
+.container.sign-up-mode:before {
+  transform: translate(100%, -50%);
+  right: 52%;
+}
+
+.container.sign-up-mode .left-panel .image,
+.container.sign-up-mode .left-panel .content {
+  transform: translateX(-800px);
+}
+
+.container.sign-up-mode .signin-signup {
+  left: 25%;
+}
+
+.container.sign-up-mode form.sign-up-form {
+  opacity: 1;
+  z-index: 2;
+}
+
+.container.sign-up-mode form.sign-in-form {
+  opacity: 0;
+  z-index: 1;
+}
+
+.container.sign-up-mode .right-panel .image,
+.container.sign-up-mode .right-panel .content {
+  transform: translateX(0%);
+}
+
+.container.sign-up-mode .left-panel {
+  pointer-events: none;
+}
+
+.container.sign-up-mode .right-panel {
+  pointer-events: all;
+}
+
+@media (max-width: 870px) {
+  .container {
+    min-height: 800px;
+    height: 100vh;
+  }
+  .signin-signup {
+    width: 100%;
+    top: 95%;
+    transform: translate(-50%, -100%);
+    transition: 1s 0.8s ease-in-out;
+  }
+
+  .signin-signup,
+  .container.sign-up-mode .signin-signup {
+    left: 50%;
+  }
+
+  .panels-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 2fr 1fr;
+  }
+
+  .panel {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2.5rem 8%;
+    grid-column: 1 / 2;
+  }
+
+  .right-panel {
+    grid-row: 3 / 4;
+  }
+
+  .left-panel {
+    grid-row: 1 / 2;
+  }
+
+  .image {
+    width: 200px;
+    transition: transform 0.9s ease-in-out;
+    transition-delay: 0.6s;
+    
+  }
+
+  .panel .content {
+    padding-right: 15%;
+    transition: transform 0.9s ease-in-out;
+    transition-delay: 0.8s;
+    
+  }
+
+  .panel h2 {
+    font-size: 1.2rem;
+  }
+
+  .panel p {
+    font-size: 1rem;
+    padding: 0.5rem 0;
+  }
+
+  .btn.transparent {
+    width: 110px;
+    height: 35px;
+    font-size: 0.7rem;
+  }
+
+  .container:before {
+    width: 1500px;
+    height: 1500px;
+    transform: translateX(-50%);
+    left: 30%;
+    bottom: 68%;
+    right: initial;
+    top: initial;
+    transition: 2s ease-in-out;
+  }
+
+  .container.sign-up-mode:before {
+    transform: translate(-50%, 100%);
+    bottom: 32%;
+    right: initial;
+  }
+
+  .container.sign-up-mode .left-panel .image,
+  .container.sign-up-mode .left-panel .content {
+    transform: translateY(-300px);
+  }
+
+  .container.sign-up-mode .right-panel .image,
+  .container.sign-up-mode .right-panel .content {
+    transform: translateY(0px);
+  }
+
+  .right-panel .image,
+  .right-panel .content {
+    transform: translateY(300px);
+  }
+
+  .container.sign-up-mode .signin-signup {
+    top: 5%;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (max-width: 570px) {
+  form {
+    padding: 0 1.5rem;
+  }
+
+  .image {
+    display: none;
+  }
+  .panel .content {
+    padding: 0.5rem 1rem;
+  }
+  .container {
+    padding: 1.5rem;
+  }
+
+  .container:before {
+    bottom: 72%;
+    left: 50%;
+  }
+
+  .container.sign-up-mode:before {
+    bottom: 28%;
+    left: 50%;
+  }
+}
+
