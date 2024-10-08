@@ -16,14 +16,23 @@ export default class ChatboxesController {
   async index({view, request, response}: HttpContext) {
 
     const data = request.all()
-    const input = data.prompt
-    const result = await model.generateContent(input);
-    // const prompt = "Tanggal berapa Ir. Soekarno meninggal?";
-    // const result = await model.generateContent(prompt);
-    return view.render('chatbox/index', {
-      // console.log(result.response.text())
-      hasil: result.response.text()
-    })
+    const input = data.prompt  
+    try {
+      const result = await model.generateContent(input);
+
+      if (!result || !result.response || !result.response.text) {
+          throw new Error("Invalid response structure");
+      }
+
+      return view.render('chatbox/index', {
+          hasil: result.response.text(),
+      });
+  } catch (error) {
+      console.error("Error generating content:", error.message);
+      return view.render('chatbox/index', {
+          hasil: "An error occurred while generating content.",
+      });
+  }
   }
 
   /**
