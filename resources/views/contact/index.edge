@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITHO Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <img alt="ITHO ACADEMY logo" src="img/icon itho.png"/>
+        </div>
+        <div class="menu">
+            <a href="{{route('home.index')}}">Beranda</a>
+            <a href="#">Tentang Kami</a>
+            <a href="#">Ulasan</a>
+            <a class="active" href="{{route('contact.index')}}">Kontak Kami</a>
+            <a href="#">Konsultasi</a> <img src="img/icons8-chatgpt-20.png" alt="ChatGPT" style="width: 20px; height: 20px; margin-left: -15px;" />
+        </div>
+        <div class="auth">
+            <div class="auth-container">
+                <div class="auth-buttons">
+                    <button class="login" id="loginButton">Log In</button>
+                    <button class="signin" id="signinButton">Sign In</button>
+                </div>
+            </div>
+            <div class="profile" id="profileIcon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </div>
+    <div class="content">
+        <h1>Kontak</h1>
+    </div>
+
+    <main class="container mx-auto mt-8 px-6">
+        <h1 class="text-center text-3xl font-bold mb-8"></h1>
+        <div class="flex justify-between items-start" style="margin-bottom: 50px;">
+            <div class="w-1/2 pr-8" id="contactForm">
+                <h2 class="text-xl font-bold mb-4" style="text-align: center;">Beri Kami Pesan</h2>
+                <form>
+                    <textarea class="w-full border border-gray-300 p-4 rounded mb-4" placeholder="Masukan Pesan" rows="5"></textarea>
+                    <button class="bg-yellow-500 text-white px-6 py-2 rounded" type="submit" style="margin-left: -85px; margin-top: 160px; position: absolute;">Kirim</button>
+                </form>
+            </div>
+            <div class="w-1/2 pl-8 border-l border-gray-300">
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold mb-2">Alamat</h2>
+                    <p>Jl. Karang Tengah Raya No.29 4, RT.4 / RW.4, Lb. Bulus, Kec. Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440</p>
+                </div>
+                <div class="mb-4">
+                    <h2 class="text-xl font-bold mb-2">Telepon</h2>
+                    <p>+62 857-7853-7382</p>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold mb-2">Instagram</h2>
+                    <p>@ithoacademy</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="mt-8" style="margin-left: 450px;">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.722766343179!2d106.77638047496696!3d-6.300112993689028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f1e11639d479%3A0x20f87e3dc1c3f744!2sITHO%20CAMP%20-%20GO%20ENT%2026!5e0!3m2!1sid!2sid!4v1728511689180!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+        <div class="container1">
+            <div class="footer logo">
+                <img alt="ITHO Academy Logo" src="img/icon itho.png" width="150px" height="150px"/>
+            </div>
+            <div class="footer">
+                <h3>Alamat</h3>
+                <p><i class="fas fa-map-marker-alt"></i> JL Karang Tengah Raya No.2G RT.4/RW.4, Lb. Bulus, Kec. Cilandak, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12440</p>
+            </div>
+            <div class="footer social-media">
+                <h3>Sosial Media</h3>
+                <p><i class="fab fa-instagram"></i> @ithoacademy</p>
+                <p><i class="fab fa-whatsapp"></i> +62 857-7653-7382</p>
+            </div>
+            <div class="footer">
+                <h3>Pelajari</h3>
+                <p><a href="#">Beranda</a></p>
+                <p><a href="#">Tentang Kami</a></p>
+                <p><a href="#">Ulasan</a></p>
+                <p><a href="#">Kontak</a></p>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
