@@ -2,7 +2,6 @@
 
         :root {
             --color-default: #f0b400;
-            --color-second: #f0b400;
             --color-white: #fff;
             --color-body: #e4e9f7;
             --color-light: #e0e0e0;
@@ -18,11 +17,13 @@
         body {
             min-height: 100vh;
             background-color: #F9F5E9;
+            overflow-x: hidden;
+            
         }
 
         .container {
             display: flex;
-            position: relative; /* Menambahkan relative untuk container */
+            position: relative;
         }
 
         .sidebar {
@@ -31,11 +32,18 @@
             padding: 6px 14px;
             z-index: 99;
             background-color: var(--color-default);
-            transition: all .5s ease;
-            position: fixed; /* Tetap di posisi fixed */
+            transition: all 0.5s ease;
+            position: fixed;
             top: 0;
             left: 0;
+            color: #000000; /* Original text color for light mode */
+            
         }
+
+.sidebar.dark-mode {
+    /* No changes to the background color for dark mode */
+    color: #000000; /* Change only the text color for dark mode */
+}
 
         .sidebar.open {
             width: 250px;
@@ -89,6 +97,7 @@
             position: relative;
             margin: 8px 0;
             list-style: none;
+            margin-bottom: 20px;
         }
 
         .sidebar li .tooltip {
@@ -127,15 +136,15 @@
             text-decoration: none;
             background-color: var(--color-default);
             position: relative;
-            transition: background-color 0.3s ease; /* Animasi transisi untuk elemen a */
+            transition: background-color 0.3s ease;
             z-index: 12;
         }
 
         .sidebar li a:hover {
-            background-color: white; /* Warna latar belakang saat hover */
-            color: black; /* Mengubah warna teks saat hover */
-            border-radius: 10px; /* Menambahkan border radius */
-            transition: background-color 0.3s ease, border-radius 0.3s ease; /* Animasi transisi */
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, border-radius 0.3s ease;
         }
 
         .sidebar li a .link_name {
@@ -144,10 +153,11 @@
             font-weight: 400;
             white-space: nowrap;
             pointer-events: auto;
-            transition: all 0.4s ease;
+            transition: all 0.1s ease;
             opacity: 0;
             color: black;
         }
+
         .sidebar li.profile {
             position: fixed;
             height: 60px;
@@ -160,6 +170,9 @@
         }
 
         .sidebar.open li.profile {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease;
             width: 250px;
         }
 
@@ -185,7 +198,7 @@
             top: 50%;
             right: 0;
             transform: translateY(-50%);
-            background-color: var(--color-second);
+            background-color: var(--color-default);
             width: 100%;
             height: 60px;
             line-height: 60px;
@@ -201,9 +214,6 @@
 
         .sidebar li a:hover .link_name {
             color: var(--color-default);
-            border-radius: 10px; /* Menambahkan border radius */
-    transition: background-color 0.3s ease, border-radius 0.3s ease; /* Animasi transisi */
-            
         }
 
         .sidebar.open li a .link_name {
@@ -211,16 +221,17 @@
         }
 
         .main-content {
-            position: absolute; /* Mengubah menjadi absolute */
-            left: 78px; /* Posisi awal sesuai dengan lebar sidebar */
-            top: 0; /* Mengatur posisi atas */
+            position: relative;
+            left: 78px;
+            top: 0;
             padding: 40px;
-            width: calc(100% - 78px); /* Mengatur lebar agar sesuai */
-            transition: margin-left .5s ease; /* Smooth transition */
+            padding-bottom: 80px;
+            width: calc(100% - 78px);
+            transition: margin-left .5s ease;
         }
 
         .sidebar.open ~ .main-content {
-            left: 250px; /* Menggeser posisi saat sidebar terbuka */
+            left: 250px;
         }
 
         .header h1, .header p {
@@ -232,58 +243,75 @@
             color: var(--color-default);
         }
 
-        .question {
-            background-color: #000000;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            border-radius: 20px;
-            display: inline-block;
-            font-size: 18px;
-            margin-bottom: 30px;
-            margin-top: 50px;
-            margin-left: 780px;
-        }
-
-        .response {
-            background-color: #000000;
-            color: #FFFFFF;
-            padding: 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            margin-bottom: 150px;
-            margin-right: 180px;
-            margin-left: 90px;
-        }
-
-        .options {
+        /* Chatbot styles */
+        .sent-messages {
+            margin-top: -470px;
             display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            margin-top: 20px;
+            flex-direction: column;
         }
 
-        .option {
-            background-color: #FFFFFF;
-            color: #000000;
+        .jawaban{
+            display: inline-block; /* Menyesuaikan ukuran dengan teks */
+            background-color: #000000; /* Warna latar belakang */
+            color: white; /* Warna teks */
+            padding: 10px 20px; /* Jarak dalam lingkaran */
+            border-radius: 50px; /* Membuat lingkaran panjang */
+            text-align: left; /* Memusatkan teks */
+            font-size: 16px; /* Ukuran font */
+            margin-top: 80px;
+            margin-bottom: 300px;
+        }
+
+        .user-message, .ai-response {
             padding: 10px 20px;
             border-radius: 20px;
-            border: 1px solid #000000;
             font-size: 16px;
-            cursor: pointer;
+            margin-bottom: 10px;
+            max-width: 60%;
+        }
+
+        .user-message {
+    background-color: #f0b400; /* Keep this as is for light mode */
+    color: #FFFFFF; /* Default text color */
+    align-self: flex-end;
+    text-align: right;
+}
+
+.ai-response {
+    background-color: transparent; /* Remove background color */
+    color: #000000; /* Default text color for light mode */
+    padding: 5px; /* Optional padding for spacing */
+    margin: 5px 0; /* Spacing between messages */
+    border-radius: 5px; /* Optional: rounded corners */
+    /* Add any other styles you want for text, such as font size or weight */
+}
+
+/* Dark mode specific styles */
+.dark-mode .ai-response {
+    color: #FFFFFF; /* Text color for dark mode */
+}
+ 
+        
+
+        @keyframes bounce {
+            to {
+                transform: translateY(-10px);
+            }
         }
 
         .footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
             display: flex;
             align-items: center;
             background-color: #000000;
             color: #FFFFFF;
-            padding: 15px 20px;
+            padding: 10px 20px;
             border-radius: 20px;
-            margin-right: 150px;
-        }
-
-        .footer i {
-            font-size: 24px;
+            width: calc(100% - 60px);
+            max-width: 900px;
         }
 
         .footer input {
@@ -300,63 +328,186 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 40px; /* Ukuran lingkaran */
-            height: 40px; /* Ukuran lingkaran */
-            border-radius: 50%; /* Membuat lingkaran */
-            background-color: var(--color-default); /* Warna latar belakang */
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--color-default);
+            color: white;
             cursor: pointer;
+        }
+
+        .quick-questions {
+            margin-bottom: 20px;
+            margin-top: 530px;
+            margin-left: 220px;
+            transition: opacity 0.5s ease;
+        }
+
+        .quick-questions.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .quick-question {
+            background-color: var(--color-default);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            display: inline-block;
+            margin-right: 10px;
             transition: background-color 0.3s;
         }
 
-        .send-button:hover {
-            background-color: #f0a500; /* Warna saat hover */
+        .quick-question:hover {
+            background-color: #ffbc00;
         }
 
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .sidebar {
-                width: 100%;
-                height: auto;
-                padding: 20px;
-            }
-
-            .main-content {
-                padding: 20px;
-                margin-left: 0; /* Reset margin for small screens */
-            }
-
-            .header h1, .header p {
-                margin-left: 0;
-            }
-
-            .question, .response, .footer {
-                margin-left: 0;
-                margin-right: 0;
-            }
-
-            .options {
-                flex-direction: column;
-                align-items: center;
-                margin-left: 0;
-            }
-
-            .option {
-                margin-bottom: 10px;
-                width: 100%;
-                text-align: center;
-            }
-
-            .footer {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .footer input {
-                width: 100%;
-                margin-top: 10px;
-            }
+        .history {
+            margin-left: 10px;
+            margin-top: 10px;
+            display: none;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #ffd153;  /* untuk warna kotak history pertayaan */
+            border-radius: 5px;
+            padding: 10px;
         }
+
+        .history h3 {
+            margin-bottom: 10px;
+            display: flex;
+            /* justify-content: space-between; */
+        }
+
+        .history ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .history li {
+            background-color: var(--color-default);
+            color: rgb(255, 255, 255);
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+
+        .clear-history {
+            cursor: pointer;
+            color: red;
+            font-size: 20px;
+        }
+
+        .loader-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+      .loader {
+    display: flex;
+    flex-direction: column; /* Mengatur agar spinner dan teks berada di kolom yang sama */
+    align-items: center; /* Memusatkan item secara horizontal */
+    margin: 10px 0; /* Jarak antar pesan */
+}
+
+.spinner {
+    width: 50px; /* Ukuran spinner */
+    height: 50px;
+    border: 5px solid rgba(255, 255, 255, 0.2); /* Warna latar belakang */
+    border-top: 5px solid transparent; /* Menjadikan bagian atas transparan untuk efek gradasi */
+    border-radius: 50%; /* Membuat bentuk lingkaran */
+    background: linear-gradient(0deg, #ff9900, #ffcc00); /* Gradasi warna oranye */
+    animation: spin 1s linear infinite; /* Animasi berputar */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk efek kedalaman */
+}
+
+/* Efek bayangan yang berubah saat loading */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        border-top-color: #ff7e00; /* Warna atas saat memulai */
+    }
+    25% {
+        border-top-color: #ffcc00; /* Warna atas saat berputar */
+    }
+    50% {
+        border-top-color: #ff7e00; /* Kembali ke warna atas */
+    }
+    75% {
+        border-top-color: #ffcc00; /* Warna atas saat berputar */
+    }
+    100% {
+        transform: rotate(360deg);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.loading-text {
+    margin-top: 10px; /* Jarak antara spinner dan teks */
+    color: #ff7e00; /* Warna teks sesuai dengan warna spinner */
+    font-size: 18px; /* Ukuran font */
+    font-weight: bold; /* Membuat teks lebih menonjol */
+    animation: fadeIn 1s ease-in-out infinite; /* Efek fade-in untuk teks */
+}
+
+/* Animasi fade-in untuk teks */
+@keyframes fadeIn {
+    0%, 100% {
+        opacity: 0.5; /* Transisi transparansi */
+    }
+    50% {
+        opacity: 1; /* Teks sepenuhnya muncul */
+    }
+}
+
+.message-icon {
+    width: 30px; /* Adjust the size as needed */
+    height: 30px; /* Adjust the size as needed */
+    border-radius: 50%; /* Make icons circular */
+    margin-right: 10px; /* Space between icon and text */
+    vertical-align: middle; /* Align icon with text vertically */
+}
+
+/* dark mmode dan light mode */
+body.light-mode {
+    background-color: #F9F5E9;
+    color: #000000;
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #FFFFFF;
+}
+
+.sidebar.light-mode {
+    background-color: var(--color-default); /* Light mode sidebar color */
+    color: #000000;
+}
+
+.sidebar.dark-mode {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.main-content.light-mode {
+    background-color: #F9F5E9;
+    color: #000000;
+}
+
+.main-content.dark-mode {
+    background-color: #121212;
+    color: #FFFFFF;
+}
+
+.messages.light-mode {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.messages.dark-mode {
+    background-color: #1e1e1e;
+    color: #FFFFFF;
+}

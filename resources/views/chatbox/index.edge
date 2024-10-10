@@ -5,81 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ITHO Academy Chatbot</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-   
-   <link rel="stylesheet" href="chatbox/style.css" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="chatbox/style.css" />
 </head>
 <body>
     <div class="container">
         <div class="sidebar">
             <div class="logo_details">
-                <div class="logo_name" style="color: black;"> &nbsp; &nbsp;Chat rasyid</div>
-                <i class="bx bx-menu" id="btn" style="color: black;"></i>
+                <span class="logo_name">ITHO Chatbot</span>
+                <i class='bx bx-menu' id="btn" style="color: black;"></i>
             </div>
             <ul class="nav-list">
                 <li>
-                    <a href="{{route('home.index')}}">
-                        <i><img src="chatbox/img/home.png" alt="" style="width: 30px; height: 30px; margin-left: 10px; margin-top: 15px;"></i>
-                        <span class="link_name">Beranda</span>
+                    <a href="#">
+                        <img src="chatbox/img/home.png" alt="" style="margin-left: 10px;">
+                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Home</span>
                     </a>
-                    <span class="tooltip">Dashboard</span>
+                    <span class="tooltip">Home</span>
                 </li>
                 <li>
-                    <a href="#">
-                        <i><img src="chatbox/img/setting.png" alt="" style="width: 30px; height: 30px; margin-left: 10px; margin-top: 15px;"></i>
-                        <span class="link_name">Pengaturan</span>
+                    <a href="#" id="settings">
+                        <img src="chatbox/img/setting.png" alt="" style="margin-left: 10px;">
+                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Pengaturan</span>
                     </a>
                     <span class="tooltip">Pengaturan</span>
                 </li>
+                <div id="settings-options" style="display: none; margin-left: 10px;">
+                    <span id="light-mode" style="cursor: pointer;">
+                        <i class='bx bxs-sun' style="color: #ffffff;"></i> Light Mode
+                    </span><br>
+                    <span id="dark-mode" style="cursor: pointer;">
+                        <i class='bx bxs-moon' style="color: #000000;"></i> Dark Mode
+                    </span>
+                </div>
                 <li>
-                    <a href="#">
-                        <i><img src="chatbox/img/history.png" alt="" style="width: 30px; height: 30px; margin-left: 10px; margin-top: 15px;"></i>
-                        <span class="link_name">History</span>
+                    <a href="#" id="new-chat">
+                        <img src="chatbox/img/image.png" alt="" style="width: 40px; height: 40px; margin-left: 5px;">
+                        <span class="link_name" style="margin-top: 5px;">New Chat</span>
+                    </a>
+                    <span class="tooltip">New Chat</span>
+                </li>
+                <li>
+                    <a href="#" id="history">
+                        <img src="chatbox/img/history.png" alt="" style="margin-left: 10px;">
+                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">History</span>
                     </a>
                     <span class="tooltip">History</span>
                 </li>
-                <li class="profile">
-                    <div class="profile_details">
-                        <img src="chatbox/img/profil.png" alt="profile image">
-                        <div class="profile_content">
-                            <div class="name">rasyidd</div>
-                            <div class="designation">Admin</div>
-                        </div>
-                    </div>
-                    <i class="bx bx-log-out" id="log_out" style="color: black;"></i>
-                </li>
             </ul>
+            <div class="history" id="history-list">
+                <h3>
+                    History Pertanyaan:
+                    <i class='bx bx-trash clear-history' id="clear-history" title="Hapus Semua Pertanyaan" style="color: black;"></i>
+                </h3>
+                <ul id="history-questions"></ul>
+            </div>
+            <li class="profile">
+                <div class="profile_details">
+                    <i class='bx bxs-user' style="color: #000000;"></i>
+                    <div class="name_job">
+                        <div class="name">Admin</div>
+                        <div class="designation">ITHO Academy</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out" style="margin-top: 10px; color: #000000; .sidebar {
+                    transition: width 0.5s ease, transform 0.5s ease; /* Animasi tambahan */
+                }"></i>
+            </li>
         </div>
-
-        <div class="main-content">
+        <section class="main-content">
             <div class="header">
-                <h1>Halo, <span class="highlight">Riyadatunnisa!</span></h1>
-                <p>Ada Yang Bisa Kami Bantu?</p>
-            </div>
-        
-            <div class="question">Apa itu Itho Academy?</div>
-            <div class="response">
-                {{hasil}}
+                <h1>Welcome to <span class="highlight">ITHO Academy</span></h1>
+                <p>Ask me anything!</p>
             </div>
 
-            <div class="options">
-                <div class="option">Apa itu Itho Academy?</div>
-                <div class="option">Bagaimana cara penggunaan Itho Academy?</div>
-                <div class="option">Bagaimana cara belajar di Itho Academy?</div>
+            <div class="quick-questions" id="quick-questions">
+               
             </div>
-        <form>
-            <div class="footer">
-                <i class="bx bxs-image" style="font-size: 24px; color: white;"></i> <!-- Ikon Gambar -->
-                <input name="prompt" type="text" placeholder="Masukan Pertanyaan" />
-                <button type="submit" class="send-button">
-                <i class="bx bx-up-arrow" style="font-size: 24px; color: white;"></i> <!-- Tombol Panah ke Atas -->
+
+            <div class="sent-messages" id="messages">
+                <!-- Messages will be appended here -->
+            </div>
+            <div class="jawaban">{{hasil}}</div>
+
+        </section>
+        <div>
+            <img src="chatbox/img/icon itho.png" alt="" style="margin-left: 10px; margin: 30px;">
+            </div>
+       
+        <div class="footer">
+            <form>
+                <input type="text" id="user-input" name="prompt" placeholder="Masukan Pertanyaan..." />
+                <button type="submit" class="send-button" onclick="sendMessage()">
+                    <i class='bx bx-send' style="color: black;"></i>
                 </button>
-            </div>
-        </form>
+            </form>
         </div>
     </div>
-    
-    <script src="chatbox/app.js"> </script>
-    <script src="chatbox/main.js"> </script>
+    <script src="chatbox/app.js"></script>
 </body>
 </html>

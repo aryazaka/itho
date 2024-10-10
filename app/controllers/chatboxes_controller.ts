@@ -16,7 +16,12 @@ export default class ChatboxesController {
   async index({view, request, response}: HttpContext) {
 
     const data = request.all()
-    const input = data.prompt  
+
+    let input = data.prompt  
+    if (input == undefined){
+        input = "repeat my word 'Please fill the question for the result'"
+    }
+    console.log(input)
     try {
       const result = await model.generateContent(input);
 

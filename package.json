@@ -41,6 +41,7 @@
     "@japa/runner": "^3.1.4",
     "@swc/core": "^1.7.22",
     "@types/luxon": "^3.4.2",
+    "@types/markdown-it": "^14.1.2",
     "@types/node": "^22.5.1",
     "eslint": "^9.9.1",
     "hot-hook": "^0.3.0",
@@ -64,6 +65,8 @@
     "dotenv": "^16.4.5",
     "edge.js": "^6.0.2",
     "luxon": "^3.5.0",
+    "markdown-it": "^14.1.0",
+    "marked": "^14.1.2",
     "mysql2": "^3.11.3",
     "openai": "^4.67.1",
     "reflect-metadata": "^0.2.2"
