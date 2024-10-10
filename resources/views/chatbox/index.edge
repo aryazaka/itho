@@ -17,7 +17,7 @@
             </div>
             <ul class="nav-list">
                 <li>
-                    <a href="#">
+                    <a href="{{route('home.index')}}">
                         <img src="chatbox/img/home.png" alt="" style="margin-left: 10px;">
                         <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Home</span>
                     </a>
@@ -86,22 +86,19 @@
             <div class="sent-messages" id="messages">
                 <!-- Messages will be appended here -->
             </div>
-            <div class="jawaban">{{hasil}}</div>
-
         </section>
         <div>
             <img src="chatbox/img/icon itho.png" alt="" style="margin-left: 10px; margin: 30px;">
             </div>
        
         <div class="footer">
-            <form>
-                <input type="text" id="user-input" name="prompt" placeholder="Masukan Pertanyaan..." />
-                <button type="submit" class="send-button" onclick="sendMessage()">
-                    <i class='bx bx-send' style="color: black;"></i>
-                </button>
-            </form>
+            
+            <input type="text" id="user-input" placeholder="Masukan Pertanyaan..." />
+            <div class="send-button" onclick="sendMessage()">
+                <i class='bx bx-send' style="color: black;"></i>
+            </div>
         </div>
     </div>
-    <script src="chatbox/app.js"></script>
+    <script type="module">import { sendMessage } from "./chatbox/app.js"; document.querySelector('.send-button').onclick = sendMessage;</script>
 </body>
 </html>

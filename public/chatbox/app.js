@@ -1,3 +1,9 @@
+import { GoogleGenerativeAI } from "/node_modules/@google/generative-ai"
+// const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+const genAI = new GoogleGenerativeAI('AIzaSyASAY3sisyTOlbuyVZvHNRnPb9I2pT1b_4');
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
 let sidebar = document.querySelector('.sidebar');
         let closeBtn = document.querySelector('#btn');
        
@@ -41,9 +47,10 @@ let sidebar = document.querySelector('.sidebar');
             localStorage.removeItem('chatHistory');
         });
 
-        function sendMessage() {
+    export async function sendMessage() {
     const userInput = document.getElementById('user-input');
     const messageText = userInput.value;
+    const result = await model.generateContent(messageText)
 
     if (messageText.trim() === '') return;
 
@@ -91,12 +98,12 @@ let sidebar = document.querySelector('.sidebar');
     messagesDiv.appendChild(loadingDiv);
     
     // Simulate AI response delay
-    setTimeout(() => {
+    setTimeout( async () => {
         // Remove loading animation
         messagesDiv.removeChild(loadingDiv);
 
         // AI response
-        let hasil = "{{hasil}}"; // Replace with actual logic
+        let hasil = result.response.text(); // Replace with actual logic
 
         // Create AI response div
         const aiResponseDiv = document.createElement('div');

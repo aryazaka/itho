@@ -1,13 +1,11 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { config } from "dotenv"
-config()
-import { GoogleGenerativeAI } from "@google/generative-ai"
-// const { GoogleGenerativeAI } = require("@google/generative-ai");
+// import { config } from "dotenv"
+// config()
+// import { GoogleGenerativeAI } from "@google/generative-ai"
+// // const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI(process.env.API_KEY!);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-
+// const genAI = new GoogleGenerativeAI(process.env.API_KEY!);
+// const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export default class ChatboxesController {
   /**
@@ -15,30 +13,32 @@ export default class ChatboxesController {
    */
   async index({view, request, response}: HttpContext) {
 
-    const data = request.all()
+    return view.render('chatbox/index')
 
-    let input = data.prompt  
-    if (input == undefined){
-        input = "repeat my word 'Please fill the question for the result'"
-    }
-    console.log(input)
-    try {
-      const result = await model.generateContent(input);
+//     const data = request.all()
 
-      if (!result || !result.response || !result.response.text) {
-          throw new Error("Invalid response structure");
-      }
+//     let input = data.prompt  
+//     if (input == undefined){
+//         input = "repeat my word 'Please fill the question for the result'"
+//     }
+//     console.log(input)
+//     try {
+//       const result = await model.generateContent(input);
 
-      return view.render('chatbox/index', {
-          hasil: result.response.text(),
-      });
-  } catch (error) {
-      console.error("Error generating content:", error.message);
-      return view.render('chatbox/index', {
-          hasil: "An error occurred while generating content.",
-      });
+//       if (!result || !result.response || !result.response.text) {
+//           throw new Error("Invalid response structure");
+//       }
+
+//       return view.render('chatbox/index', {
+//           hasil: result.response.text(),
+//       });
+//   } catch (error) {
+//       console.error("Error generating content:", error.message);
+//       return view.render('chatbox/index', {
+//           hasil: "An error occurred while generating content.",
+//       });
   }
-  }
+  
 
   /**
    * Display form to create a new record
