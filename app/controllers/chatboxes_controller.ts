@@ -20,8 +20,14 @@ export default class ChatboxesController {
 
     try {
       const completion = await openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: 'chatgpt-4o-latest',
         messages: [{ role: 'user', content: userMessage }],
+        temperature: 0.1,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+        max_tokens: 256,
+        stop:["user:","AI:","user:","AI:"]
       });
 
       const result = completion.choices[0].message.content?.trim()

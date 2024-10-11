@@ -9,13 +9,18 @@
 
 import router from '@adonisjs/core/services/router'
 const homeController = () => import('#controllers/home_controller')
-const loginController = () => import('#controllers/login_controller')
 const chatboxController = () => import('#controllers/chatboxes_controller')
 const contactController = () => import('#controllers/contacts_controller')
+const authController = () => import('#controllers/auth_controller')
+const aboutController = () => import('#controllers/about_controller')
+const ulasanController = () => import('#controllers/ulasans_controller')
 
 router.get('/', [homeController, 'index']).as('home.index')
-router.get('/login', [loginController, 'index']).as('login.index')
+router.get('/auth', [authController, 'index']).as('auth.index')
 router.get('/chat', [chatboxController, 'index']).as('chat.index')
 router.get('/contact', [contactController,'index']).as('contact.index')
+router.get('/about', [aboutController, 'index']).as('about.index')
+router.get('/ulasan', [ulasanController, 'index']).as('ulasan.index')
 
+router.post('/register',[authController, 'register']).as('auth.register')
 router.post('/process', [chatboxController, 'proses'])

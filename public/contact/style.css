@@ -235,12 +235,17 @@ body {
 textarea {
     position: relative;
     width: 100%;
-    border: 2px solid #ccc; /* Default border */
-    border-radius: 8px;
+    border: 2px solid #ccc;
+    /*Defaultborder*/border-radius: 8px;
     padding: 12px;
     font-size: 16px;
     transition: border-color 0.3s ease;
-    overflow: hidden; /* Hide overflow */
+    overflow: hidden;
+
+    -webkit-transition: border-color 0.3s ease;
+    -moz-transition: border-color 0.3s ease;
+    -ms-transition: border-color 0.3s ease;
+    -o-transition: border-color 0.3s ease;
 }
 
 /* Placeholder style */
