@@ -1,68 +1,61 @@
-import { GoogleGenerativeAI } from "/node_modules/@google/generative-ai"
-// const { GoogleGenerativeAI } = require("@google/generative-ai");
-
-const genAI = new GoogleGenerativeAI('AIzaSyASAY3sisyTOlbuyVZvHNRnPb9I2pT1b_4');
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
 let sidebar = document.querySelector('.sidebar');
-        let closeBtn = document.querySelector('#btn');
-       
-        let messagesDiv = document.getElementById('messages');
-        let historyList = document.getElementById('history-list');
-        let historyQuestions = document.getElementById('history-questions');
-        let quickQuestions = document.getElementById('quick-questions');
+let closeBtn = document.querySelector('#btn');
+let messagesDiv = document.getElementById('messages');
+let historyList = document.getElementById('history-list');
+let historyQuestions = document.getElementById('history-questions');
+let quickQuestions = document.getElementById('quick-questions');
 
-        // Load history from localStorage
-        let historyData = JSON.parse(localStorage.getItem('chatHistory')) || [];
+// Load history from localStorage
+let historyData = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
-        // Display history on page load
-        historyData.forEach(question => {
-            addToHistory(question);
-        });
+// Display history on page load
+historyData.forEach(question => {
+    addToHistory(question);
+});
 
-        closeBtn.addEventListener('click', () => {
-            sidebar.classList.toggle('open');
-            toggleQuickQuestions();
-        });
+closeBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('open');
+    toggleQuickQuestions();
+});
 
-        function toggleQuickQuestions() {
-            if (sidebar.classList.contains('open')) {
-                quickQuestions.classList.add('hidden');
-            } else {
-                quickQuestions.classList.remove('hidden');
-            }
-        }
+function toggleQuickQuestions() {
+    if (sidebar.classList.contains('open')) {
+        quickQuestions.classList.add('hidden');
+    } else {
+        quickQuestions.classList.remove('hidden');
+    }
+}
 
-        document.getElementById('new-chat').addEventListener('click', () => {
-            messagesDiv.innerHTML = '';
-        });
+document.getElementById('new-chat').addEventListener('click', () => {
+    messagesDiv.innerHTML = '';
+});
 
-        document.getElementById('history').addEventListener('click', () => {
-            historyList.style.display = historyList.style.display === 'none' ? 'block' : 'none';
-        });
+document.getElementById('history').addEventListener('click', () => {
+    historyList.style.display = historyList.style.display === 'none' ? 'block' : 'none';
+});
 
-        document.getElementById('clear-history').addEventListener('click', () => {
-            historyData = [];
-            updateHistory();
-            localStorage.removeItem('chatHistory');
-        });
+document.getElementById('clear-history').addEventListener('click', () => {
+    historyData = [];
+    updateHistory();
+    localStorage.removeItem('chatHistory');
+});
 
-    export async function sendMessage() {
+export async function sendMessage() {
     const userInput = document.getElementById('user-input');
     const messageText = userInput.value;
-    const result = await model.generateContent(messageText)
 
     if (messageText.trim() === '') return;
+       // Nonaktifkan input dan tombol saat mengirim pesan
+       userInput.disabled = true;
 
     // Create user message div
     const userMessageDiv = document.createElement('div');
     userMessageDiv.className = 'user-message';
-    
-    // Create user icon
+
     const userIcon = document.createElement('img');
     userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
     userIcon.alt = 'User Icon';
-    userIcon.className = 'message-icon';  // Add a class for styling
+    userIcon.className = 'message-icon';
 
     const userText = document.createElement('span');
     userText.textContent = messageText;
@@ -71,87 +64,121 @@ let sidebar = document.querySelector('.sidebar');
     userMessageDiv.appendChild(userText);
     messagesDiv.appendChild(userMessageDiv);
 
-    // Update history and storage
-    historyData.push(messageText);
-    localStorage.setItem('chatHistory', JSON.stringify(historyData));
-    addToHistory(messageText);
-
-    // Scroll to the user message
     userMessageDiv.scrollIntoView({ behavior: 'smooth' });
 
     // Create loading indicator
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'loader';
 
-    // Create loading spinner
     const spinner = document.createElement('div');
     spinner.className = 'spinner';
 
-    // Create loading text
     const loadingText = document.createElement('div');
     loadingText.className = 'loading-text';
     loadingText.textContent = "Loading...";
 
-    // Append spinner and loading text to loadingDiv
     loadingDiv.appendChild(spinner);
     loadingDiv.appendChild(loadingText);
     messagesDiv.appendChild(loadingDiv);
-    
+
+    loadingDiv.scrollIntoView({ behavior: "smooth" });
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const res = await fetch('/process', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({ message: messageText }),
+    });
+
+    userInput.value = '';
+
+    const data = await res.json();
+
+    // Update history and storage
+    historyData.push(messageText);
+    localStorage.setItem('chatHistory', JSON.stringify(historyData));
+    addToHistory(messageText);
+
     // Simulate AI response delay
-    setTimeout( async () => {
-        // Remove loading animation
+    setTimeout(async () => {
         messagesDiv.removeChild(loadingDiv);
 
         // AI response
-        let hasil = result.response.text(); // Replace with actual logic
+        let hasil = data.reply || 'Error: ' + data.error;
 
         // Create AI response div
         const aiResponseDiv = document.createElement('div');
         aiResponseDiv.className = 'ai-response';
 
-        // Create AI icon
         const aiIcon = document.createElement('img');
         aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
         aiIcon.alt = 'AI Icon';
-        aiIcon.className = 'message-icon'; // Add a class for styling
-
-        const aiText = document.createElement('span');
-        aiText.textContent = hasil;
+        aiIcon.className = 'message-icon';
 
         aiResponseDiv.appendChild(aiIcon);
-        aiResponseDiv.appendChild(aiText);
         messagesDiv.appendChild(aiResponseDiv);
+
+        
+
+        // Animate AI response
+        animateAIResponse(hasil, aiResponseDiv);
         aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
+        userInput.disabled = false;
+        userInput.focus(); // Fokus kembali ke input
     }, 5000); // Simulated delay of 5 seconds
 }
 
-        function sendQuickQuestion(question) {
-            const userInput = document.getElementById('user-input');
-            userInput.value = question;
-            sendMessage();
+function animateAIResponse(text, container) {
+    const words = text.split(' ');
+    let index = 0;
+
+    const interval = setInterval(() => {
+        if (index < words.length) {
+            const span = document.createElement('span');
+            span.innerHTML = words[index] + ' '; // Tambahkan spasi setelah setiap kata
+            container.appendChild(span);
+            container.scrollIntoView({ behavior: 'smooth' });
+            index++;
+        } else {
+            clearInterval(interval); // Hentikan interval setelah semua kata ditampilkan
         }
+    }, 100); // Waktu tampil setiap kata (300 ms)
+}
 
-        function updateHistory() {
-            historyQuestions.innerHTML = '';
-            historyData.slice().reverse().forEach((question) => {
-                addToHistory(question);
-            });
-        }
+function sendQuickQuestion(question) {
+    const userInput = document.getElementById('user-input');
+    userInput.value = question;
+    sendMessage();
+}
 
-        function addToHistory(question) {
-            const li = document.createElement('li');
-            li.textContent = question;
-            historyQuestions.appendChild(li);
-        }
+function updateHistory() {
+    historyQuestions.innerHTML = '';
+    historyData.slice().reverse().forEach((question) => {
+        addToHistory(question);
+    });
+}
 
+function addToHistory(question) {
+    const li = document.createElement('li');
+    li.textContent = question;
 
-        // Menambahkan event untuk mengirim pesan dengan tombol Enter
+    // Add click event to send the question when clicked
+    li.addEventListener('click', () => {
+        sendQuickQuestion(question);
+    });
+
+    historyQuestions.appendChild(li);
+}
+
+// Menambahkan event untuk mengirim pesan dengan tombol Enter
 document.getElementById('user-input').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         sendMessage();
     }
 });
-
 
 // dark mode dan light mode
 document.getElementById('settings').addEventListener('click', () => {
@@ -173,7 +200,7 @@ document.getElementById('dark-mode').addEventListener('click', () => {
 
 function updateColors() {
     const isDarkMode = document.body.classList.contains('dark-mode');
-    
+
     // Sidebar remains unchanged
     const sidebar = document.querySelector('.sidebar');
     sidebar.style.color = isDarkMode ? '#FFFFFF' : '#000000'; // Change text color in the sidebar
@@ -182,7 +209,7 @@ function updateColors() {
     const mainContent = document.querySelector('.main-content');
     mainContent.style.backgroundColor = isDarkMode ? '#121212' : '#F9F5E9';
     mainContent.style.color = isDarkMode ? '#FFFFFF' : '#000000';
-    
+
     // Update messages div color
     const messagesDiv = document.getElementById('messages');
     messagesDiv.style.backgroundColor = isDarkMode ? '#1e1e1e' : '#FFFFFF';
@@ -201,9 +228,6 @@ function updateColors() {
     });
 }
 
-
-
-
-        document.getElementById('log_out').addEventListener('click', () => {
+document.getElementById('log_out').addEventListener('click', () => {
     window.location.href = "home.html"; // Arahkan ke halaman home untu icon di paling bawah sidebar ai
 });

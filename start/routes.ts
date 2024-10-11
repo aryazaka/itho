@@ -18,3 +18,4 @@ router.get('/login', [loginController, 'index']).as('login.index')
 router.get('/chat', [chatboxController, 'index']).as('chat.index')
 router.get('/contact', [contactController,'index']).as('contact.index')
 
+router.post('/process', [chatboxController, 'proses'])

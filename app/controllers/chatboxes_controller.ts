@@ -1,11 +1,10 @@
 import type { HttpContext } from '@adonisjs/core/http'
-// import { config } from "dotenv"
-// config()
-// import { GoogleGenerativeAI } from "@google/generative-ai"
-// // const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { marked } from 'marked';
+import OpenAI from "openai";
 
-// const genAI = new GoogleGenerativeAI(process.env.API_KEY!);
-// const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 export default class ChatboxesController {
   /**
@@ -14,32 +13,27 @@ export default class ChatboxesController {
   async index({view, request, response}: HttpContext) {
 
     return view.render('chatbox/index')
-
-//     const data = request.all()
-
-//     let input = data.prompt  
-//     if (input == undefined){
-//         input = "repeat my word 'Please fill the question for the result'"
-//     }
-//     console.log(input)
-//     try {
-//       const result = await model.generateContent(input);
-
-//       if (!result || !result.response || !result.response.text) {
-//           throw new Error("Invalid response structure");
-//       }
-
-//       return view.render('chatbox/index', {
-//           hasil: result.response.text(),
-//       });
-//   } catch (error) {
-//       console.error("Error generating content:", error.message);
-//       return view.render('chatbox/index', {
-//           hasil: "An error occurred while generating content.",
-//       });
   }
   
+  async proses({request, response}: HttpContext){
+    const userMessage = request.input('message');
 
+    try {
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [{ role: 'user', content: userMessage }],
+      });
+
+      const result = completion.choices[0].message.content?.trim()
+      const markedResult =  marked(result!)
+
+      return response.json({
+        reply: markedResult,
+      });
+    }catch (error) {
+      return response.status(500).json({ error: 'Error communicating with OpenAI' });
+    }
+  }
   /**
    * Display form to create a new record
    */

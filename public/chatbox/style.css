@@ -18,6 +18,7 @@
             min-height: 100vh;
             background-color: #F9F5E9;
             overflow-x: hidden;
+            background-image: url('../chatbox/img/wm.png');
             
         }
 
@@ -235,7 +236,7 @@
         }
 
         .header h1, .header p {
-            font-size: 24px; 
+            font-size: 30px; 
             margin-left: 0; 
         }
 
@@ -248,6 +249,7 @@
             margin-top: -470px;
             display: flex;
             flex-direction: column;
+            background-color: transparent;
         }
 
         .jawaban{
@@ -277,13 +279,44 @@
     text-align: right;
 }
 
+.user-message {
+    border: 1px solid #ccc; /* Example border style */
+    align-items: left; /* Center items vertically */
+    justify-content: space-between; /* Space between text and icon */
+    border-radius: 15px;
+    background-color: #f0b400; /* Background color for user message */
+    align-self: flex-end;
+    text-align: left;
+}
+
+.user-message .message-icon {
+    width: 40px; /* Set a width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    padding: 5px; /* Optional: padding for the icon */
+    align-items: right;
+
+}
+
 .ai-response {
-    background-color: transparent; /* Remove background color */
-    color: #000000; /* Default text color for light mode */
-    padding: 5px; /* Optional padding for spacing */
-    margin: 5px 0; /* Spacing between messages */
-    border-radius: 5px; /* Optional: rounded corners */
-    /* Add any other styles you want for text, such as font size or weight */
+    position: relative; /* Allows positioning of child elements */
+    border: 1px solid #000000; /* Example border style */
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #000000; /* Background color for AI response */
+    color: white;
+    margin-bottom: 150px;
+}
+
+.ai-response .message-icon {
+    position: absolute; /* Position it absolutely within the AI response */
+    top: -35px; /* Adjust this value to move it above the border */
+    left: -5px; /* Adjust this value to position horizontally */
+    width: 40px; /* Set a width for the icon */
+    height: auto; /* Maintain aspect ratio */
+    padding: 5px; /* Optional: padding for the icon */
+    color: white;
+  
 }
 
 /* Dark mode specific styles */
@@ -367,7 +400,7 @@
             margin-left: 10px;
             margin-top: 10px;
             display: none;
-            max-height: 300px;
+            max-height: 500px;
             overflow-y: auto;
             background-color: #ffd153;  /* untuk warna kotak history pertayaan */
             border-radius: 5px;
@@ -383,6 +416,7 @@
         .history ul {
             list-style-type: none;
             padding: 0;
+            cursor: pointer;
         }
 
         .history li {
@@ -391,6 +425,7 @@
             padding: 5px 10px;
             border-radius: 5px;
             margin-bottom: 5px;
+            cursor: pointer;
         }
 
         .clear-history {
@@ -510,4 +545,44 @@ body.dark-mode {
 .messages.dark-mode {
     background-color: #1e1e1e;
     color: #FFFFFF;
+}
+h2 {
+    font-size: 24px;
+    margin-top: 20px;
+}
+
+h3 {
+    font-size: 20px;
+    margin-top: 15px;
+}
+
+ol {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+    line-height: 1.5;
+}
+
+
+
+#settings-options span {
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#settings-options span:hover {
+    transform: scale(1.1);
+    color: #ffffff; /* Warna saat hover */
+    background-color: rgb(175, 117, 0);
+    border-radius: 15px;
+    padding-top: 20px;
+    padding-right: 50px;
+    padding-bottom: 10px;
+}
+
+#settings-options span:active {
+    transform: scale(0.9); /* Memberikan efek mengecil saat diklik */
+    color: #000000; /* Warna saat diklik */
 }

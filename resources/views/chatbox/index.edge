@@ -7,6 +7,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="chatbox/style.css" />
+    <meta name="csrf-token" content="{{ csrfToken }}">
 </head>
 <body>
     <div class="container">
@@ -24,20 +25,20 @@
                     <span class="tooltip">Home</span>
                 </li>
                 <li>
-                    <a href="#" id="settings">
-                        <img src="chatbox/img/setting.png" alt="" style="margin-left: 10px;">
-                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Pengaturan</span>
-                    </a>
-                    <span class="tooltip">Pengaturan</span>
-                </li>
-                <div id="settings-options" style="display: none; margin-left: 10px;">
-                    <span id="light-mode" style="cursor: pointer;">
-                        <i class='bx bxs-sun' style="color: #ffffff;"></i> Light Mode
-                    </span><br>
-                    <span id="dark-mode" style="cursor: pointer;">
-                        <i class='bx bxs-moon' style="color: #000000;"></i> Dark Mode
-                    </span>
-                </div>
+    <a href="#" id="settings">
+        <img src="chatbox/img/setting.png" alt="" style="margin-left: 10px;">
+        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Settings</span>
+    </a>
+    <span class="tooltip">Settings</span>
+</li>
+<div id="settings-options">
+    <span id="light-mode" style="cursor: pointer;">
+        <i class='bx bxs-sun' style="color: #ffffff;"></i> Light Mode
+    </span><br>
+    <span id="dark-mode" style="cursor: pointer;">
+        <i class='bx bxs-moon' style="color: #000000;"></i> Dark Mode
+    </span>
+</div>
                 <li>
                     <a href="#" id="new-chat">
                         <img src="chatbox/img/image.png" alt="" style="width: 40px; height: 40px; margin-left: 5px;">
@@ -75,7 +76,7 @@
         </div>
         <section class="main-content">
             <div class="header">
-                <h1>Welcome to <span class="highlight">ITHO Academy</span></h1>
+                <h1>Welcome to <span class="highlight">ITHO ASSISTENT</span></h1>
                 <p>Ask me anything!</p>
             </div>
 
