@@ -81,6 +81,8 @@ export async function sendMessage() {
     loadingDiv.appendChild(loadingText);
     messagesDiv.appendChild(loadingDiv);
 
+    userInput.value = '';
+    
     loadingDiv.scrollIntoView({ behavior: "smooth" });
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -92,8 +94,6 @@ export async function sendMessage() {
         },
         body: JSON.stringify({ message: messageText }),
     });
-
-    userInput.value = '';
 
     const data = await res.json();
 
@@ -140,8 +140,8 @@ function animateAIResponse(text, container) {
             const span = document.createElement('span');
             span.innerHTML = words[index] + ' '; // Tambahkan spasi setelah setiap kata
             container.appendChild(span);
-            container.scrollIntoView({ behavior: 'smooth' });
             index++;
+            container.scrollIntoView({ behavior: 'smooth' });
         } else {
             clearInterval(interval); // Hentikan interval setelah semua kata ditampilkan
         }
@@ -212,7 +212,7 @@ function updateColors() {
 
     // Update messages div color
     const messagesDiv = document.getElementById('messages');
-    messagesDiv.style.backgroundColor = isDarkMode ? '#1e1e1e' : '#FFFFFF';
+    messagesDiv.style.backgroundColor = isDarkMode ? 'transparant' : 'transparant';
     messagesDiv.style.color = isDarkMode ? '#FFFFFF' : '#000000';
 
     // Update user message styles

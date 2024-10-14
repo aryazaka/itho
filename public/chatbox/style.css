@@ -249,7 +249,6 @@
             margin-top: -470px;
             display: flex;
             flex-direction: column;
-            background-color: transparent;
         }
 
         .jawaban{
@@ -274,7 +273,7 @@
 
         .user-message {
     background-color: #f0b400; /* Keep this as is for light mode */
-    color: #FFFFFF; /* Default text color */
+    color: #000000; /* Default text color */
     align-self: flex-end;
     text-align: right;
 }
@@ -299,12 +298,12 @@
 
 .ai-response {
     position: relative; /* Allows positioning of child elements */
-    border: 1px solid #000000; /* Example border style */
+    border: 1px solid #ffffff; /* Example border style */
     border-radius: 15px;
     padding: 10px;
     margin: 10px 0;
-    background-color: #000000; /* Background color for AI response */
-    color: white;
+    background-color: #f0b400; /* Background color for AI response */
+    color: rgb(0, 0, 0);
     margin-bottom: 150px;
 }
 

@@ -14,15 +14,17 @@ export default class ChatboxesController {
 
     return view.render('chatbox/index')
   }
-  
+
   async proses({request, response}: HttpContext){
     const userMessage = request.input('message');
 
     try {
       const completion = await openai.chat.completions.create({
         model: 'chatgpt-4o-latest',
-        messages: [{ role: 'user', content: userMessage }],
-        temperature: 0.1,
+        messages: [
+          { role: 'user', content: userMessage }
+        ],
+        temperature: 1,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
