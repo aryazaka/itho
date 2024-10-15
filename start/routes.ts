@@ -9,6 +9,7 @@
 
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const landingController = () => import('#controllers/landings_controller')
 const homeController = () => import('#controllers/home_controller')
 const chatboxController = () => import('#controllers/chatboxes_controller')
 const contactController = () => import('#controllers/contacts_controller')
@@ -16,7 +17,8 @@ const authController = () => import('#controllers/auth_controller')
 const aboutController = () => import('#controllers/about_controller')
 const ulasanController = () => import('#controllers/ulasans_controller')
 
-router.get('/', [homeController, 'index']).as('home.index')
+router.get('/', [landingController, 'index']).as('landing.index')
+router.get('/home', [homeController, 'index']).as('home.index')
 router.get('/auth', [authController,'index']).as('auth.index')
 router.get('/chat', [chatboxController, 'index']).as('chat.index')
 router.get('/contact', [contactController,'index']).as('contact.index')
