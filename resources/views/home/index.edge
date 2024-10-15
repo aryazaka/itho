@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITHO Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{asset('home/style.css')}}" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #FCCC3D;
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+        }
+        .menu {
+            display: flex;
+            align-items: center;
+        }
+        .menu a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: black;
+        }
+        .text-center {
+            text-align: center;
+            padding: 20px;
+        }
+        .text {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .footer {
+            background-color: #FFEB99;
+            padding: 10px;
+            margin-top: 25px;
+        }
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .footer div {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .text {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .footer .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+   @include('partial/navbar')
+
+    <br><br><br>
+    <div class="text-center text">
+        <h1 class="text-3xl font-bold mb-6">Apa Itu ITHO Academy?</h1>
+        <p class="text-lg mb-6" style="text-align: left; margin-top: 20px;">
+            Bergabunglah dengan ITHO Academy untuk memperoleh keterampilan
+            <br/> praktis dan relevan dalam digital marketing. Kami hadir untuk membantu
+            <br/> Anda meraih masa depan yang cerah melalui
+            <br/> pendidikan yang sesuai dan peluang nyata.
+            <br/> Jangan sia-siakan kesempatan ini.
+        </p>
+    </div>
+    <div class="absolute bottom-10 left-10" style="margin-bottom: 250px;">
+        <div class="bg-yellow-300 rounded-full w-20 h-20 flex items-center justify-center">
+            <div class="bg-white rounded-full w-10 h-10"></div>
+        </div>
+    </div>
+    <div class="absolute bottom-10 right-10">
+        <img alt="Illustration of a person with a laptop, raising one finger" class="w-48" height="200" src="{{asset('home/img/womenn.png')}}" style="margin-bottom: 300px; margin-right: 200px;" width="200"/>
+    </div>
+    <button class="bg-black text-white py-2 px-4 rounded" style="margin-left: 370px; margin-top: -30px; margin-bottom: 70px;">
+        Selengkapnya
+    </button>
+
+     @include('partial/footer')
+
+</body>
+</html>

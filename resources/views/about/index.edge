@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITHO Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{asset('about/style.css')}}" />
+    <style>
+  
+    </style>
+
+</head>
+<body>
+
+    @include('partial/navbar')
+
+    <div class="bg-white">
+        <p class="text-6xl font-bold"><img src="{{asset('about/img/header.png')}}" alt="" style="width: 7000px;"></p>
+    </div>
+
+    <div class="max-w-2xl mx-auto p-6 bg-yellow-200 mt-10 rounded-lg shadow-lg">
+        <h1 class="text-center text-2xl font-bold mb-6">
+         Apa Itu ITHO Academy?
+        </h1>
+        <p class="mb-4">
+         ITHO Academy adalah sebuah inisiatif pendidikan yang dirancang oleh PT ITHO INDOSTOCK, sebuah perusahaan yang telah beroperasi sejak tahun 2002 dan memiliki fokus utama pada bidang Teknologi Informasi (IT) dan Pendidikan. Sebagai respons terhadap tantangan yang dihadapi oleh lulusan Sekolah Menengah Kejuruan (SMK) dalam memasuki dunia kerja, ITHO Academy menawarkan Kelas Industri yang praktis dan relevan dengan kebutuhan industri modern. Program ini dirancang khusus untuk siswa SMK dengan fokus pada bidang Digital dan Digital Marketing.
+        </p>
+        <div class="flex justify-center mb-4">
+         <img alt="Ilustrasi siswa belajar di depan papan tulis" class="rounded" height="100" src="{{asset('about/img/rapat.png')}}" width="150"/>
+        </div>
+        <p class="mb-4">
+         Salah satu tantangan utama yang dihadapi lulusan SMK adalah kurangnya keterampilan praktis akibat rendahnya kualitas pendidikan yang mereka terima selama masa sekolah, serta tidak adanya jembatan penghubung yang efektif antara dunia pendidikan dan industri. ITHO Academy berupaya menjawab tantangan ini dengan menyediakan program pendidikan yang berfokus pada pengembangan keterampilan praktis yang dibutuhkan oleh siswa SMK agar siap memasuki dunia kerja. Program ini juga memberikan kesempatan bagi siswa SMK untuk belajar langsung dari para profesional di industri terkait ini.
+        </p>
+        <p>
+         Dengan adanya ITHO Academy, PT ITHO INDOSTOCK berupaya menciptakan pelatihan yang dapat meningkatkan kompetensi siswa SMK, sehingga mereka lebih kompetitif dan siap menghadapi tantangan di dunia kerja modern.
+        </p>
+       </div> <br><br>
+
+       <div class="text-center" style="background: linear-gradient(to bottom, #FCCC3D, #FFFF, #FCCC3D); height: 600px;">  <br><br><br>
+        <h1 class="text-2xl font-bold mb-8">
+         Kenapa harus ITHO Academy?
+        </h1>
+        <div class="flex justify-center space-x-8">
+         <div class="bg-white p-6 rounded-lg shadow-lg w-64">
+          <img alt="Icon of a group of people representing a class" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/fuCxKV8uvHxnNqzdnjJC0sWVMdP9RTEqkmhNfQvoz9mlfSLnA.jpg" width="100"/>
+          <p class="text-sm">
+           Kelas dengan peserta terbatas untuk pengalaman belajar yang lebih personal dan interaktif.
+          </p>
+         </div>
+         <div class="bg-white p-6 rounded-lg shadow-lg w-64">
+          <img alt="Icon of a light bulb and book representing relevant and up-to-date material" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/dadeI0bPEy3WFiujpk02ENGA622u3uSlB6oprAE6SSVxv0yJA.jpg" width="100"/>
+          <p class="text-sm">
+           Materi yang relevan dan terkini, disusun oleh para profesional di bidangnya.
+          </p>
+         </div>
+         <div class="bg-white p-6 rounded-lg shadow-lg w-64">
+          <img alt="Icon of a dollar sign representing affordable prices" class="mx-auto mb-4" height="100" src="https://storage.googleapis.com/a1aa/image/F18Q0SzHLlbQJ93ZVy8UZWPqZRlcPLs5HLCQqi988xfxv0yJA.jpg" width="100"/>
+          <p class="text-sm">
+           Harga terjangkau dengan kualitas pendidikan yang tinggi, memberikan nilai maksimal bagi setiap siswa.
+          </p>
+         </div>
+        </div>
+       </div>
+
+       @include('partial/footer')
+     
+</body>
+</html>

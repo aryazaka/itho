@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITHO Academy</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .bg-pattern {
+            background-color: #FFED9A;
+            background-image: url('../ulasan/img/watermark.png');
+            background-repeat: repeat;
+        }
+        .btn-review {
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-review:hover {
+            transform: scale(1.05);
+            background-color: #FFED9A;
+        }
+        .popup-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+        .popup-container.active {
+            display: block;
+        }
+        .overlay-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        .overlay-bg.active {
+            display: block;
+        }
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            padding: 10px 15px;
+            box-shadow: none;
+            transition: background-color 0.5s ease;
+            justify-content: space-between;
+        }
+        .navbar:hover {
+            background-color: #F7EDC1;
+        }
+        .navbar img {
+            height: 70px;
+            margin-left: 10px;
+        }
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .menu {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+        .navbar .menu a {
+            text-decoration: none;
+            color: black;
+            margin: 0 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.4s ease, transform 0.3s, color 0.3s;
+            border-radius: 25px;
+            padding: 10px 15px;
+        }
+        .navbar .menu a:hover {
+            transform: scale(1.1);
+            color: #e67e22;
+        }
+        .navbar:hover .menu a.active {
+            background-color: #e67e22;
+            color: #fff;
+        }
+        .navbar .menu a.active {
+            color: #fff;
+            background-color: #F6BD26;
+            padding: 10px 20px;
+            border-radius: 25px;
+        }
+        .navbar .auth {
+            display: flex;
+            align-items: center;
+        }
+        .auth-container {
+            display: inline-block;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-right: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+        }
+        .auth-buttons {
+            display: flex;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+        .auth-buttons button {
+            border: none;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s;
+        }
+        .auth-buttons button.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .login {
+            background-color: #000000;
+            color: #fff;
+            border-radius: 50px 10px 0 50px;
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+        .signin {
+            background-color: #fff;
+            color: #000;
+            border: 2px solid #2c3e50;
+            border-radius: 0 50px 50px 0;
+            transition: transform 0.3s ease, background-color 0.3s;
+        }
+        .auth-buttons button:hover {
+            transform: scale(1.05);
+        }
+        .auth-buttons button:active {
+            transform: scale(0.95);
+            background-color: #e67e22;
+        }
+        .navbar .profile {
+            margin-left: 10px;
+            font-size: 45px;
+            margin-right: 0px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .navbar .profile.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .navbar .profile:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+        .review-slide {
+            display: none;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease; /* Added transform transition */
+            transform: translateY(20px); /* Start slightly below */
+        }
+        .review-slide.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0); /* Move to original position */
+        }
+        .orange-line {
+            border-top: 1px solid rgb(255, 204, 110);
+            margin: 20px 0;
+        }
+        .review-container {
+            position: relative;
+            height: 150px;
+        }
+        /* Animation for labels */
+        input, textarea {
+            padding-top: 1.5rem; /* Add space for label */
+        }
+        input:focus + label,
+        textarea:focus + label,
+        input:not(:placeholder-shown) + label,
+        textarea:not(:placeholder-shown) + label {
+            transform: translateY(-48px) scale(0.75);
+            color: #FFED9A;
+        }
+    </style>
+</head>
+<body>
+
+    @include('partial/navbar')
+    <div class="bg-pattern">
+        <main class="container mx-auto py-12 px-6">
+            <div class="flex justify-center items-center h-screen" style="margin-top: -150px; margin-bottom: -150px;">
+                <div class="bg-white w-20/10 h-1/2 flex items-center shadow-lg">
+                    <div class="w-1/2 flex justify-center">
+                        <img alt="An envelope with a heart on a card" height="150" src="../ulasan/img/3d-casual-life-thank-you-letter-in-envelope.png" width="150"/>
+                    </div>
+                    <div class="review-container">
+                        <div class="orange-line"></div>
+                        <div class="reviews">
+                            <div class="review-slide active">
+                                <p class="font-bold text-lg">A** R*****</p>
+                                <p>ITHO Academy memberikan dampak positif pada dunia belajar, memberikan layanan terbaik dan menyenangkan.</p>
+                            </div>
+                            <div class="review-slide">
+                                <p class="font-bold text-lg">B** S*****</p>
+                                <p>Pengalaman belajar di ITHO Academy sangat menyenangkan, banyak hal baru yang saya pelajari!</p>
+                            </div>
+                            <div class="review-slide">
+                                <p class="font-bold text-lg">C** T*****</p>
+                                <p>Materi yang disampaikan sangat jelas dan mudah dipahami. Saya merekomendasikan kepada teman-teman!</p>
+                            </div>
+                            <div class="review-slide">
+                                <p class="font-bold text-lg">D** W*****</p>
+                                <p>Pengajar yang berpengalaman dan ramah, membuat suasana belajar semakin menarik!</p>
+                            </div>
+                            <div class="review-slide">
+                                <p class="font-bold text-lg">E** L*****</p>
+                                <p>ITHO Academy adalah tempat yang tepat untuk belajar. Saya merasa puas dengan layanan mereka.</p>
+                            </div>
+                        </div>
+                        <div class="orange-line"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-12">
+                <button class="bg-white text-yellow-400 border border-yellow-400 px-6 py-3 rounded-full text-lg btn-review" id="reviewButton">
+                    Beri Ulasan
+                </button>
+            </div>
+        </main> 
+    </div>
+   
+
+    <!-- Popup -->
+    <div class="overlay-bg" id="overlay"></div>
+    <div class="popup-container" id="popup">
+        <div class="relative w-96 p-8 bg-white border border-yellow-500 rounded-lg shadow-lg">
+            <button class="absolute top-4 right-4 text-black text-xl" id="closePopup">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="flex justify-center mb-4">
+                <img alt="Shooting star icon" class="w-12 h-12" height="50" src="../ulasan/img/3d-fluency-star-of-bethlehem 1.png" width="50"/>
+            </div><br><br>
+            <h2 class="text-center text-lg font-semibold text-black mb-6">Beri kami ulasan atas pengalaman belajar anda</h2>
+            <form>
+                <div class="mb-4 relative" style="margin-bottom: 30px;">
+                    <input id="username" class="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder=" " type="text"/>
+                    <label class="absolute left-1 top-6 text-gray-500 transition-transform transform -translate-y-4 scale-75 pointer-events-none" for="username" >Nama Pengguna</label>
+                </div> 
+                <div class="mb-6 relative">
+                    <textarea id="review" class="w-full px-4 py-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500" placeholder=" "></textarea>
+                    <label class="absolute left-1 top-6 text-gray-500 transition-transform transform -translate-y-4 scale-75 pointer-events-none" for="review">Masukan Ulasan Anda</label>
+                </div>
+                <div class="flex justify-center">
+                    <button class="px-6 py-2 bg-yellow-500 text-black font-semibold rounded-full hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500" type="submit">
+                        Kirim
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @include('partial/footer')
+
+    <!-- Thank You Popup -->
+    <div class="overlay-bg" id="thankYouOverlay"></div>
+    <div class="popup-container" id="thankYouPopup" style="display: none;">
+        <div class="bg-white p-8 rounded-lg shadow-md text-center">
+            <p class="text-lg font-medium">Terima kasih</p>
+            <p class="text-lg font-medium">sudah memberi</p>
+            <p class="text-lg font-medium">ulasan</p>
+            <div class="mt-4">
+                <i class="fas fa-hand-holding-heart text-2xl"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const reviewButton = document.getElementById('reviewButton');
+        const overlay = document.getElementById('overlay');
+        const popup = document.getElementById('popup');
+        const closePopup = document.getElementById('closePopup');
+        const form = document.querySelector('form');
+        const thankYouPopup = document.getElementById('thankYouPopup');
+        const thankYouOverlay = document.getElementById('thankYouOverlay');
+
+        // Show review popup
+        reviewButton.addEventListener('click', () => {
+            overlay.classList.add('active');
+            popup.classList.add('active');
+        });
+
+        // Close review popup
+        closePopup.addEventListener('click', closeReviewPopup);
+        overlay.addEventListener('click', closeReviewPopup);
+
+        function closeReviewPopup() {
+            overlay.classList.remove('active');
+            popup.classList.remove('active');
+        }
+
+        // Handle form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Hide review popup
+            closeReviewPopup();
+
+            // Show thank you popup
+            thankYouOverlay.classList.add('active');
+            thankYouPopup.style.display = 'block';
+
+            // Hide thank you popup after 3 seconds
+            setTimeout(() => {
+                thankYouOverlay.classList.remove('active');
+                thankYouPopup.style.display = 'none';
+            }, 3000);
+        });
+
+        // Slideshow functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.review-slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Change slide automatically every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Initialize the first slide
+        showSlide(currentSlide);
+    </script>
+</body>
+</html>
