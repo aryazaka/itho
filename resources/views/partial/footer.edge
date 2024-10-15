@@ -1,27 +1,35 @@
 
 <link rel="stylesheet" href="footer/style.css">
-<script src="" ></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
 
-<div class="container1">
-            <div class="footer logo">
-                <img alt="ITHO Academy Logo" src="footer/img/icon.png" width="150px" height="150px"/>
+ <footer class="py-12" style="background-color: #FFEB99;">
+        <div class="container mx-auto flex justify-between px-6">
+            <div class="flex items-center">
+                <img alt="ITHO Academy Logo" class="h-10" src="../ulasan/img/icon itho.png" width="120px" />
             </div>
-            <div class="footer">
-                <h3>Alamat</h3> <img src="footer/img/lokasi.png" alt="" style="margin-top: 10px;">
-                <p style="margin-top: 20px; mar"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; JL Karang Tengah Raya No.2G <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RT.4/RW.4, Lb. Bulus, Kec. Cilandak, <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kota Jakarta Selatan, Daerah <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Khusus Ibukota Jakarta 12440</p>
+            <div>
+                <h3 class="font-bold mb-2">Alamat</h3>
+                <p style="margin-top: -20px;">-----------------------------------------------------------------</p>
+                <img src="{{asset('footer/img/lokasi.png')}}" alt="" style="margin-top: 10px;">
+                <p class="text-sm" style="margin-top: -20px;">  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Jl. Karang Tengah Raya No.29 A, RT.4/RW.4,<br>  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Lb. Bulus, Kec. Cilandak,<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Kota Jakarta Selatan,<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Daerah Khusus Ibukota Jakarta 12440</p>
             </div>
-            <div class="footer social-media">
-                <h3>Sosial Media</h3>
-                <img src="footer/img/Instagram.png" alt="" style="margin-top: 10px;">
-                <p style="margin-top: -27px;"> @ithoacademy</p>
-                <img src="footer/img/WhatsApp.png" alt="" style="margin-top: 10px;">
+            <div>
+                <h3 class="font-bold mb-2">Sosial Media</h3>
+                <p style="margin-top: -20px;">---------------------------------</p>
+                <img src="{{asset('footer/img/Instagram.png')}}" alt="" style="margin-top: 10px;">
+                <p style="margin-top: -27px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; @ithoacademy</p>
+                <img src="{{asset('footer/img/WhatsApp.png')}}" alt="" style="margin-top: 10px;">
                 <p style="margin-top: -27px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+62 857-7653-7382</p>
             </div>
-            <div class="footer">
-                <h3>Pelajari</h3>
-                <p><a href="#">Beranda</a></p>
-                <p><a href="#">Tentang Kami</a></p>
-                <p><a href="#">Ulasan</a></p>
-                <p><a href="#">Kontak</a></p>
+            <div>
+                <h3 class="font-bold mb-2">Pelajari</h3>
+                <p style="margin-top: -20px;">----------------------</p>
+                <p class="text-sm">Beranda</p>
+                <p class="text-sm">Tentang Kami</p>
+                <p class="text-sm">Ulasan</p>
+                <p class="text-sm">Kontak</p>
             </div>
-</div>
+        </div>
+    </footer>

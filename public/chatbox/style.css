@@ -18,7 +18,7 @@
             min-height: 100vh;
             background-color: #F9F5E9;
             overflow-x: hidden;
-            background-image: url('../chatbox/img/watermark.png');
+            background-image: url('../chatbox/img/wm.png');
             
         }
 
@@ -38,7 +38,19 @@
             top: 0;
             left: 0;
             color: #000000; /* Original text color for light mode */
-            
+        }
+        .sidebar.open {
+            transform: translateX(0); /* Sidebar terbuka */
+        }
+        
+        .nav-icon {
+            opacity: 0.5; /* Ikon terlihat redup jika sidebar tertutup */
+            cursor: not-allowed; /* Cursor tidak dapat diklik */
+        }
+        
+        .nav-icon.active {
+            opacity: 1; /* Ikon terlihat jelas saat sidebar terbuka */
+            cursor: pointer; /* Cursor dapat diklik */
         }
 
 .sidebar.dark-mode {
@@ -129,6 +141,7 @@
             display: none;
         }
 
+
         .sidebar li a {
             display: flex;
             height: 100%;
@@ -137,17 +150,18 @@
             text-decoration: none;
             background-color: var(--color-default);
             position: relative;
-            transition: background-color 0.3s ease;
-            z-index: 12;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Tambahkan transisi transform */
+            border-radius: 10px; /* Tambahkan border-radius untuk efek sudut */
+            color: var(--color-white); /* Warna teks default */
         }
-
+        
+        /* Efek hover pada item sidebar */
         .sidebar li a:hover {
-            background-color: white;
-            color: black;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, border-radius 0.3s ease;
+            background-color: #ffcc00; /* Ubah warna latar belakang saat hover */
+            color: black; /* Ubah warna teks menjadi hitam saat hover */
+            transform: scale(1.05); /* Efek membesar saat hover */
         }
-
+        
         .sidebar li a .link_name {
             color: var(--color-white);
             font-size: 15px;
@@ -156,8 +170,18 @@
             pointer-events: auto;
             transition: all 0.1s ease;
             opacity: 0;
-            color: black;
+            padding: 10px;
         }
+
+        .sidebar li a:hover .link_name {
+            opacity: 1; /* Tampilkan nama link saat hover */
+        }
+        
+        .message-icon:hover {
+            transform: scale(1.2); /* Membesarkan ikon saat hover */
+            transition: transform 0.3s ease; /* Transisi untuk animasi halus */
+        }
+        
 
         .sidebar li.profile {
             position: fixed;
@@ -214,7 +238,7 @@
         }
 
         .sidebar li a:hover .link_name {
-            color: var(--color-default);
+            color: black;
         }
 
         .sidebar.open li a .link_name {
@@ -249,6 +273,7 @@
             margin-top: -470px;
             display: flex;
             flex-direction: column;
+            background-color: transparent;
         }
 
         .jawaban{
@@ -273,7 +298,7 @@
 
         .user-message {
     background-color: #f0b400; /* Keep this as is for light mode */
-    color: #000000; /* Default text color */
+    color: #FFFFFF; /* Default text color */
     align-self: flex-end;
     text-align: right;
 }
@@ -298,12 +323,12 @@
 
 .ai-response {
     position: relative; /* Allows positioning of child elements */
-    border: 1px solid #ffffff; /* Example border style */
+    border: 1px solid #000000; /* Example border style */
     border-radius: 15px;
     padding: 10px;
     margin: 10px 0;
-    background-color: #f0b400; /* Background color for AI response */
-    color: rgb(0, 0, 0);
+    background-color: #000000; /* Background color for AI response */
+    color: white;
     margin-bottom: 150px;
 }
 
@@ -565,10 +590,23 @@ li {
     line-height: 1.5;
 }
 
-
+.dark-mode {
+    background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang gelap */
+    border-radius: 10px; /* Sudut membulat */
+    padding: 1px; /* Ruang di sekitar gambar */
+    margin-bottom: 150px;
+    margin-top: 10px;
+    margin-right: 10px;
+}
 
 #settings-options span {
     transition: transform 0.3s ease, color 0.3s ease;
+    padding: 10px 15px; /* Tambahkan padding untuk memperbesar area klik */
+
+}
+
+#settings-options {
+    display: none; /* Sembunyikan opsi pengaturan secara default */
 }
 
 #settings-options span:hover {
@@ -584,4 +622,123 @@ li {
 #settings-options span:active {
     transform: scale(0.9); /* Memberikan efek mengecil saat diklik */
     color: #000000; /* Warna saat diklik */
+    transition: transform 0.3s ease; /* Transisi untuk animasi halus */
+
 }
+
+.theme-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.theme-toggle svg,
+.theme-toggle .slider {
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg,
+.theme-toggle:hover .slider {
+    transform: scale(1.1); /* Membesar ikon saat hover */
+}
+
+.theme-toggle::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 105%;
+    height: 100%;
+    border-radius: 10%;
+    /*Membuatlingkaran*/background: rgba(255, 255, 0, 0.2);
+    /*Warnalingkaran*/opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    -webkit-border-radius: 10%;
+    -moz-border-radius: 10%;
+    -ms-border-radius: 10%;
+    -o-border-radius: 10%;
+}
+
+.theme-toggle:hover::after {
+    opacity: 1; /* Menampilkan lingkaran saat hover */
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: background-color 0.4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: transform 0.4s;
+    border-radius: 50%;
+}
+
+/* Ketika checkbox aktif */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Label tema */
+.theme-label {
+    font-size: 16px;
+    color: var(--color-black);
+    display: flex;
+    align-items: left; /* Pastikan ikon dan teks sejajar */
+}
+
+/* Ikon */
+.icon {
+    margin-right: 4px; /* Jarak antara ikon dan teks */
+}
+
+/* Ketika checkbox aktif */
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Label tema */
+.theme-label {
+    margin-left: 10px;
+    font-size: 16px;
+    transition: none; /* Nonaktifkan transisi pada teks label */
+    color: var(--color-black); /* Set warna teks tetap */
+    padding: 10px 10px;
+}
+
+

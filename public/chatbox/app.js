@@ -40,17 +40,9 @@ document.getElementById('clear-history').addEventListener('click', () => {
     localStorage.removeItem('chatHistory');
 });
 
-
-
-
-
-
 export async function sendMessage() {
-    let messages = []
     const userInput = document.getElementById('user-input');
     const messageText = userInput.value;
-    const newMessage = {"role": "user", "content": messageText}
-    messages.push(newMessage)
 
     if (messageText.trim() === '') return;
        // Nonaktifkan input dan tombol saat mengirim pesan
@@ -89,8 +81,6 @@ export async function sendMessage() {
     loadingDiv.appendChild(loadingText);
     messagesDiv.appendChild(loadingDiv);
 
-    userInput.value = '';
-    
     loadingDiv.scrollIntoView({ behavior: "smooth" });
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
@@ -100,12 +90,13 @@ export async function sendMessage() {
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken,
         },
-        body: JSON.stringify({ messages }),
+        body: JSON.stringify({ message: messageText }),
     });
 
+    userInput.value = '';
+
     const data = await res.json();
-    let newAssistantMessage = {"role": "assistant", "content": data.reply}
-    messages.push(newAssistantMessage)
+
     // Update history and storage
     historyData.push(messageText);
     localStorage.setItem('chatHistory', JSON.stringify(historyData));
@@ -116,7 +107,7 @@ export async function sendMessage() {
         messagesDiv.removeChild(loadingDiv);
 
         // AI response
-        let hasil = newAssistantMessage.content || 'Error: ' + data.error;
+        let hasil = data.reply || 'Error: ' + data.error;
 
         // Create AI response div
         const aiResponseDiv = document.createElement('div');
@@ -149,8 +140,8 @@ function animateAIResponse(text, container) {
             const span = document.createElement('span');
             span.innerHTML = words[index] + ' '; // Tambahkan spasi setelah setiap kata
             container.appendChild(span);
-            index++;
             container.scrollIntoView({ behavior: 'smooth' });
+            index++;
         } else {
             clearInterval(interval); // Hentikan interval setelah semua kata ditampilkan
         }
@@ -190,17 +181,68 @@ document.getElementById('user-input').addEventListener('keypress', function (eve
 });
 
 // dark mode dan light mode
+const toggleTheme = document.getElementById('toggle-theme');
+const themeLabel = document.getElementById('theme-label');
+const themeIcon = document.getElementById('theme-icon');
+const themeImage = document.getElementById('theme-image');
+
+// Cek tema yang tersimpan di localStorage
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    toggleTheme.checked = true; // Set toggle ke posisi 'checked'
+}
+
+// Ikon untuk Light Mode (Matahari)
+const lightModeIcon = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="yellow" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5" fill="yellow" />
+        <line x1="12" y1="0" x2="12" y2="4" stroke="orange" stroke-width="2"/>
+        <line x1="12" y1="24" x2="12" y2="20" stroke="orange" stroke-width="2"/>
+        <line x1="0" y1="12" x2="4" y2="12" stroke="orange" stroke-width="2"/>
+        <line x1="24" y1="12" x2="20" y2="12" stroke="orange" stroke-width="2"/>
+        <line x1="4.24" y1="4.24" x2="6.34" y2="6.34" stroke="orange" stroke-width="2"/>
+        <line x1="17.66" y1="17.66" x2="19.76" y2="19.76" stroke="orange" stroke-width="2"/>
+        <line x1="4.24" y1="19.76" x2="6.34" y2="17.66" stroke="orange" stroke-width="2"/>
+        <line x1="17.66" y1="6.34" x2="19.76" y2="4.24" stroke="orange" stroke-width="2"/>
+    </svg>
+`;
+
+
+// Event listener untuk toggle tema
+toggleTheme.addEventListener('change', () => {
+    if (toggleTheme.checked) {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+        localStorage.setItem('theme', 'dark'); // Simpan tema ke localStorage
+        themeLabel.textContent = 'Light Mode'; // Ubah teks menjadi Light Mode
+        themeIcon.innerHTML = lightModeIcon; // Ubah ikon menjadi matahari
+    } else {
+        document.body.classList.remove('dark-mode');
+        document.body.classList.add('light-mode');
+        localStorage.setItem('theme', 'light'); // Simpan tema ke localStorage
+        themeLabel.textContent = 'Dark Mode'; // Ubah teks menjadi Dark Mode
+        themeIcon.textContent = '🌙'; // Ubah ikon menjadi bulan
+    }
+});
+// Menambahkan event listener untuk ikon pengaturan
 document.getElementById('settings').addEventListener('click', () => {
     const settingsOptions = document.getElementById('settings-options');
-    settingsOptions.style.display = settingsOptions.style.display === 'none' ? 'block' : 'none';
+    // Toggle display
+    if (settingsOptions.style.display === 'none' || settingsOptions.style.display === '') {
+        settingsOptions.style.display = 'block';
+    } else {
+        settingsOptions.style.display = 'none';
+    }
 });
 
+// Event listener untuk mengatur mode terang
 document.getElementById('light-mode').addEventListener('click', () => {
     document.body.classList.remove('dark-mode');
     document.body.classList.add('light-mode');
     updateColors();
 });
 
+// Event listener untuk mengatur mode gelap
 document.getElementById('dark-mode').addEventListener('click', () => {
     document.body.classList.remove('light-mode');
     document.body.classList.add('dark-mode');
@@ -221,7 +263,7 @@ function updateColors() {
 
     // Update messages div color
     const messagesDiv = document.getElementById('messages');
-    messagesDiv.style.backgroundColor = isDarkMode ? 'transparant' : 'transparant';
+    messagesDiv.style.backgroundColor = isDarkMode ? '#1e1e1e' : '#FFFFFF';
     messagesDiv.style.color = isDarkMode ? '#FFFFFF' : '#000000';
 
     // Update user message styles
@@ -239,4 +281,27 @@ function updateColors() {
 
 document.getElementById('log_out').addEventListener('click', () => {
     window.location.href = "home.html"; // Arahkan ke halaman home untu icon di paling bawah sidebar ai
+});
+
+
+document.getElementById('send-image').addEventListener('click', () => {
+    document.getElementById('image-input').click(); // Memicu klik pada input file
+});
+
+document.getElementById('send-image').addEventListener('click', () => {
+    alert('Silakan pilih gambar dari perangkat Anda.'); // Notifikasi
+    document.getElementById('image-input').click(); // Memicu klik pada input file
+});
+
+document.getElementById('send-image').addEventListener('click', () => {
+    const notification = document.getElementById('notification');
+    notification.innerText = 'Silakan pilih gambar dari perangkat Anda.';
+    notification.classList.add('show');
+
+    // Menyembunyikan notifikasi setelah 3 detik
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 3000);
+
+    document.getElementById('image-input').click(); // Memicu klik pada input file
 });

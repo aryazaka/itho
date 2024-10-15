@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITHO Academy Chatbot</title>
+    <title>ITHO Chatbot</title>
+    <link rel="icon" type="image/x-icon" href="chatbox/img/ai.png">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="chatbox/style.css" />
@@ -20,36 +21,38 @@
                 <li>
                     <a href="{{route('home.index')}}">
                         <img src="chatbox/img/home.png" alt="" style="margin-left: 10px;">
-                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Home</span>
+                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;"> &nbsp; Home</span>
                     </a>
                     <span class="tooltip">Home</span>
                 </li>
                 <li>
     <a href="#" id="settings">
         <img src="chatbox/img/setting.png" alt="" style="margin-left: 10px;">
-        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">Settings</span>
+        <span class="link_name" style="margin-left: 5px; margin-top: 5px;"> &nbsp; Settings</span>
     </a>
     <span class="tooltip">Settings</span>
 </li>
 <div id="settings-options">
-    <span id="light-mode" style="cursor: pointer;">
-        <i class='bx bxs-sun' style="color: #ffffff;"></i> Light Mode
-    </span><br>
-    <span id="dark-mode" style="cursor: pointer;">
-        <i class='bx bxs-moon' style="color: #000000;"></i> Dark Mode
-    </span>
+    <div class="theme-toggle">
+        <i class="icon" id="theme-icon">🌙</i>
+        <p class="theme-label" id="theme-label">Dark Mode &nbsp;</p>
+        <label class="switch">
+            <input type="checkbox" id="toggle-theme">
+            <span class="slider"></span>
+        </label>
+    </div>
 </div>
                 <li>
                     <a href="#" id="new-chat">
                         <img src="chatbox/img/image.png" alt="" style="width: 40px; height: 40px; margin-left: 5px;">
-                        <span class="link_name" style="margin-top: 5px;">New Chat</span>
+                        <span class="link_name" style="margin-top: 5px;"> &nbsp; New Chat</span>
                     </a>
                     <span class="tooltip">New Chat</span>
                 </li>
                 <li>
                     <a href="#" id="history">
                         <img src="chatbox/img/history.png" alt="" style="margin-left: 10px;">
-                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;">History</span>
+                        <span class="link_name" style="margin-left: 5px; margin-top: 5px;"> &nbsp; History</span>
                     </a>
                     <span class="tooltip">History</span>
                 </li>
@@ -75,11 +78,13 @@
             </li>
         </div>
         <section class="main-content">
-            <div class="header" style="background: transparent">
+            <div class="header">
                 <h1>Welcome to <span class="highlight">ITHO ASSISTENT</span></h1>
                 <p>Ask me anything!</p>
             </div>
-
+            
+    
+            
             <div class="quick-questions" id="quick-questions">
                
             </div>
@@ -88,14 +93,23 @@
                 <!-- Messages will be appended here -->
             </div>
         </section>
-        <div>
-            <img src="chatbox/img/icon itho.png" alt="" style="margin-left: 10px; margin: 30px;">
-            </div>
        
         <div class="footer">
-            
+
+        <a id="send-image" class="icon-button">
+            <!-- Ikon untuk mengirim gambar -->
+             <img src="chatbox/img/foto.png" alt="" style="background-color: black; width: 40px; height:40px;">
+            <input type="file" id="image-input" accept="image/*" style="display: none;">
+        </a>
             <input type="text" id="user-input" placeholder="Masukan Pertanyaan..." />
             <div class="send-button" onclick="sendMessage()">
+            
+            <a id="send-image" class="icon-button">
+            <!-- Ikon untuk mengirim gambar -->
+             <img src="chatbox/img/mic.jpg" alt="" style="background-color: ; width: 40px; height:40px; margin-left: -60px; margin-top: 10px;">
+            <input type="file" id="image-input" accept="image/*" style="display: none;">
+        </a>
+
                 <i class='bx bx-send' style="color: black;"></i>
             </div>
         </div>

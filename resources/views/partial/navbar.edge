@@ -1,16 +1,17 @@
 
-<link rel="stylesheet" href="nav/style.css">
-
+<link rel="stylesheet" href="{{asset('nav/style.css')}}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
 <div class="navbar">
         <div class="logo">
-            <img alt="ITHO ACADEMY logo" src="nav/img/icon itho.png"/>
+            <img alt="ITHO ACADEMY logo" src="{{asset('nav/img/icon itho.png')}}"/>
         </div>
         <div class="menu">
             <a href="#">Beranda</a>
             <a href="#">Tentang Kami</a>
             <a href="#">Ulasan</a>
             <a href="#">Kontak Kami</a>
-            <a href="#">Konsultasi</a> <img src="nav/img/icons8-chatgpt-20.png" alt="ChatGPT" style="width: 20px; height: 20px; margin-left: -15px;" />
+            <a href="#">Konsultasi</a> <img src="{{asset('nav/img/icons8-chatgpt-20.png')}}" alt="ChatGPT" style="width: 20px; height: 20px; margin-left: -15px;" />
         </div>
         <div class="auth">
             <div class="auth-container">
@@ -24,3 +25,5 @@
             </div>
         </div>
     </div>
+
+<script src="{{asset('nav/app.js')}}"></script>
