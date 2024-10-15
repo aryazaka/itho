@@ -1,0 +1,285 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Body styling */
+body {
+    background-color: #ffffff;
+    opacity: 0; /* Start hidden for fade-in effect */
+    animation: fadeIn 1s forwards; /* Body fade-in */
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    to {
+        opacity: 1; /* Fully visible */
+    }
+}
+
+/* Navbar styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 15px;
+    box-shadow: none;
+    transition: background-color 0.5s ease;
+    justify-content: space-between;
+    position: relative;
+}
+
+.navbar:hover {
+    background-color: #F7EDC1;
+}
+
+.navbar img {
+    height: 70px;
+    margin-left: 10px;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: black;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.4s ease, transform 0.3s, color 0.3s;
+    border-radius: 25px;
+    padding: 10px 15px;
+}
+
+.navbar .menu a:hover {
+    transform: scale(1.1); /* Scale effect on hover */
+    color: #e67e22; /* Change color on hover */
+}
+
+.navbar:hover .menu a.active {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+.navbar .menu a.active {
+    color: #fff;
+    background-color: #F6BD26;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.navbar .auth {
+    display: flex;
+    align-items: center;
+}
+
+.auth-container {
+    display: inline-block;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-right: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.auth-buttons {
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.auth-buttons button {
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0; /* Start hidden for JavaScript animation */
+    transform: translateY(20px); /* Slide up from below for JavaScript animation */
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s;
+}
+
+.auth-buttons button.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* End at the original position */
+}
+
+.login {
+    background-color: #000000;
+    color: #fff;
+    border-radius: 50px 10px 0 50px;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.signin {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #2c3e50;
+    border-radius: 0 50px 50px 0;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.auth-buttons button:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+.auth-buttons button:active {
+    transform: scale(0.95); /* Scale down on click */
+    background-color: #e67e22; /* Change color on click */
+}
+
+.navbar .profile {
+    margin-left: 10px;
+    font-size: 45px;
+    margin-right: 0px;
+    opacity: 0; /* Start hidden for JavaScript animation */
+    transform: translateY(20px); /* Slide up from below for JavaScript animation */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.navbar .profile.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* End at the original position */
+}
+
+.navbar .profile:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    transition: transform 0.3s ease;
+}
+
+/* Main content styling */
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 50px;
+    background: linear-gradient(to bottom, #ffffff, #ffffff);
+}
+
+.main-content img {
+    width: 500px;
+    text-align: center;
+    margin-left: 50px;
+}
+
+.main-content .text-content {
+    max-width: 500px;
+    text-align: center;
+    opacity: 0; /* Start hidden for JavaScript animation */
+    transform: translateY(20px); /* Slide up from below for JavaScript animation */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.main-content .text-content.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* End at the original position */
+}
+
+.main-content .text-content h1 {
+    width: 400px;
+    text-align: center;
+    margin-left: -90px;
+}
+
+.main-content .text-content p {
+    font-size: 20px;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.main-content .text-content a {
+    padding: 15px 30px;
+    background-color: #F6BD26;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    display: inline-block;
+    margin-top: 20px;
+    font-weight: bold;
+    margin-left: -360px;
+    opacity: 0; /* Start hidden for animation */
+    transform: scale(0.8); /* Start smaller for animation */
+    animation: fadeInScale 0.5s forwards; /* Fade in and scale up effect */
+    animation-delay: 1s; /* Delay before animation starts */
+    transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Hover and active effects for the Bergabung button */
+.main-content .text-content a:hover {
+    background-color: #e67e22; /* Change background color on hover */
+    transform: scale(1.1); /* Scale up on hover */
+}
+
+.main-content .text-content a:active {
+    transform: scale(0.95); /* Scale down on click */
+    background-color: #d95d0e; /* Darker color on click */
+}
+
+/* Additional zoom effect for the text on hover */
+.main-content .text-content a:hover {
+    transform: scale(1.1); /* Zoom in */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .navbar .menu {
+        flex-direction: column; /* Stack menu items */
+    }
+
+    .main-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px; /* Reduced padding */
+    }
+
+    .main-content img {
+        width: 100%;
+        max-width: 300px;
+        margin: 0; /* Reset margin */
+    }
+
+    .main-content .text-content {
+        max-width: 90%; /* Responsive width */
+        margin: 20px 0; /* Margin for spacing */
+    }
+
+    .main-content .text-content h1 {
+        margin-left: 0; /* Reset margin */
+    }
+
+    .main-content .text-content a {
+        margin-left: 0; /* Reset margin */
+    }
+}

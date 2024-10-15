@@ -12,12 +12,14 @@ export default class ChatboxesController {
    */
   async index({view, request, response}: HttpContext) {
 
-    return view.render('chatbox/index')
+    return view.render('chatbox/index', {
+      title: 'ChatBot',
+    })
   }
 
   async proses({request, response}: HttpContext){
     // const userMessage = request.input('message');
-    const { messages } = request.body();
+    const inputText = request.input('message');
 
     try {
       const completion = await openai.chat.completions.create({
@@ -33,7 +35,7 @@ export default class ChatboxesController {
                 `
               }
             ]
-          }, ...messages
+          }, {"role": "user", "content": inputText},
         ],
         temperature: 1,
         top_p: 1,
@@ -42,12 +44,12 @@ export default class ChatboxesController {
         max_completion_tokens: 256,
         stop: ["user:", "AI:","user:", "AI:"],
       });
-      console.log(messages)
+    
       const result = completion.choices[0].message.content
       const markedResult =  marked(result!)
 
       return response.json({
-        reply: markedResult,
+        reply: markedResult
       });
     }catch (error) {
       return response.status(500).json({ error: 'Error communicating with OpenAI' });

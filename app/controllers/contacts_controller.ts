@@ -5,7 +5,9 @@ export default class ContactsController {
    * Display a list of resource
    */
   async index({view}: HttpContext) {
-    return view.render('contact/index')
+    return view.render('contact/index', {
+      title: 'Contact',
+    })
   }
 
   /**

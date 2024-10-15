@@ -5,7 +5,9 @@ export default class UlasansController {
    * Display a list of resource
    */
   async index({view}: HttpContext) {
-    return view.render('ulasan/index')
+    return view.render('ulasan/index', {
+      title: 'Review',
+    })
   }
 
   /**

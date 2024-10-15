@@ -7,7 +7,9 @@ import { isLength } from 'validator'
 export default class AuthController {
 
     async index({view} : HttpContext){
-        return view.render('auth/index')
+        return view.render('auth/index',{
+            title: 'Authentication',
+        })
     }
 
     async register({request, response, session} : HttpContext){

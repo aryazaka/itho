@@ -5,9 +5,9 @@ export default class HomeController {
    * Display a list of resource
    */
   async index({view}: HttpContext) {
-    return view.render('home/index', [
-      
-    ])
+    return view.render('home/index', {
+      'title' : 'Home',
+    })
   }
 
   /**

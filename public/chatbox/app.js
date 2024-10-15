@@ -5,6 +5,7 @@ let historyList = document.getElementById('history-list');
 let historyQuestions = document.getElementById('history-questions');
 let quickQuestions = document.getElementById('quick-questions');
 
+
 // Load history from localStorage
 let historyData = JSON.parse(localStorage.getItem('chatHistory')) || [];
 

@@ -5,7 +5,9 @@ export default class AboutController {
    * Display a list of resource
    */
   async index({view}: HttpContext) {
-    return view.render('about/index')
+    return view.render('about/index', {
+      title: 'About',
+    })
   }
 
   /**
