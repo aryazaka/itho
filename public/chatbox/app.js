@@ -40,6 +40,11 @@ document.getElementById('clear-history').addEventListener('click', () => {
     localStorage.removeItem('chatHistory');
 });
 
+
+
+
+
+
 export async function sendMessage() {
     let messages = []
     const userInput = document.getElementById('user-input');

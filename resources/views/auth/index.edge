@@ -101,22 +101,25 @@
             <div class="login-container ">
               <button class="close-button" onclick="closeForm()">&times;</button>
               <h2>Masuk</h2>
-            
+
+                @if (flashMessages.get('failedPassword'))
+                    <div style="color: red; margin-bottom: 25px;">{{ flashMessages.get('failedPassword') }}</div>
+                @endif
+
+                @if (flashMessages.get('failedUser'))
+                    <div style="color: red; margin-bottom: 25px;">{{ flashMessages.get('failedUser') }}</div>
+                @endif
+
               <div class="input-group">
                   <i class="fas fa-user"></i>
                   <input name="usernameLogin" type="text" id="username" placeholder=" " required>
                   <label>Nama Pengguna</label>
-                  @if (flashMessages.get('failedUser'))
-                    <div style="color: red; margin-bottom: 25px;">{{ flashMessages.get('failedUser') }}</div>
-                  @endif
+                 
               </div>
               <div class="input-group">
                   <i class="fas fa-lock"></i>
                   <input name="passwordLogin" type="password" id="password" placeholder=" " required>
                   <label>Kata Sandi</label>
-                  @if (flashMessages.get('failedPassword'))
-                    <div style="color: red; margin-bottom: 25px;">{{ flashMessages.get('failedPassword') }}</div>
-                  @endif
                   <div class="eye-container toggle-password" id="togglePassword">
                     <div class="eye" id="eye">
                         <svg viewBox=" 0 0 64 32" width="40" height="40">
