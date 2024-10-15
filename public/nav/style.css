@@ -1,0 +1,140 @@
+/* Navbar styling */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 15px;
+    box-shadow: none;
+    transition: background-color 0.5s ease;
+    justify-content: space-between;
+    position: relative;
+}
+
+.navbar:hover {
+    background-color: #F7EDC1;
+}
+
+.navbar img {
+    height: 70px;
+    margin-left: 10px;
+}
+
+.navbar .logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.navbar .menu a {
+    text-decoration: none;
+    color: black;
+    margin: 0 10px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.4s ease, transform 0.3s, color 0.3s;
+    border-radius: 25px;
+    padding: 10px 15px;
+}
+
+.navbar .menu a:hover {
+    transform: scale(1.1); /* Scale effect on hover */
+    color: #e67e22; /* Change color on hover */
+}
+
+.navbar:hover .menu a.active {
+    background-color: #e67e22;
+    color: #fff;
+}
+
+.navbar .menu a.active {
+    color: #fff;
+    background-color: #F6BD26;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.navbar .auth {
+    display: flex;
+    align-items: center;
+}
+
+.auth-container {
+    display: inline-block;
+    border-radius: 50px;
+    overflow: hidden;
+    margin-right: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.auth-buttons {
+    display: flex;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.auth-buttons button {
+    border: none;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0; /* Start hidden for JavaScript animation */
+    transform: translateY(20px); /* Slide up from below for JavaScript animation */
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s;
+}
+
+.auth-buttons button.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* End at the original position */
+}
+
+.login {
+    background-color: #000000;
+    color: #fff;
+    border-radius: 50px 10px 0 50px;
+    transition: transform 0.3s ease, background-color 0.3s;
+    text-decoration: none;
+}
+
+.signin {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #2c3e50;
+    border-radius: 0 50px 50px 0;
+    transition: transform 0.3s ease, background-color 0.3s;
+}
+
+.auth-buttons button:hover {
+    transform: scale(1.05); /* Scale effect on hover */
+}
+
+.auth-buttons button:active {
+    transform: scale(0.95); /* Scale down on click */
+    background-color: #e67e22; /* Change color on click */
+}
+
+.navbar .profile {
+    margin-left: 10px;
+    font-size: 45px;
+    margin-right: 0px;
+    opacity: 0; /* Start hidden for JavaScript animation */
+    transform: translateY(20px); /* Slide up from below for JavaScript animation */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.navbar .profile.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* End at the original position */
+}
+
+.navbar .profile:hover {
+    transform: scale(1.1); /* Slightly enlarge on hover */
+    transition: transform 0.3s ease;
+}
