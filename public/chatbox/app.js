@@ -41,8 +41,11 @@ document.getElementById('clear-history').addEventListener('click', () => {
 });
 
 export async function sendMessage() {
+    let messages = []
     const userInput = document.getElementById('user-input');
     const messageText = userInput.value;
+    const newMessage = {"role": "user", "content": messageText}
+    messages.push(newMessage)
 
     if (messageText.trim() === '') return;
        // Nonaktifkan input dan tombol saat mengirim pesan
@@ -92,11 +95,12 @@ export async function sendMessage() {
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken,
         },
-        body: JSON.stringify({ message: messageText }),
+        body: JSON.stringify({ messages }),
     });
 
     const data = await res.json();
-
+    let newAssistantMessage = {"role": "assistant", "content": data.reply}
+    messages.push(newAssistantMessage)
     // Update history and storage
     historyData.push(messageText);
     localStorage.setItem('chatHistory', JSON.stringify(historyData));
@@ -107,7 +111,7 @@ export async function sendMessage() {
         messagesDiv.removeChild(loadingDiv);
 
         // AI response
-        let hasil = data.reply || 'Error: ' + data.error;
+        let hasil = newAssistantMessage.content || 'Error: ' + data.error;
 
         // Create AI response div
         const aiResponseDiv = document.createElement('div');
