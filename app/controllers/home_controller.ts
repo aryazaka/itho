@@ -4,9 +4,11 @@ export default class HomeController {
   /**
    * Display a list of resource
    */
-  async index({view}: HttpContext) {
+  async index({view, session}: HttpContext) {
+    const username = session.get('username');
     return view.render('home/index', {
       'title' : 'Home',
+      username
     })
   }
 

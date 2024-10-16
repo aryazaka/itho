@@ -4,6 +4,7 @@ let messagesDiv = document.getElementById('messages');
 let historyList = document.getElementById('history-list');
 let historyQuestions = document.getElementById('history-questions');
 let quickQuestions = document.getElementById('quick-questions');
+let settingsOptions = document.getElementById('settings-options');
 
 
 
@@ -15,10 +16,73 @@ historyData.forEach(question => {
     addToHistory(question);
 });
 
+// closeBtn.addEventListener('click', () => {
+//     sidebar.classList.toggle('open');
+//     toggleQuickQuestions();
+// });
+
+// Toggle sidebar open/close
 closeBtn.addEventListener('click', () => {
     sidebar.classList.toggle('open');
-    toggleQuickQuestions();
+    if (sidebar.classList.contains('open')) {
+        openSidebar(); // Buka sidebar dan kontennya
+    } else {
+        closeSidebar(); // Tutup sidebar dan kontennya
+    }
 });
+
+// Function to open sidebar and its contents
+function openSidebar() {
+    sidebar.classList.add('open');
+    // settingsOptions.style.display = 'block'; // Tampilkan opsi pengaturan
+    // historyList.style.display = 'block'; // Tampilkan riwayat
+}
+
+// Function to close sidebar and all its contents
+function closeSidebar() {
+    sidebar.classList.remove('open');
+    closeSidebarContents(); // Tutup semua konten
+}
+
+// Function to close all sidebar contents
+function closeSidebarContents() {
+    settingsOptions.style.display = 'none'; // Tutup opsi pengaturan
+    historyList.style.display = 'none'; // Tutup riwayat
+}
+
+document.getElementById('settings').addEventListener('click', () => {
+    openSidebar(); // Buka sidebar
+    closeSidebarContents(); // Tutup semua konten
+    settingsOptions.style.display = 'block'; // Tampilkan opsi pengaturan
+});
+
+// Event listeners for sidebar items
+document.getElementById('new-chat').addEventListener('click', () => {
+    messagesDiv.innerHTML = '';
+    openSidebar(); // Buka sidebar
+    closeSidebarContents(); // Tutup semua konten
+});
+
+document.getElementById('history').addEventListener('click', () => {
+    openSidebar(); // Buka sidebar
+    closeSidebarContents(); // Tutup semua konten
+    historyList.style.display = 'none'; // Tampilkan riwayat
+});
+
+document.getElementById('settings').addEventListener('click', () => {
+    openSidebar(); // Buka sidebar
+    closeSidebarContents(); // Tutup semua konten
+    settingsOptions.style.display = 'none'; // Tampilkan opsi pengaturan
+});
+
+
+// Clear history
+document.getElementById('clear-history').addEventListener('click', () => {
+    historyData = [];
+    updateHistory();
+    localStorage.removeItem('chatHistory');
+});
+
 
 function toggleQuickQuestions() {
     if (sidebar.classList.contains('open')) {
@@ -88,18 +152,37 @@ document.getElementById('clear-history').addEventListener('click', () => {
     imageInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
         if (file) {
-            pendingImage = URL.createObjectURL(file); // Simpan gambar yang akan dikirim
-            // Hapus gambar yang ditampilkan sebelumnya (jika ada)
-            // Tidak ada tampilan di bawah sambutan
-        }
-    });
+            pendingImage = URL.createObjectURL(file);
+            
+            const imgURL = URL.createObjectURL(file);
+            const imgMessageDiv = document.createElement('div');
+        
+            imgMessageDiv.innerHTML = `<img src="${imgURL}" alt="Uploaded Image" style="max-width: 50%; height: auto;"/>`;
+    
+                    // Send the image message
+            sendMessage("Image uploaded");
+    
+                    // Clear file input
+            imageInput.value = '';
+                }
+            });
 
  function handleSend() {
         const messageText = userInput.value.trim();
+
         if (messageText === '' && !pendingImage) return; // Pastikan ada input atau gambar
 
+        const triggerImgs = ['buatlah gambar', 'buatkan gambar']; // Array trigger
+
+        // Cek apakah input mengandung salah satu trigger
+        const isImageRequest = triggerImgs.some(trigger => messageText.toLowerCase().startsWith(trigger));
+
         // Kirim pesan dan gambar (jika ada)
-        sendMessage(messageText, pendingImage);
+        if (isImageRequest) {
+            sendImg(); 
+        } else {
+            sendMessage(messageText, pendingImage); // Panggil fungsi sendMessage
+        }
         
         pendingImage = null; // Reset gambar setelah mengirim
         userInput.value = ''; // Kosongkan input setelah mengirim
@@ -154,6 +237,8 @@ document.getElementById('clear-history').addEventListener('click', () => {
     loadingText.className = 'loading-text';
     loadingText.textContent = "Loading...";
 
+    userInput.value = '';
+
     loadingDiv.appendChild(spinner);
     loadingDiv.appendChild(loadingText);
     messagesDiv.appendChild(loadingDiv);
@@ -170,8 +255,6 @@ document.getElementById('clear-history').addEventListener('click', () => {
         body: JSON.stringify({ message: messageText }),
     });
 
-    userInput.value = '';
-
     const data = await res.json();
 
     // Update history and storage
@@ -184,11 +267,108 @@ document.getElementById('clear-history').addEventListener('click', () => {
         messagesDiv.removeChild(loadingDiv);
 
         // AI response
-        let hasil = data.reply || 'Error: ' + data.error;
+        let hasil = data.replyText || 'Error: ' + data.error;
 
         // Create AI response div
         const aiResponseDiv = document.createElement('div');
         aiResponseDiv.className = 'ai-response';
+
+        const aiIcon = document.createElement('img');
+        aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
+        aiIcon.alt = 'AI Icon';
+        aiIcon.className = 'message-icon';
+
+        aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
+        messagesDiv.appendChild(aiResponseDiv);
+
+        // Animate AI response
+        animateAIResponse(hasil, aiResponseDiv);
+        aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
+        aiResponseDiv.disabled = false;
+        aiResponseDiv.focus(); // Fokus kembali ke input
+    }, 5000); // Simulated delay of 5 seconds
+
+    userInput.disabled = false;
+}
+
+async function sendImg() {
+    const input = document.getElementById('user-input');
+    const userInput = input.value
+    if (userInput.trim() === '') return;
+       // Nonaktifkan input dan tombol saat mengirim pesan
+       userInput.disabled = true;
+
+    // Create user message div
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'user-message';
+
+    const userIcon = document.createElement('img');
+    userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
+    userIcon.alt = 'User Icon';
+    userIcon.className = 'message-icon';
+
+    const userText = document.createElement('span');
+    userText.textContent = userInput;
+
+    userMessageDiv.appendChild(userIcon);
+    userMessageDiv.appendChild(userText);
+
+    messagesDiv.appendChild(userMessageDiv);
+
+    userMessageDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // Create loading indicator
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loader';
+
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+
+    const loadingText = document.createElement('div');
+    loadingText.className = 'loading-text';
+    loadingText.textContent = "Loading...";
+
+    loadingDiv.appendChild(spinner);
+    loadingDiv.appendChild(loadingText);
+    messagesDiv.appendChild(loadingDiv);
+
+    loadingDiv.scrollIntoView({ behavior: "smooth" });
+
+    userInput.value = '';
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const res = await fetch('/process', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({ message: userInput }),
+    });
+
+    
+
+    const data = await res.json();
+
+    // Update history and storage
+    historyData.push(userInput);
+    localStorage.setItem('chatHistory', JSON.stringify(historyData));
+    addToHistory(userInput);
+
+    // Simulate AI response delay
+    setTimeout(async () => {
+        messagesDiv.removeChild(loadingDiv);
+
+        // AI response
+        let hasil = data.replyImg || 'Error: ' + data.error;
+
+        // Create AI response div
+        const aiResponseDiv = document.createElement('img');
+        aiResponseDiv.className = 'ai-response';
+        aiResponseDiv.style.width = '500px';
+        aiResponseDiv.src = hasil
+
+
 
         const aiIcon = document.createElement('img');
         aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
@@ -203,9 +383,11 @@ document.getElementById('clear-history').addEventListener('click', () => {
         // Animate AI response
         animateAIResponse(hasil, aiResponseDiv);
         aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
-        userInput.disabled = false;
-        userInput.focus(); // Fokus kembali ke input
+        aiResponseDiv.disabled = false;
+        aiResponseDiv.focus(); // Fokus kembali ke input
     }, 5000); // Simulated delay of 5 seconds
+
+    userInput.disabled = false;
 }
 
 

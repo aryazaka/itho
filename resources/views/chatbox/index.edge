@@ -68,18 +68,26 @@
                 <div class="profile_details">
                     <i class='bx bxs-user' style="color: #000000;"></i>
                     <div class="name_job">
-                        <div class="name">Admin</div>
+                        @if(username === undefined)
+                            <div class="name">Guest</div>
+                        @else
+                            <div class="name">{{username}}</div>
+                        @end
                         <div class="designation">ITHO Academy</div>
                     </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out" style="margin-top: 10px; color: #000000; .sidebar {
+                 <i class='bx bx-log-out' id="log_out" style="margin-top: 10px; color: #000000; .sidebar {
                     transition: width 0.5s ease, transform 0.5s ease; /* Animasi tambahan */
                 }"></i>
             </li>
         </div>
         <section class="main-content">
             <div class="header">
-                <h1>Welcome to <span class="highlight">ITHO ASSISTENT</span></h1>
+            @if(username === undefined)
+                    <h1>Welcome Guest to <span class="highlight">ITHO ASSISTENT</span></h1>
+            @else
+                    <h1>Welcome {{username}} to <span class="highlight">ITHO ASSISTENT</span></h1>
+            @end
                 <p>Ask me anything!</p>
             </div>
             
@@ -92,14 +100,14 @@
 </section>
 
 <div class="footer">
-    <button id="send-image" class="icon-button">
+    <a id="send-image" class="icon-button">
          <img src="chatbox/img/foto.png" alt="" style="background-color: black; width: 40px; height:40px;">
         <input type="file" id="image-input" accept="image/*" style="display: none;">
-    </button>
+    </a>
     <input type="text" id="user-input" placeholder="Masukan Pertanyaan..." />
-    <button id="mic-button" class="icon-button">
-        <img src="chatbox/img/mic.jpg" alt="" style="background-color: ; width: 40px; height:40px; margin-left: -60px; margin-top: 10px;">
-    </button>
+    <a id="mic-button" class="icon-button">
+        <img src="chatbox/img/mic.jpg" alt="" style="width: 40px; height:40px; margin-left: -60px; margin-top: 10px;">
+    </a>
     <div class="send-button" onclick="handleSend()">
         <i class='bx bx-send' style="color: black;"></i>
     </div>

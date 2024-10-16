@@ -4,9 +4,11 @@ export default class AboutController {
   /**
    * Display a list of resource
    */
-  async index({view}: HttpContext) {
+  async index({view, session}: HttpContext) {
+    const username = session.get('username');
     return view.render('about/index', {
       title: 'About',
+      username
     })
   }
 

@@ -10,10 +10,11 @@ export default class ChatboxesController {
   /**
    * Display a list of resource
    */
-  async index({view, request, response}: HttpContext) {
-
+  async index({view, session}: HttpContext) {
+    const username = session.get('username');
     return view.render('chatbox/index', {
       title: 'ChatBot',
+      username
     })
   }
 
@@ -44,12 +45,21 @@ export default class ChatboxesController {
         max_completion_tokens: 256,
         stop: ["user:", "AI:","user:", "AI:"],
       });
+
+      const responseImg = await openai.images.generate({
+        model: "dall-e-3",
+        prompt: inputText,
+        n: 1,
+        size: "1024x1024",
+      });
+      const image_url = responseImg.data[0].url;
     
       const result = completion.choices[0].message.content
       const markedResult =  marked(result!)
 
       return response.json({
-        reply: markedResult
+        replyText: markedResult,
+        replyImg: image_url,
       });
     }catch (error) {
       return response.status(500).json({ error: 'Error communicating with OpenAI' });

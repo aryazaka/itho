@@ -25,6 +25,7 @@ router.get('/chat', [chatboxController, 'index']).as('chat.index')
 router.get('/contact', [contactController,'index']).as('contact.index')
 router.get('/about', [aboutController, 'index']).as('about.index')
 router.get('/ulasan', [ulasanController, 'index']).as('ulasan.index')
+router.get('/logout', [authController,'logout']).as('auth.logout')
 
 router.post('/register',[authController, 'register']).as('auth.register')
 router.post('/login', [authController,'login']).as('auth.login')

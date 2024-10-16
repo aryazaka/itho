@@ -1,5 +1,5 @@
- // JavaScript for text and button animations
- document.addEventListener("DOMContentLoaded", function() {
+// JavaScript for text and button animations
+document.addEventListener("DOMContentLoaded", function() {
     const textContent = document.getElementById("textContent");
     const loginButton = document.getElementById("loginButton");
     const signinButton = document.getElementById("signinButton");
@@ -18,4 +18,21 @@
     setTimeout(() => {
         profileIcon.classList.add("show"); // Show profile icon
     }, 900); // Delay for profile icon
+
+    // Pop-up logic
+    const popupMenu = document.getElementById('popupMenu');
+    popupMenu.style.display = 'none'; // Ensure pop-up is hidden initially
+
+    profileIcon.addEventListener('click', function(event) {
+        // Tampilkan pop-up hanya ketika ikon profil diklik
+        popupMenu.style.display = 'block';
+        event.stopPropagation(); // Menghindari event bubbling
+    });
+
+    // Menyembunyikan pop-up ketika mengklik di luar
+    window.addEventListener('click', function(event) {
+        if (!event.target.matches('#profileIcon') && !popupMenu.contains(event.target)) {
+            popupMenu.style.display = 'none';
+        }
+    });
 });

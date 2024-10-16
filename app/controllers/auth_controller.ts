@@ -62,17 +62,15 @@ export default class AuthController {
             session.flash({failedPassword: "Password salah!"})
             return response.redirect('back')
         }
-        return response.redirect('/')
-        
-        // try {
 
-        //     return response.redirect('back')
-            
-        // }catch (error) {
-        //     console.error(error) // Log kesalahan ke console
-        //     session.flash({ error: "Error saat registrasi!" })
-        //     return response.redirect('back') // Kembali ke halaman sebelumnya
-        // }   
-        
+        session.put('username', user.username!);
+
+        return response.redirect('/home')
     }
+
+    async logout({ session, response }: HttpContext) {
+        session.clear(); // Hapus semua data session
+        return response.redirect('/auth'); // Redirect ke halaman login
+    }
+
 }

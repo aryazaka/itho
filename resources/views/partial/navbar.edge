@@ -1,29 +1,43 @@
-
 <link rel="stylesheet" href="{{asset('nav/style.css')}}">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
 <div class="navbar">
-        <div class="logo">
-            <img alt="ITHO ACADEMY logo" src="{{asset('nav/img/icon itho.png')}}"/>
-        </div>
-        <div class="menu">
-            <a class="{{ title === 'Home' ? 'active' : '' }}" href="{{route('home.index')}}">Beranda</a>
-            <a class="{{ title === 'About' ? 'active' : '' }}" href="{{route('about.index')}}">Tentang Kami</a>
-            <a class="{{ title === 'Review' ? 'active' : '' }}" href="{{route('ulasan.index')}}">Ulasan</a>
-            <a class="{{ title === 'Contact' ? 'active' : '' }}" href="{{route('contact.index')}}">Kontak Kami</a>
-            <a href="{{route('chat.index')}}">Konsultasi</a> <img src="{{asset('nav/img/icons8-chatgpt-20.png')}}" alt="ChatGPT" style="width: 20px; height: 20px; margin-left: -15px;" />
-        </div>
-        <div class="auth">
-            <div class="auth-container">
+    <div class="logo">
+        <img alt="ITHO ACADEMY logo" src="{{asset('nav/img/icon itho.png')}}"/>
+    </div>
+    <div class="menu">
+        <a class="{{ title === 'Home' ? 'active' : '' }}" href="{{route('home.index')}}">Beranda</a>
+        <a class="{{ title === 'About' ? 'active' : '' }}" href="{{route('about.index')}}">Tentang Kami</a>
+        <a class="{{ title === 'Review' ? 'active' : '' }}" href="{{route('ulasan.index')}}">Ulasan</a>
+        <a class="{{ title === 'Contact' ? 'active' : '' }}" href="{{route('contact.index')}}">Kontak Kami</a>
+        <a href="{{route('chat.index')}}">Konsultasi</a> 
+        <img src="{{asset('nav/img/icons8-chatgpt-20.png')}}" alt="ChatGPT" style="width: 20px; height: 20px; margin-left: -15px;" />
+    </div>
+    <div class="auth">
+        <div class="auth-container">
+            @if(username === undefined)
                 <div class="auth-buttons">
                     <a href="{{route('auth.index')}}"><button class="login" id="loginButton">Log In</button></a>
                     <a href="{{route('auth.index')}}"><button class="signin" id="signinButton">Sign In</button></a>
                 </div>
-            </div>
-            <div class="profile" id="profileIcon">
-                <i class="fas fa-user-circle"></i>
-            </div>
+            @else
+                <div class="user-up">
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{username}}
+                </div>
+            @end
+        </div>
+        <div class="profile" id="profileIcon">
+            <i class="fas fa-user-circle"></i>
         </div>
     </div>
+</div>
+
+<!-- Pop-up Menu -->
+        <div class="popup-menu" id="popupMenu">
+            <ul>
+                <li><a href="#profile">Profil</a></li>
+                <li><a href="{{route('auth.logout')}}">Logout</a></li>
+            </ul>
+        </div>
 
 <script src="{{asset('nav/app.js')}}"></script>
