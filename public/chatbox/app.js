@@ -1,9 +1,10 @@
 let sidebar = document.querySelector('.sidebar');
 let closeBtn = document.querySelector('#btn');
-let messagesDiv = document.getElementById('messages');
+let messagesDiv = document.getElementById('messages');               
 let historyList = document.getElementById('history-list');
 let historyQuestions = document.getElementById('history-questions');
 let quickQuestions = document.getElementById('quick-questions');
+
 
 
 // Load history from localStorage
@@ -41,10 +42,72 @@ document.getElementById('clear-history').addEventListener('click', () => {
     localStorage.removeItem('chatHistory');
 });
 
-export async function sendMessage() {
+    let isRecording = false;
     const userInput = document.getElementById('user-input');
-    const messageText = userInput.value;
+    const micButton = document.getElementById('mic-button');
+    const imageInput = document.getElementById('image-input');
 
+    let recognition;
+
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'id-ID';
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            userInput.value = transcript; // Set the transcribed text to the input
+        };
+
+        recognition.onerror = (event) => {
+            console.error('Error occurred in recognition: ', event.error);
+        };
+    } else {
+        alert("Browser tidak mendukung fitur pengenalan suara.");
+    }
+
+    micButton.addEventListener('click', () => {
+        if (!isRecording) {
+            recognition.start(); // Start recording
+            isRecording = true;
+            micButton.classList.add('recording');
+        } else {
+            recognition.stop(); // Stop recording
+            isRecording = false;
+            micButton.classList.remove('recording');
+        }
+    });
+
+    let pendingImage = null; // Menyimpan gambar yang akan dikirim
+
+    document.getElementById('send-image').addEventListener('click', () => {
+        imageInput.click(); // Trigger file input click
+    });
+
+    imageInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            pendingImage = URL.createObjectURL(file); // Simpan gambar yang akan dikirim
+            // Hapus gambar yang ditampilkan sebelumnya (jika ada)
+            // Tidak ada tampilan di bawah sambutan
+        }
+    });
+
+ function handleSend() {
+        const messageText = userInput.value.trim();
+        if (messageText === '' && !pendingImage) return; // Pastikan ada input atau gambar
+
+        // Kirim pesan dan gambar (jika ada)
+        sendMessage(messageText, pendingImage);
+        
+        pendingImage = null; // Reset gambar setelah mengirim
+        userInput.value = ''; // Kosongkan input setelah mengirim
+        userInput.focus(); // Fokus kembali ke input
+    }
+ async function sendMessage(messageText = '', imageText = '') {
+    const userInput = document.getElementById('user-input');
+   
     if (messageText.trim() === '') return;
        // Nonaktifkan input dan tombol saat mengirim pesan
        userInput.disabled = true;
@@ -61,6 +124,19 @@ export async function sendMessage() {
     const userText = document.createElement('span');
     userText.textContent = messageText;
 
+    if (imageText){
+        userInput = imageText
+    }
+    userMessageDiv.appendChild(userIcon);
+    userMessageDiv.appendChild(userText);
+
+    // Jika ada gambar, tambahkan ke messageContainer
+    if (imageText) {
+        const imgElement = document.createElement('img');
+        imgElement.src = imageText;
+        imgElement.className = 'image-message';
+        userMessageDiv.appendChild(imgElement);
+    }
     userMessageDiv.appendChild(userIcon);
     userMessageDiv.appendChild(userText);
     messagesDiv.appendChild(userMessageDiv);
@@ -132,6 +208,7 @@ export async function sendMessage() {
     }, 5000); // Simulated delay of 5 seconds
 }
 
+
 function animateAIResponse(text, container) {
     const words = text.split(' ');
     let index = 0;
@@ -177,7 +254,7 @@ function addToHistory(question) {
 // Menambahkan event untuk mengirim pesan dengan tombol Enter
 document.getElementById('user-input').addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
-        sendMessage();
+        handleSend();
     }
 });
 

@@ -26,6 +26,21 @@
             display: flex;
             position: relative;
         }
+        .image-message img {
+            max-width: 150px; /* Ukuran maksimum gambar sebelum dikirim */
+            height: auto;
+            border-radius: 8px; /* Menambahkan sudut yang membulat */
+        }
+        .message-container {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px; /* Jarak antar pesan */
+        }
+        .message-text {
+            margin-left: 10px; /* Jarak antara gambar dan teks */
+            margin: 50px;
+            margin-bottom: -100px;
+        }
 
         .sidebar {
             min-height: 100vh;
@@ -270,10 +285,15 @@
 
         /* Chatbot styles */
         .sent-messages {
-            margin-top: -470px;
             display: flex;
             flex-direction: column;
-            background-color: transparent;
+            align-items: stretch; /* Mengatur agar pesan mengambil lebar penuh */
+            /* margin: 10px; */
+        }
+        .message-container {
+            display: flex;
+            justify-content: space-between; /* Mengatur jarak antar elemen */
+            margin-bottom: 10px; /* Jarak antar pesan */
         }
 
         .jawaban{
@@ -297,11 +317,15 @@
         }
 
         .user-message {
-    background-color: #f0b400; /* Keep this as is for light mode */
-    color: #FFFFFF; /* Default text color */
-    align-self: flex-end;
-    text-align: right;
-}
+        background-color: #FCCC3D; /* Warna pesan pengguna */
+        border-radius: 15px; /* Membulatkan sudut */
+        padding: 10px; /* Jarak dalam lingkaran */
+        max-width: 80%; /* Mengatur lebar maksimum */
+        margin-left: auto; /* Memindahkan pesan ke kanan */
+        display: flex;
+        color: white;
+        align-items: center; /* Mengatur agar ikon dan teks sejajar */
+    }
 
 .user-message {
     border: 1px solid #ccc; /* Example border style */
