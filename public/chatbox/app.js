@@ -1,7 +1,6 @@
 let sidebar = document.querySelector('.sidebar');
 let closeBtn = document.querySelector('#btn');
-let messagesDiv = document.getElementById('messages');               
-let historyList = document.getElementById('history-list');
+let messagesDiv = document.getElementById('messages'); let historyList = document.getElementById('history-list');
 let historyQuestions = document.getElementById('history-questions');
 let quickQuestions = document.getElementById('quick-questions');
 
