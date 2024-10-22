@@ -16,26 +16,33 @@ historyData.forEach(question => {
     addToHistory(question);
 });
 
-// closeBtn.addEventListener('click', () => {
-//     sidebar.classList.toggle('open');
-//     toggleQuickQuestions();
-// });
 
 // Toggle sidebar open/close
 closeBtn.addEventListener('click', () => {
     sidebar.classList.toggle('open');
     if (sidebar.classList.contains('open')) {
         openSidebar(); // Buka sidebar dan kontennya
+        updateFooterPosition(); // Update posisi footer
     } else {
         closeSidebar(); // Tutup sidebar dan kontennya
+        updateFooterPosition(); // Update posisi footer
     }
 });
+
+function updateFooterPosition() {
+    const footer = document.querySelector('.footer');
+    if (sidebar.classList.contains('open')) {
+        footer.style.left = '640px'; // Geser sedikit ke kanan saat sidebar terbuka
+        footer.style.transform = 'translateX(0)'; // Reset transform
+    } else {
+        footer.style.left = '50%'; // Kembalikan posisi footer saat sidebar tertutup
+        footer.style.transform = 'translateX(-50%)'; // Kembalikan transform
+    }
+}
 
 // Function to open sidebar and its contents
 function openSidebar() {
     sidebar.classList.add('open');
-    // settingsOptions.style.display = 'block'; // Tampilkan opsi pengaturan
-    // historyList.style.display = 'block'; // Tampilkan riwayat
 }
 
 // Function to close sidebar and all its contents

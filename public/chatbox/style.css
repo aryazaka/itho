@@ -27,10 +27,14 @@
             position: relative;
         }
         .image-message img {
-            max-width: 150px; /* Ukuran maksimum gambar sebelum dikirim */
+            max-width: 150px;
             height: auto;
-            border-radius: 8px; /* Menambahkan sudut yang membulat */
-        }
+            border-radius: 8px;
+            -webkit-border-radius: 8px;
+            -moz-border-radius: 8px;
+            -ms-border-radius: 8px;
+            -o-border-radius: 8px;
+}
         .message-container {
             display: flex;
             align-items: flex-start;
@@ -201,7 +205,7 @@
         .sidebar li.profile {
             position: fixed;
             height: 60px;
-            width: 78px;
+            width: 65px;
             left: 0;
             bottom: -8px;
             padding: 10px 14px;
@@ -323,9 +327,25 @@
         max-width: 80%; /* Mengatur lebar maksimum */
         margin-left: auto; /* Memindahkan pesan ke kanan */
         display: flex;
-        color: white;
+        color: black;
         align-items: center; /* Mengatur agar ikon dan teks sejajar */
     }
+
+    
+/* Dark mode */
+.dark-mode .user-message {
+    background-color: #FCCC3D; /* Warna latar belakang untuk pesan pengguna di dark mode */
+    color: #000000; /* Warna teks untuk pesan pengguna di dark mode */
+}
+
+.dark-mode .ai-response {
+    background-color: #F7EDC1; /* Warna latar belakang untuk jawaban AI di dark mode */
+    color: #000000; /* Warna teks untuk jawaban AI di dark mode */
+}
+
+.dark-mode .footer {
+    background-color: #000000; /* Warna latar belakang footer di dark mode */
+}
 
 .user-message {
     border: 1px solid #ccc; /* Example border style */
@@ -369,7 +389,8 @@
 
 /* Dark mode specific styles */
 .dark-mode .ai-response {
-    color: #FFFFFF; /* Text color for dark mode */
+    color: #cebbbb; /* Text color for dark mode */
+    color: black;
 }
  
         
@@ -766,3 +787,90 @@ input:checked + .slider:before {
 }
 
 
+/* responsive */
+/* Gaya untuk perangkat mobile */
+@media (max-width: 868px) {
+
+    .sidebar {
+        width: 70px; /* Lebar sidebar yang lebih kecil untuk mobile */
+    }
+    .nav-list{
+        margin-top: 20px;
+        height: 20%;
+        margin-left: -8px;
+    }
+
+    .sidebar.open {
+        width: 250px; /* Lebar sidebar saat terbuka */
+    }
+
+    .main-content {
+        left: 60px; /* Sesuaikan posisi konten utama */
+        width: calc(100% - 60px); /* Sesuaikan lebar konten utama */
+        padding: 20px; /* Padding yang lebih kecil */
+    }
+
+    .header h1 {
+        font-size: 20px; /* Ukuran font yang lebih kecil */
+        margin-left: 20px
+    }
+
+    .header p {
+        font-size: 16px; /* Ukuran font yang lebih kecil */
+        margin-left: 20px
+    }
+
+    .footer {
+        /* flex-direction: column; Mengatur footer menjadi kolom */
+        align-items: stretch; /* Mengatur item untuk mengambil lebar penuh */
+        width: 250px;
+        position: absolute;
+        margin-bottom: -490px;
+    }
+
+
+    .footer input {
+        width: 1400%; /* Input mengisi lebar penuh */
+        margin: 10px 0; /* Margin di atas dan bawah */
+
+    }
+
+    .send-button {
+        width: 230%; /* Tombol kirim mengisi lebar penuh */
+        margin-top: 10px;
+    }
+    .icon-button{
+        margin-right: 10px;
+        margin-top: 10px;
+        
+    }
+    .quick-questions {
+        margin-left: 0; /* Menghilangkan margin kiri */
+        margin-top: 20px; /* Margin atas untuk jarak */
+    }
+
+    .history {
+        max-height: 300px; /* Membatasi tinggi history untuk mobile */
+    }
+}
+
+/* Gaya untuk desktop */
+@media (min-width: 569px) {
+    .sidebar {
+        width: 78px; /* Lebar sidebar untuk desktop */
+    }
+
+    .main-content {
+        left: 78px; /* Posisi konten utama */
+        width: calc(100% - 78px); /* Lebar konten utama */
+        padding: 40px; /* Padding untuk desktop */
+    }
+
+    .header h1 {
+        font-size: 30px; /* Ukuran font untuk desktop */
+    }
+
+    .header p {
+        font-size: 18px; /* Ukuran font untuk desktop */
+    }
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
-    <link rel="icon" type="image/x-icon" href="chatbox/img/icon_home.png">
+    <link rel="icon" type="image/x-icon" href="/home/img/icon_home.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -67,6 +67,20 @@
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .absolute {
+                position: relative; /* Change absolute to relative */
+                margin: 0 auto; /* Center the element */
+                display: flex;
+                justify-content: center; /* Center items */
+                flex-direction: column; /* Stack vertically */
+                margin-top: 
+            }
+
+            .button-container {
+                display: flex;
+                justify-content: center; /* Center the button */
+                margin-top: 20px;
+            }
         }
     </style>
 </head>
@@ -84,18 +98,20 @@
             <br/> pendidikan yang sesuai dan peluang nyata.
             <br/> Jangan sia-siakan kesempatan ini.
         </p>
+        <img alt="Illustration of a person with a laptop, raising one finger" class="w-48" height="200" src="{{asset('home/img/womenn.png')}}" width="200"/>    
+        <div class="button-container">
+            <button class="bg-black text-white py-2 px-4 rounded">
+                Selengkapnya
+            </button>
+        </div>
     </div>
-    <div class="absolute bottom-10 left-10" style="margin-bottom: 250px;">
+    
+    <div class="absolute">
         <div class="bg-yellow-300 rounded-full w-20 h-20 flex items-center justify-center">
             <div class="bg-white rounded-full w-10 h-10"></div>
         </div>
+       
     </div>
-    <div class="absolute bottom-10 right-10">
-        <img alt="Illustration of a person with a laptop, raising one finger" class="w-48" height="200" src="{{asset('home/img/womenn.png')}}" style="margin-bottom: 480px; margin-right: 400px;" width="200"/>
-    </div>
-    <button class="bg-black text-white py-2 px-4 rounded" style="margin-left: 570px; margin-top: -30px; margin-bottom: 270px;">
-        Selengkapnya
-    </button>
 
      @include('partial/footer')
 
