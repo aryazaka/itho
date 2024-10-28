@@ -335,11 +335,11 @@
 /* Dark mode */
 .dark-mode .user-message {
     background-color: #FCCC3D; /* Warna latar belakang untuk pesan pengguna di dark mode */
-    color: #000000; /* Warna teks untuk pesan pengguna di dark mode */
+    color: #ffffff; /* Warna teks untuk pesan pengguna di dark mode */
 }
 
 .dark-mode .ai-response {
-    background-color: #F7EDC1; /* Warna latar belakang untuk jawaban AI di dark mode */
+    background-color: #000000; /* Warna latar belakang untuk jawaban AI di dark mode */
     color: #000000; /* Warna teks untuk jawaban AI di dark mode */
 }
 
@@ -390,7 +390,7 @@
 /* Dark mode specific styles */
 .dark-mode .ai-response {
     color: #cebbbb; /* Text color for dark mode */
-    color: black;
+    color: rgb(255, 255, 255);
 }
  
         
@@ -415,6 +415,54 @@
             width: calc(100% - 60px);
             max-width: 900px;
         }
+        .chat-footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            border-radius: 20px 20px 0 0;
+            width: calc(100% - 60px);
+            max-width: 900px;
+            max-height: 900px;
+            width: 950px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .chat-footer img {
+            width: 50%;
+            max-height: 30vh;
+            transition: filter 0.3s ease;
+            border-radius: 20px;
+            max-width: 350px;
+        }
+        .img-send {
+            
+            width: 50%;
+            max-height: 30vh;
+            transition: filter 0.3s ease;
+            border-radius: 20px;
+        }
+        
+        .remove-icon {
+            position: absolute;
+            color: #FFFFFF;
+            font-size: 30px;
+            display: none;
+            cursor: pointer;
+        }
+        .chat-footer:hover .remove-icon {
+            display: block;
+            top: 15%;
+            left: 23%;
+            transform: translate(-50%, -50%);
+        }
+        
+
 
         .footer input {
             border: none;
@@ -873,4 +921,10 @@ input:checked + .slider:before {
     .header p {
         font-size: 18px; /* Ukuran font untuk desktop */
     }
+}
+
+#user-input {
+    width: 200px; /* Lebar input */
+    overflow: hidden; /* Menyembunyikan scrollbar */
+    white-space: nowrap; /* Mencegah teks dari membungkus */
 }

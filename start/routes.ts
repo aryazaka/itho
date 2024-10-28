@@ -16,6 +16,7 @@ const chatboxController = () => import('#controllers/chatboxes_controller')
 const contactController = () => import('#controllers/contacts_controller')
 const authController = () => import('#controllers/auth_controller')
 const aboutController = () => import('#controllers/about_controller')
+const genimagesController = () => import('#controllers/genimages_controller')
 
 
 router.get('/', [landingController, 'index']).as('landing.index')
@@ -30,4 +31,6 @@ router.get('/logout', [authController,'logout']).as('auth.logout')
 router.post('/register',[authController, 'register']).as('auth.register')
 router.post('/login', [authController,'login']).as('auth.login')
 router.post('/process', [chatboxController, 'proses'])
+// router.post('/genimage', [genimagesController, 'generateImage'])
+
 

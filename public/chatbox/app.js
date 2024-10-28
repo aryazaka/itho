@@ -151,6 +151,9 @@ document.getElementById('clear-history').addEventListener('click', () => {
     });
 
     let pendingImage = null; // Menyimpan gambar yang akan dikirim
+    const imageDiv = document.getElementById('chat-image-div'); 
+    const fileInput = document.getElementById('file-input'); 
+    const sendImageButton = document.getElementById('send-image'); // Tombol untuk upload
 
     document.getElementById('send-image').addEventListener('click', () => {
         imageInput.click(); // Trigger file input click
@@ -158,22 +161,33 @@ document.getElementById('clear-history').addEventListener('click', () => {
 
     imageInput.addEventListener('change', (event) => {
         const file = event.target.files[0];
-        if (file) {
-            pendingImage = URL.createObjectURL(file);
-            
+        if (file) {            
             const imgURL = URL.createObjectURL(file);
+            imageDiv.innerHTML = '';  // Kosongkan div sebelum menambahkan gambar
             const imgMessageDiv = document.createElement('div');
         
-            imgMessageDiv.innerHTML = `<img src="${imgURL}" alt="Uploaded Image" style="max-width: 50%; height: auto;"/>`;
-    
-                    // Send the image message
-            sendMessage("Image uploaded");
-    
-                    // Clear file input
+            imgMessageDiv.innerHTML = `
+            <img src="${imgURL}" alt="Uploaded Image" id="chat-image" />
+            <span class="remove-icon" id="remove-icon">&times;</span>
+        `;
+
+            imageDiv.appendChild(imgMessageDiv);
+            
+            const chatImage = document.getElementById('chat-image');
+            const removeIcon = document.getElementById('remove-icon');
+                
+            // Hapus gambar saat ikon silang diklik
+            removeIcon.addEventListener('click', () => {
+                imageDiv.innerHTML = ''; // Kosongkan div untuk menghapus gambar
+            });
+
+            
+            pendingImage = imgURL;
+            
             imageInput.value = '';
                 }
             });
-
+            
  function handleSend() {
         const messageText = userInput.value.trim();
 
@@ -186,9 +200,13 @@ document.getElementById('clear-history').addEventListener('click', () => {
 
         // Kirim pesan dan gambar (jika ada)
         if (isImageRequest) {
-            sendImg(); 
+            resImg(); 
         } else {
             sendMessage(messageText, pendingImage); // Panggil fungsi sendMessage
+        }
+
+        if (pendingImage){
+            sendImg();
         }
         
         pendingImage = null; // Reset gambar setelah mengirim
@@ -200,7 +218,7 @@ document.getElementById('clear-history').addEventListener('click', () => {
    
     if (messageText.trim() === '') return;
        // Nonaktifkan input dan tombol saat mengirim pesan
-       userInput.disabled = true;
+    // userInput.disabled = true;
 
     // Create user message div
     const userMessageDiv = document.createElement('div');
@@ -298,7 +316,18 @@ document.getElementById('clear-history').addEventListener('click', () => {
     userInput.disabled = false;
 }
 
-async function sendImg() {
+
+
+
+
+
+
+
+
+
+
+
+async function resImg() {
     const input = document.getElementById('user-input');
     const userInput = input.value
     if (userInput.trim() === '') return;
@@ -397,6 +426,124 @@ async function sendImg() {
     userInput.disabled = false;
 }
 
+async function sendImg() {
+    const input = document.getElementById('user-input');
+    const userInput = input.value
+    // if (userInput.trim() === '') return;
+    //    // Nonaktifkan input dan tombol saat mengirim pesan
+    userInput.disabled = true;
+
+    
+    // Create user message div
+    const userMessageDiv = document.createElement('div');
+    userMessageDiv.className = 'user-message';
+
+    const userIcon = document.createElement('img');
+    userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
+    userIcon.alt = 'User Icon';
+    userIcon.className = 'message-icon';
+
+     // Tambahkan ikon pengguna ke div pesan
+     userMessageDiv.appendChild(userIcon);
+
+     
+    
+    const imgSend = document.createElement('img')
+    imgSend.src = pendingImage
+    imgSend.className = 'img-send'
+
+    // Clear the image after sending
+    pendingImage = null; // Reset pending image
+    imageDiv.innerHTML = ''; // Clear image div    
+
+    const userText = document.createElement('span');
+    userText.textContent = userInput;
+
+    userMessageDiv.appendChild(userIcon);
+     // Tambahkan teks di bawah gambar (jika ada)
+    userMessageDiv.appendChild(userText);
+
+    // Tambahkan div pesan ke kontainer pesan
+    messagesDiv.appendChild(userMessageDiv);
+
+    userMessageDiv.appendChild(imgSend);
+    
+    messagesDiv.appendChild(userMessageDiv);
+
+    userMessageDiv.scrollIntoView({ behavior: 'smooth' });
+
+    // Create loading indicator
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'loader';
+
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+
+    const loadingText = document.createElement('div');
+    loadingText.className = 'loading-text';
+    loadingText.textContent = "Loading...";    
+
+    loadingDiv.appendChild(spinner);
+    loadingDiv.appendChild(loadingText);
+    messagesDiv.appendChild(loadingDiv);
+
+    loadingDiv.scrollIntoView({ behavior: "smooth" });
+
+    userInput.value = '';
+
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const res = await fetch('/process', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken,
+        },
+        body: JSON.stringify({ message: userInput }),
+    });
+
+    
+
+    const data = await res.json();
+
+    // Update history and storage
+    historyData.push(userInput);
+    localStorage.setItem('chatHistory', JSON.stringify(historyData));
+    addToHistory(userInput);
+
+    // Simulate AI response delay
+    setTimeout(async () => {
+        messagesDiv.removeChild(loadingDiv);
+
+        // AI response
+        let hasil = data.replyText || 'Error: ' + data.error;
+
+        // Create AI response div
+        const aiResponseDiv = document.createElement('div');
+        aiResponseDiv.className = 'ai-response';
+        aiResponseDiv.style.width = '500px';
+        aiResponseDiv.src = hasil
+
+
+
+        const aiIcon = document.createElement('img');
+        aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
+        aiIcon.alt = 'AI Icon';
+        aiIcon.className = 'message-icon';
+
+        aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
+        messagesDiv.appendChild(aiResponseDiv);
+
+        
+
+        // Animate AI response
+        animateAIResponse(hasil, aiResponseDiv);
+        aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
+        aiResponseDiv.disabled = false;
+        aiResponseDiv.focus(); // Fokus kembali ke input
+    }, 5000); // Simulated delay of 5 seconds
+    userInput.disabled = t
+    
+}
 
 function animateAIResponse(text, container) {
     const words = text.split(' ');
@@ -550,16 +697,6 @@ document.getElementById('log_out').addEventListener('click', () => {
     window.location.href = "home.html"; // Arahkan ke halaman home untu icon di paling bawah sidebar ai
 });
 
-
-document.getElementById('send-image').addEventListener('click', () => {
-    document.getElementById('image-input').click(); // Memicu klik pada input file
-});
-
-document.getElementById('send-image').addEventListener('click', () => {
-    alert('Silakan pilih gambar dari perangkat Anda.'); // Notifikasi
-    document.getElementById('image-input').click(); // Memicu klik pada input file
-});
-
 document.getElementById('send-image').addEventListener('click', () => {
     const notification = document.getElementById('notification');
     notification.innerText = 'Silakan pilih gambar dari perangkat Anda.';
@@ -569,6 +706,4 @@ document.getElementById('send-image').addEventListener('click', () => {
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
-
-    document.getElementById('image-input').click(); // Memicu klik pada input file
 });
