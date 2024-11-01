@@ -31,6 +31,7 @@ router.get('/logout', [authController,'logout']).as('auth.logout')
 router.post('/register',[authController, 'register']).as('auth.register')
 router.post('/login', [authController,'login']).as('auth.login')
 router.post('/process', [chatboxController, 'proses'])
+router.post('/store', [chatboxController, 'store'])
 // router.post('/genimage', [genimagesController, 'generateImage'])
 
 

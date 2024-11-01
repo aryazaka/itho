@@ -104,16 +104,18 @@
 <div class="footer">
     <div class="chat-footer" id="chat-image-div"></div>
     
-    <a id="send-image" class="icon-button">
-         <img src="chatbox/img/foto.png" alt="" style="background-color: black; width: 40px; height:40px;">
-        <input type="file" id="image-input" name="image" accept="image/*" style="display: none;">
-    </a>
-    
+        <a id="send-image" class="icon-button">
+            <img src="chatbox/img/foto.png" alt="" style="background-color: black; width: 40px; height:40px;">
+            <input type="file" id="image-input" name="image" accept="image/*" style="display: none;">
+        </a>
     <input type="text" id="user-input" placeholder="Masukan Pertanyaan..."/>
     
     <a id="mic-button" class="icon-button1">
         <img src="chatbox/img/mic.jpg" alt="" style="width: 40px; height:40px; margin-left: -60px; margin-top: 10px;">
     </a>
+    {{--  cencel  --}}
+    <div class="cancel-button hidden" id="cancel-button">Cancel</div>
+
     <div class="send-button" onclick="handleSend()">
         <i class='bx bx-send' style="color: black;"></i>
     </div> 

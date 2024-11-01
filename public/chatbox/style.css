@@ -372,7 +372,7 @@
     padding: 10px;
     margin: 10px 0;
     background-color: #000000; /* Background color for AI response */
-    color: white;
+    color: rgb(255, 255, 255);
     margin-bottom: 10px;
 }
 
@@ -927,4 +927,28 @@ input:checked + .slider:before {
     width: 200px; /* Lebar input */
     overflow: hidden; /* Menyembunyikan scrollbar */
     white-space: nowrap; /* Mencegah teks dari membungkus */
+}
+
+
+/* cencel respon ai  */
+.cancel-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: var(--color-default);
+    color: white;
+    border-radius: 20px;
+    margin: 0 auto 10px; /* Center the button above footer */
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cancel-button:hover {
+    background-color: #ffbc00; /* Change color on hover */
+}
+
+.cancel-button.hidden {
+    display: none; /* Hide the button by default */
 }

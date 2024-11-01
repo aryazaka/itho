@@ -6,8 +6,6 @@ let historyQuestions = document.getElementById('history-questions');
 let quickQuestions = document.getElementById('quick-questions');
 let settingsOptions = document.getElementById('settings-options');
 
-
-
 // Load history from localStorage
 let historyData = JSON.parse(localStorage.getItem('chatHistory')) || [];
 
@@ -15,7 +13,6 @@ let historyData = JSON.parse(localStorage.getItem('chatHistory')) || [];
 historyData.forEach(question => {
     addToHistory(question);
 });
-
 
 // Toggle sidebar open/close
 closeBtn.addEventListener('click', () => {
@@ -213,119 +210,134 @@ document.getElementById('clear-history').addEventListener('click', () => {
         userInput.value = ''; // Kosongkan input setelah mengirim
         userInput.focus(); // Fokus kembali ke input
     }
- async function sendMessage(messageText = '', imageText = '') {
-    const userInput = document.getElementById('user-input');
    
-    if (messageText.trim() === '') return;
-       // Nonaktifkan input dan tombol saat mengirim pesan
-    // userInput.disabled = true;
-
-    // Create user message div
-    const userMessageDiv = document.createElement('div');
-    userMessageDiv.className = 'user-message';
-
-    const userIcon = document.createElement('img');
-    userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
-    userIcon.alt = 'User Icon';
-    userIcon.className = 'message-icon';
-
-    const userText = document.createElement('span');
-    userText.textContent = messageText;
-
-    if (imageText){
-        userInput = imageText
+    // cencel senMessage
+    let isLoading = false; // State to keep track of loading status
+    const cancelButton = document.getElementById('cancel-button');
+    
+    // Function to send a message
+    async function sendMessage(messageText = '', imageText = '') {
+        const userInput = document.getElementById('user-input').value;
+        const inputText = userInput.value;
+    
+        // Check if message is empty
+        if (messageText.trim() === '' && inputText.trim() === '') return;
+    
+        // Show the cancel button
+        cancelButton.classList.remove('hidden');
+        isLoading = true;
+    
+        // Create user message div
+        const userMessageDiv = document.createElement('div');
+        userMessageDiv.className = 'user-message';
+    
+        const userIcon = document.createElement('img');
+        userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
+        userIcon.alt = 'User Icon';
+        userIcon.className = 'message-icon';
+    
+        const userText = document.createElement('span');
+        userText.textContent = messageText || inputText; // Use either messageText or user input
+    
+        if (imageText) {
+            // If imageText is provided, use it as the input
+            userInput.value = imageText;
+        }
+    
+        userMessageDiv.appendChild(userIcon);
+        userMessageDiv.appendChild(userText);
+    
+        // If there is an image, add it to messageContainer
+        if (imageText) {
+            const imgElement = document.createElement('img');
+            imgElement.src = imageText;
+            imgElement.className = 'image-message';
+            userMessageDiv.appendChild(imgElement);
+        }
+    
+        messagesDiv.appendChild(userMessageDiv);
+        userMessageDiv.scrollIntoView({ behavior: 'smooth' });
+        userInput.value = ''; // Clear the input field
+    
+        // Create loading indicator
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'loader';
+    
+        const spinner = document.createElement('div');
+        spinner.className = 'spinner';
+    
+        const loadingText = document.createElement('div');
+        loadingText.className = 'loading-text';
+        loadingText.textContent = "Loading...";
+    
+        loadingDiv.appendChild(spinner);
+        loadingDiv.appendChild(loadingText);
+        messagesDiv.appendChild(loadingDiv);
+    
+        loadingDiv.scrollIntoView({ behavior: "smooth" });
+    
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        
+        // Fetch response from the server
+        const res = await fetch('/process', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken,
+            },
+            body: JSON.stringify({ message: messageText || inputText }),
+        });
+    
+        const data = await res.json();
+    
+        // Update history and storage
+        historyData.push(messageText || inputText);
+        localStorage.setItem('chatHistory', JSON.stringify(historyData));
+        addToHistory(messageText || inputText);
+    
+        // Simulate AI response delay
+        setTimeout(async () => {
+            // Remove loading indicator
+            messagesDiv.removeChild(loadingDiv);
+    
+            // AI response
+            let hasil = data.replyText || 'Error: ' + data.error;
+    
+            // Create AI response div
+            const aiResponseDiv = document.createElement('div');
+            aiResponseDiv.className = 'ai-response';
+    
+            const aiIcon = document.createElement('img');
+            aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
+            aiIcon.alt = 'AI Icon';
+            aiIcon.className = 'message-icon';
+    
+            aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
+            messagesDiv.appendChild(aiResponseDiv);
+    
+            // Animate AI response
+            animateAIResponse(hasil, aiResponseDiv);
+            aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
+    
+            // Hide the cancel button after response
+            cancelButton.classList.add('hidden');
+            isLoading = false;
+    
+        }, 5000); // Simulated delay of 5 seconds
+    
+        userInput.disabled = false;
     }
-    userMessageDiv.appendChild(userIcon);
-    userMessageDiv.appendChild(userText);
-
-    // Jika ada gambar, tambahkan ke messageContainer
-    if (imageText) {
-        const imgElement = document.createElement('img');
-        imgElement.src = imageText;
-        imgElement.className = 'image-message';
-        userMessageDiv.appendChild(imgElement);
+    
+    // Function to cancel the loading
+    function cancelLoading() {
+        if (isLoading) {
+            console.log("AI response cancelled.");
+            // Hide the loading indicator and cancel button
+            cancelButton.classList.add('hidden');
+            isLoading = false;
+        }
     }
-    userMessageDiv.appendChild(userIcon);
-    userMessageDiv.appendChild(userText);
-    messagesDiv.appendChild(userMessageDiv);
-
-    userMessageDiv.scrollIntoView({ behavior: 'smooth' });
-
-    // Create loading indicator
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = 'loader';
-
-    const spinner = document.createElement('div');
-    spinner.className = 'spinner';
-
-    const loadingText = document.createElement('div');
-    loadingText.className = 'loading-text';
-    loadingText.textContent = "Loading...";
-
-    userInput.value = '';
-
-    loadingDiv.appendChild(spinner);
-    loadingDiv.appendChild(loadingText);
-    messagesDiv.appendChild(loadingDiv);
-
-    loadingDiv.scrollIntoView({ behavior: "smooth" });
-
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const res = await fetch('/process', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-        },
-        body: JSON.stringify({ message: messageText }),
-    });
-
-    const data = await res.json();
-
-    // Update history and storage
-    historyData.push(messageText);
-    localStorage.setItem('chatHistory', JSON.stringify(historyData));
-    addToHistory(messageText);
-
-    // Simulate AI response delay
-    setTimeout(async () => {
-        messagesDiv.removeChild(loadingDiv);
-
-        // AI response
-        let hasil = data.replyText || 'Error: ' + data.error;
-
-        // Create AI response div
-        const aiResponseDiv = document.createElement('div');
-        aiResponseDiv.className = 'ai-response';
-
-        const aiIcon = document.createElement('img');
-        aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
-        aiIcon.alt = 'AI Icon';
-        aiIcon.className = 'message-icon';
-
-        aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
-        messagesDiv.appendChild(aiResponseDiv);
-
-        // Animate AI response
-        animateAIResponse(hasil, aiResponseDiv);
-        aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
-        aiResponseDiv.disabled = false;
-        aiResponseDiv.focus(); // Fokus kembali ke input
-    }, 5000); // Simulated delay of 5 seconds
-
-    userInput.disabled = false;
-}
-
-
-
-
-
-
-
-
-
-
-
+    
 
 async function resImg() {
     const input = document.getElementById('user-input');
@@ -404,8 +416,6 @@ async function resImg() {
         aiResponseDiv.style.width = '500px';
         aiResponseDiv.src = hasil
 
-
-
         const aiIcon = document.createElement('img');
         aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
         aiIcon.alt = 'AI Icon';
@@ -413,8 +423,6 @@ async function resImg() {
 
         aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
         messagesDiv.appendChild(aiResponseDiv);
-
-        
 
         // Animate AI response
         animateAIResponse(hasil, aiResponseDiv);
@@ -432,7 +440,6 @@ async function sendImg() {
     // if (userInput.trim() === '') return;
     //    // Nonaktifkan input dan tombol saat mengirim pesan
     userInput.disabled = true;
-
     
     // Create user message div
     const userMessageDiv = document.createElement('div');
@@ -444,10 +451,8 @@ async function sendImg() {
     userIcon.className = 'message-icon';
 
      // Tambahkan ikon pengguna ke div pesan
-     userMessageDiv.appendChild(userIcon);
+    userMessageDiv.appendChild(userIcon);
 
-     
-    
     const imgSend = document.createElement('img')
     imgSend.src = pendingImage
     imgSend.className = 'img-send'
@@ -492,16 +497,23 @@ async function sendImg() {
     userInput.value = '';
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const res = await fetch('/process', {
+    const formData = new FormData();
+
+     // Upload the image if it exists
+     if (pendingImage) {
+        formData.append('image', pendingImage); // Append the image file
+    }
+
+    // Append the text message
+    formData.append('message', userInput);
+    const res = await fetch('/store', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-Token': csrfToken,
         },
-        body: JSON.stringify({ message: userInput }),
+        body: formData
     });
-
-    
 
     const data = await res.json();
 
@@ -523,8 +535,6 @@ async function sendImg() {
         aiResponseDiv.style.width = '500px';
         aiResponseDiv.src = hasil
 
-
-
         const aiIcon = document.createElement('img');
         aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
         aiIcon.alt = 'AI Icon';
@@ -533,15 +543,13 @@ async function sendImg() {
         aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
         messagesDiv.appendChild(aiResponseDiv);
 
-        
-
         // Animate AI response
         animateAIResponse(hasil, aiResponseDiv);
         aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
         aiResponseDiv.disabled = false;
         aiResponseDiv.focus(); // Fokus kembali ke input
     }, 5000); // Simulated delay of 5 seconds
-    userInput.disabled = t
+    userInput.disabled = false
     
 }
 
@@ -707,3 +715,4 @@ document.getElementById('send-image').addEventListener('click', () => {
         notification.classList.remove('show');
     }, 3000);
 });
+
