@@ -113,7 +113,7 @@ document.getElementById('clear-history').addEventListener('click', () => {
     let isRecording = false;
     const userInput = document.getElementById('user-input');
     const micButton = document.getElementById('mic-button');
-    const imageInput = document.getElementById('image-input');
+  
 
     let recognition;
 
@@ -147,48 +147,12 @@ document.getElementById('clear-history').addEventListener('click', () => {
         }
     });
 
-    let pendingImage = null; // Menyimpan gambar yang akan dikirim
-    const imageDiv = document.getElementById('chat-image-div'); 
-    const fileInput = document.getElementById('file-input'); 
-    const sendImageButton = document.getElementById('send-image'); // Tombol untuk upload
-
-    document.getElementById('send-image').addEventListener('click', () => {
-        imageInput.click(); // Trigger file input click
-    });
-
-    imageInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {            
-            const imgURL = URL.createObjectURL(file);
-            imageDiv.innerHTML = '';  // Kosongkan div sebelum menambahkan gambar
-            const imgMessageDiv = document.createElement('div');
-        
-            imgMessageDiv.innerHTML = `
-            <img src="${imgURL}" alt="Uploaded Image" id="chat-image" />
-            <span class="remove-icon" id="remove-icon">&times;</span>
-        `;
-
-            imageDiv.appendChild(imgMessageDiv);
-            
-            const chatImage = document.getElementById('chat-image');
-            const removeIcon = document.getElementById('remove-icon');
-                
-            // Hapus gambar saat ikon silang diklik
-            removeIcon.addEventListener('click', () => {
-                imageDiv.innerHTML = ''; // Kosongkan div untuk menghapus gambar
-            });
-
-            
-            pendingImage = imgURL;
-            
-            imageInput.value = '';
-                }
-            });
+    let pendingImage = null;
             
  function handleSend() {
         const messageText = userInput.value.trim();
 
-        if (messageText === '' && !pendingImage) return; // Pastikan ada input atau gambar
+        if (messageText === '') return; // Pastikan ada input atau gambar
 
         const triggerImgs = ['buatlah gambar', 'buatkan gambar']; // Array trigger
 
@@ -198,13 +162,12 @@ document.getElementById('clear-history').addEventListener('click', () => {
         // Kirim pesan dan gambar (jika ada)
         if (isImageRequest) {
             resImg(); 
-        } else {
-            sendMessage(messageText, pendingImage); // Panggil fungsi sendMessage
-        }
-
-        if (pendingImage){
-            sendImg();
-        }
+        }else if (!isImageRequest && !pendingImage) {
+            sendMessage(messageText); // Panggil fungsi sendMessage
+        }else{
+            sendImg(messageText);
+        } 
+        
         
         pendingImage = null; // Reset gambar setelah mengirim
         userInput.value = ''; // Kosongkan input setelah mengirim
@@ -216,7 +179,7 @@ document.getElementById('clear-history').addEventListener('click', () => {
     const cancelButton = document.getElementById('cancel-button');
     
     // Function to send a message
-    async function sendMessage(messageText = '', imageText = '') {
+    async function sendMessage(messageText = '') {
         const userInput = document.getElementById('user-input').value;
         const inputText = userInput.value;
     
@@ -239,21 +202,8 @@ document.getElementById('clear-history').addEventListener('click', () => {
         const userText = document.createElement('span');
         userText.textContent = messageText || inputText; // Use either messageText or user input
     
-        if (imageText) {
-            // If imageText is provided, use it as the input
-            userInput.value = imageText;
-        }
-    
         userMessageDiv.appendChild(userIcon);
         userMessageDiv.appendChild(userText);
-    
-        // If there is an image, add it to messageContainer
-        if (imageText) {
-            const imgElement = document.createElement('img');
-            imgElement.src = imageText;
-            imgElement.className = 'image-message';
-            userMessageDiv.appendChild(imgElement);
-        }
     
         messagesDiv.appendChild(userMessageDiv);
         userMessageDiv.scrollIntoView({ behavior: 'smooth' });
@@ -323,7 +273,7 @@ document.getElementById('clear-history').addEventListener('click', () => {
             cancelButton.classList.add('hidden');
             isLoading = false;
     
-        }, 5000); // Simulated delay of 5 seconds
+        }, 500); // Simulated delay of 5 seconds
     
         userInput.disabled = false;
     }
@@ -429,37 +379,56 @@ async function resImg() {
         aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
         aiResponseDiv.disabled = false;
         aiResponseDiv.focus(); // Fokus kembali ke input
-    }, 5000); // Simulated delay of 5 seconds
+    }, 500); // Simulated delay of 5 seconds
 
     userInput.disabled = false;
 }
 
-async function sendImg() {
+const imageDiv = document.getElementById('chat-image-div'); 
+
+async function sendImg(file) {
     const input = document.getElementById('user-input');
     const userInput = input.value
-    // if (userInput.trim() === '') return;
-    //    // Nonaktifkan input dan tombol saat mengirim pesan
     userInput.disabled = true;
-    
-    // Create user message div
-    const userMessageDiv = document.createElement('div');
-    userMessageDiv.className = 'user-message';
 
-    const userIcon = document.createElement('img');
-    userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
-    userIcon.alt = 'User Icon';
-    userIcon.className = 'message-icon';
+    const formData = new FormData();
+    formData.append('image', file); // Menambahkan file ke FormData
 
-     // Tambahkan ikon pengguna ke div pesan
-    userMessageDiv.appendChild(userIcon);
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    const imgSend = document.createElement('img')
-    imgSend.src = pendingImage
-    imgSend.className = 'img-send'
+    const response = await fetch('/store', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-Token': csrfToken,            
+        },
+        body: formData,
+    })
 
-    // Clear the image after sending
+    const data = await response.json();
+
+    pendingImage = '/storage/uploads/' + data.imageName;
+
+    console.log(pendingImage);
+
+     // Create user message div
+     const userMessageDiv = document.createElement('div');
+     userMessageDiv.className = 'user-message';
+ 
+     const userIcon = document.createElement('img');
+     userIcon.src = 'chatbox/img/profil.png'; // Path to user icon
+     userIcon.alt = 'User Icon';
+     userIcon.className = 'message-icon';
+ 
+      // Tambahkan ikon pengguna ke div pesan
+     userMessageDiv.appendChild(userIcon);
+ 
+     const imgSend = document.createElement('img')
+     imgSend.src = pendingImage
+     imgSend.className = 'img-send'
+
+     // Clear the image after sending
     pendingImage = null; // Reset pending image
-    imageDiv.innerHTML = ''; // Clear image div    
+    imageDiv.innerHTML = ''; // Clear image div  
 
     const userText = document.createElement('span');
     userText.textContent = userInput;
@@ -496,62 +465,20 @@ async function sendImg() {
 
     userInput.value = '';
 
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    const formData = new FormData();
-
-     // Upload the image if it exists
-     if (pendingImage) {
-        formData.append('image', pendingImage); // Append the image file
-    }
-
-    // Append the text message
-    formData.append('message', userInput);
-    const res = await fetch('/store', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-        },
-        body: formData
-    });
-
-    const data = await res.json();
-
-    // Update history and storage
-    historyData.push(userInput);
-    localStorage.setItem('chatHistory', JSON.stringify(historyData));
-    addToHistory(userInput);
-
-    // Simulate AI response delay
-    setTimeout(async () => {
-        messagesDiv.removeChild(loadingDiv);
-
-        // AI response
-        let hasil = data.replyText || 'Error: ' + data.error;
-
-        // Create AI response div
-        const aiResponseDiv = document.createElement('div');
-        aiResponseDiv.className = 'ai-response';
-        aiResponseDiv.style.width = '500px';
-        aiResponseDiv.src = hasil
-
-        const aiIcon = document.createElement('img');
-        aiIcon.src = 'chatbox/img/ai.png'; // Path to AI icon
-        aiIcon.alt = 'AI Icon';
-        aiIcon.className = 'message-icon';
-
-        aiResponseDiv.appendChild(aiIcon); // Add AI icon to AI response div
-        messagesDiv.appendChild(aiResponseDiv);
-
-        // Animate AI response
-        animateAIResponse(hasil, aiResponseDiv);
-        aiResponseDiv.scrollIntoView({ behavior: 'smooth' });
-        aiResponseDiv.disabled = false;
-        aiResponseDiv.focus(); // Fokus kembali ke input
-    }, 5000); // Simulated delay of 5 seconds
-    userInput.disabled = false
-    
 }
+
+const imageInput = document.getElementById('image-input');
+
+document.getElementById('send-image').addEventListener('click', () => {
+    imageInput.click(); // Trigger file input click
+});
+
+document.getElementById('image-input').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Mengambil file yang dipilih
+    if (file) {
+        sendImg(file); // Panggil fungsi upload
+    }
+});
 
 function animateAIResponse(text, container) {
     const words = text.split(' ');
@@ -657,20 +584,6 @@ document.getElementById('settings').addEventListener('click', () => {
     }
 });
 
-// Event listener untuk mengatur mode terang
-document.getElementById('light-mode').addEventListener('click', () => {
-    document.body.classList.remove('dark-mode');
-    document.body.classList.add('light-mode');
-    updateColors();
-});
-
-// Event listener untuk mengatur mode gelap
-document.getElementById('dark-mode').addEventListener('click', () => {
-    document.body.classList.remove('light-mode');
-    document.body.classList.add('dark-mode');
-    updateColors();
-});
-
 function updateColors() {
     const isDarkMode = document.body.classList.contains('dark-mode');
 
@@ -702,17 +615,17 @@ function updateColors() {
 }
 
 document.getElementById('log_out').addEventListener('click', () => {
-    window.location.href = "home.html"; // Arahkan ke halaman home untu icon di paling bawah sidebar ai
+    window.location.href = "/logout"; // Arahkan ke halaman home untu icon di paling bawah sidebar ai
 });
 
-document.getElementById('send-image').addEventListener('click', () => {
-    const notification = document.getElementById('notification');
-    notification.innerText = 'Silakan pilih gambar dari perangkat Anda.';
-    notification.classList.add('show');
+// document.getElementById('send-image').addEventListener('click', () => {
+//     const notification = document.getElementById('notification');
+//     notification.innerText = 'Silakan pilih gambar dari perangkat Anda.';
+//     notification.classList.add('show');
 
-    // Menyembunyikan notifikasi setelah 3 detik
-    setTimeout(() => {
-        notification.classList.remove('show');
-    }, 3000);
-});
+//     // Menyembunyikan notifikasi setelah 3 detik
+//     setTimeout(() => {
+//         notification.classList.remove('show');
+//     }, 3000);
+// });
 

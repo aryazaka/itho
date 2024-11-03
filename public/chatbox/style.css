@@ -1,335 +1,335 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-        :root {
-            --color-default: #f0b400;
-            --color-white: #fff;
-            --color-body: #e4e9f7;
-            --color-light: #e0e0e0;
-        }
-
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background-color: #F9F5E9;
-            overflow-x: hidden;
-            background-image: url('../chatbox/img/watermark.png');
-            
-        }
-
-        .container {
-            display: flex;
-            position: relative;
-        }
-        .image-message img {
-            max-width: 150px;
-            height: auto;
-            border-radius: 8px;
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            -ms-border-radius: 8px;
-            -o-border-radius: 8px;
+:root {
+--color-default: #f0b400;
+--color-white: #fff;
+--color-body: #e4e9f7;
+--color-light: #e0e0e0;
 }
-        .message-container {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px; /* Jarak antar pesan */
-        }
-        .message-text {
-            margin-left: 10px; /* Jarak antara gambar dan teks */
-            margin: 50px;
-            margin-bottom: -100px;
-        }
 
-        .sidebar {
-            min-height: 100vh;
-            width: 78px;
-            padding: 6px 14px;
-            z-index: 99;
-            background-color: var(--color-default);
-            transition: all 0.5s ease;
-            position: fixed;
-            top: 0;
-            left: 0;
-            color: #000000; /* Original text color for light mode */
-        }
-        .sidebar.open {
-            transform: translateX(0); /* Sidebar terbuka */
-        }
-        
-        .nav-icon {
-            opacity: 0.5; /* Ikon terlihat redup jika sidebar tertutup */
-            cursor: not-allowed; /* Cursor tidak dapat diklik */
-        }
-        
-        .nav-icon.active {
-            opacity: 1; /* Ikon terlihat jelas saat sidebar terbuka */
-            cursor: pointer; /* Cursor dapat diklik */
-        }
+* {
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+font-family: 'Poppins', sans-serif;
+}
+
+body {
+min-height: 100vh;
+background-color: #F9F5E9;
+overflow-x: hidden;
+background-image: url('../chatbox/img/watermark.png');
+
+}
+
+.container {
+display: flex;
+position: relative;
+}
+.image-message img {
+max-width: 150px;
+height: auto;
+border-radius: 8px;
+-webkit-border-radius: 8px;
+-moz-border-radius: 8px;
+-ms-border-radius: 8px;
+-o-border-radius: 8px;
+}
+.message-container {
+display: flex;
+align-items: flex-start;
+margin-bottom: 20px; /* Jarak antar pesan */
+}
+.message-text {
+margin-left: 10px; /* Jarak antara gambar dan teks */
+margin: 50px;
+margin-bottom: -100px;
+}
+
+.sidebar {
+min-height: 100vh;
+width: 78px;
+padding: 6px 14px;
+z-index: 99;
+background-color: var(--color-default);
+transition: all 0.5s ease;
+position: fixed;
+top: 0;
+left: 0;
+color: #000000; /* Original text color for light mode */
+}
+.sidebar.open {
+transform: translateX(0); /* Sidebar terbuka */
+}
+
+.nav-icon {
+opacity: 0.5; /* Ikon terlihat redup jika sidebar tertutup */
+cursor: not-allowed; /* Cursor tidak dapat diklik */
+}
+
+.nav-icon.active {
+opacity: 1; /* Ikon terlihat jelas saat sidebar terbuka */
+cursor: pointer; /* Cursor dapat diklik */
+}
 
 .sidebar.dark-mode {
     /* No changes to the background color for dark mode */
     color: #000000; /* Change only the text color for dark mode */
 }
 
-        .sidebar.open {
-            width: 250px;
-        }
+.sidebar.open {
+width: 250px;
+}
 
-        .sidebar .logo_details {
-            height: 60px;
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
+.sidebar .logo_details {
+height: 60px;
+display: flex;
+align-items: center;
+position: relative;
+}
 
-        .sidebar .logo_details .logo_name {
-            color: var(--color-white);
-            font-size: 22px;
-            font-weight: 600;
-            opacity: 0;
-            transition: all .5s ease;
-        }
+.sidebar .logo_details .logo_name {
+color: var(--color-white);
+font-size: 22px;
+font-weight: 600;
+opacity: 0;
+transition: all .5s ease;
+}
 
-        .sidebar.open .logo_details .logo_name {
-            opacity: 1;
-        }
+.sidebar.open .logo_details .logo_name {
+opacity: 1;
+}
 
-        .sidebar .logo_details #btn {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            font-size: 23px;
-            text-align: center;
-            cursor: pointer;
-            transition: all .5s ease;
-        }
+.sidebar .logo_details #btn {
+position: absolute;
+top: 50%;
+right: 0;
+transform: translateY(-50%);
+font-size: 23px;
+text-align: center;
+cursor: pointer;
+transition: all .5s ease;
+}
 
-        .sidebar i {
-            color: var(--color-white);
-            height: 60px;
-            line-height: 60px;
-            min-width: 50px;
-            font-size: 25px;
-            text-align: center;
-        }
+.sidebar i {
+color: var(--color-white);
+height: 60px;
+line-height: 60px;
+min-width: 50px;
+font-size: 25px;
+text-align: center;
+}
 
-        .sidebar .nav-list {
-            margin-top: 20px;
-            height: 100%;
-        }
+.sidebar .nav-list {
+margin-top: 20px;
+height: 100%;
+}
 
-        .sidebar li {
-            position: relative;
-            margin: 8px 0;
-            list-style: none;
-            margin-bottom: 20px;
-        }
+.sidebar li {
+position: relative;
+margin: 8px 0;
+list-style: none;
+margin-bottom: 20px;
+}
 
-        .sidebar li .tooltip {
-            position: absolute;
-            top: -20px;
-            left: calc(100% + 15px);
-            z-index: 3;
-            background-color: var(--color-white);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-            padding: 6px 14px;
-            font-size: 15px;
-            font-weight: 400;
-            border-radius: 5px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-        }
+.sidebar li .tooltip {
+position: absolute;
+top: -20px;
+left: calc(100% + 15px);
+z-index: 3;
+background-color: var(--color-white);
+box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+padding: 6px 14px;
+font-size: 15px;
+font-weight: 400;
+border-radius: 5px;
+white-space: nowrap;
+opacity: 0;
+pointer-events: none;
+}
 
-        .sidebar li:hover .tooltip {
-            opacity: 1;
-            pointer-events: auto;
-            transition: all 0.4s ease;
-            top: 50%;
-            transform: translateY(-50%);
-        }
+.sidebar li:hover .tooltip {
+opacity: 1;
+pointer-events: auto;
+transition: all 0.4s ease;
+top: 50%;
+transform: translateY(-50%);
+}
 
-        .sidebar.open li .tooltip {
-            display: none;
-        }
+.sidebar.open li .tooltip {
+display: none;
+}
 
 
-        .sidebar li a {
-            display: flex;
-            height: 100%;
-            width: 100%;
-            align-items: center;
-            text-decoration: none;
-            background-color: var(--color-default);
-            position: relative;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Tambahkan transisi transform */
-            border-radius: 10px; /* Tambahkan border-radius untuk efek sudut */
-            color: var(--color-white); /* Warna teks default */
-        }
-        
-        /* Efek hover pada item sidebar */
-        .sidebar li a:hover {
-            background-color: #ffcc00; /* Ubah warna latar belakang saat hover */
-            color: black; /* Ubah warna teks menjadi hitam saat hover */
-            transform: scale(1.05); /* Efek membesar saat hover */
-        }
-        
-        .sidebar li a .link_name {
-            color: var(--color-white);
-            font-size: 15px;
-            font-weight: 400;
-            white-space: nowrap;
-            pointer-events: auto;
-            transition: all 0.1s ease;
-            opacity: 0;
-            padding: 10px;
-        }
+.sidebar li a {
+display: flex;
+height: 100%;
+width: 100%;
+align-items: center;
+text-decoration: none;
+background-color: var(--color-default);
+position: relative;
+transition: background-color 0.3s ease, transform 0.3s ease; /* Tambahkan transisi transform */
+border-radius: 10px; /* Tambahkan border-radius untuk efek sudut */
+color: var(--color-white); /* Warna teks default */
+}
 
-        .sidebar li a:hover .link_name {
-            opacity: 1; /* Tampilkan nama link saat hover */
-        }
-        
-        .message-icon:hover {
-            transform: scale(1.2); /* Membesarkan ikon saat hover */
-            transition: transform 0.3s ease; /* Transisi untuk animasi halus */
-        }
-        
+/* Efek hover pada item sidebar */
+.sidebar li a:hover {
+background-color: #ffcc00; /* Ubah warna latar belakang saat hover */
+color: black; /* Ubah warna teks menjadi hitam saat hover */
+transform: scale(1.05); /* Efek membesar saat hover */
+}
 
-        .sidebar li.profile {
-            position: fixed;
-            height: 60px;
-            width: 65px;
-            left: 0;
-            bottom: -8px;
-            padding: 10px 14px;
-            overflow: hidden;
-            transition: all .5s ease;
-        }
+.sidebar li a .link_name {
+color: var(--color-white);
+font-size: 15px;
+font-weight: 400;
+white-space: nowrap;
+pointer-events: auto;
+transition: all 0.1s ease;
+opacity: 0;
+padding: 10px;
+}
 
-        .sidebar.open li.profile {
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.5s ease;
-            width: 250px;
-        }
+.sidebar li a:hover .link_name {
+opacity: 1; /* Tampilkan nama link saat hover */
+}
 
-        .sidebar .profile .profile_details {
-            display: flex;
-            align-items: center;
-        }
+.message-icon:hover {
+transform: scale(1.2); /* Membesarkan ikon saat hover */
+transition: transform 0.3s ease; /* Transisi untuk animasi halus */
+}
 
-        .sidebar li.profile .name,
-        .sidebar li.profile .designation {
-            font-size: 15px;
-            font-weight: 400;
-            color: black;
-            white-space: nowrap;
-        }
 
-        .sidebar li.profile .designation {
-            font-size: 12px;
-        }
+.sidebar li.profile {
+position: fixed;
+height: 60px;
+width: 65px;
+left: 0;
+bottom: -8px;
+padding: 10px 14px;
+overflow: hidden;
+transition: all .5s ease;
+}
 
-        .sidebar .profile #log_out {
-            position: absolute;
-            top: 50%;
-            right: 0;
-            transform: translateY(-50%);
-            background-color: var(--color-default);
-            width: 100%;
-            height: 60px;
-            line-height: 60px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.5s ease;
-        }
+.sidebar.open li.profile {
+opacity: 1;
+visibility: visible;
+transition: opacity 0.5s ease;
+width: 250px;
+}
 
-        .sidebar.open .profile #log_out {
-            width: 50px;
-            background: none;
-        }
+.sidebar .profile .profile_details {
+display: flex;
+align-items: center;
+}
 
-        .sidebar li a:hover .link_name {
-            color: black;
-        }
+.sidebar li.profile .name,
+.sidebar li.profile .designation {
+font-size: 15px;
+font-weight: 400;
+color: black;
+white-space: nowrap;
+}
 
-        .sidebar.open li a .link_name {
-            opacity: 1;
-        }
+.sidebar li.profile .designation {
+font-size: 12px;
+}
 
-        .main-content {
-            position: relative;
-            left: 78px;
-            top: 0;
-            padding: 40px;
-            padding-bottom: 80px;
-            width: calc(100% - 78px);
-            transition: margin-left .5s ease;
-        }
+.sidebar .profile #log_out {
+position: absolute;
+top: 50%;
+right: 0;
+transform: translateY(-50%);
+background-color: var(--color-default);
+width: 100%;
+height: 60px;
+line-height: 60px;
+border-radius: 5px;
+cursor: pointer;
+transition: all 0.5s ease;
+}
 
-        .sidebar.open ~ .main-content {
-            left: 250px;
-        }
+.sidebar.open .profile #log_out {
+width: 50px;
+background: none;
+}
 
-        .header h1, .header p {
-            font-size: 30px; 
-            margin-left: 0; 
-        }
+.sidebar li a:hover .link_name {
+color: black;
+}
 
-        .highlight {
-            color: var(--color-default);
-        }
+.sidebar.open li a .link_name {
+opacity: 1;
+}
 
-        /* Chatbot styles */
-        .sent-messages {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch; /* Mengatur agar pesan mengambil lebar penuh */
-            /* margin: 10px; */
-        }
-        .message-container {
-            display: flex;
-            justify-content: space-between; /* Mengatur jarak antar elemen */
-            margin-bottom: 10px; /* Jarak antar pesan */
-        }
+.main-content {
+position: relative;
+left: 78px;
+top: 0;
+padding: 40px;
+padding-bottom: 80px;
+width: calc(100% - 78px);
+transition: margin-left .5s ease;
+}
 
-        .jawaban{
-            display: inline-block; /* Menyesuaikan ukuran dengan teks */
-            background-color: #000000; /* Warna latar belakang */
-            color: white; /* Warna teks */
-            padding: 10px 20px; /* Jarak dalam lingkaran */
-            border-radius: 50px; /* Membuat lingkaran panjang */
-            text-align: left; /* Memusatkan teks */
-            font-size: 16px; /* Ukuran font */
-            margin-top: 80px;
-            margin-bottom: 300px;
-        }
+.sidebar.open ~ .main-content {
+left: 250px;
+}
 
-        .user-message, .ai-response {
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 16px;
-            margin-bottom: 10px;
-            max-width: 60%;
-        }
+.header h1, .header p {
+font-size: 30px; 
+margin-left: 0; 
+}
 
-        .user-message {
-        background-color: #FCCC3D; /* Warna pesan pengguna */
-        border-radius: 15px; /* Membulatkan sudut */
-        padding: 10px; /* Jarak dalam lingkaran */
-        max-width: 80%; /* Mengatur lebar maksimum */
-        margin-left: auto; /* Memindahkan pesan ke kanan */
-        display: flex;
-        color: black;
-        align-items: center; /* Mengatur agar ikon dan teks sejajar */
-    }
+.highlight {
+color: var(--color-default);
+}
+
+/* Chatbot styles */
+.sent-messages {
+display: flex;
+flex-direction: column;
+align-items: stretch; /* Mengatur agar pesan mengambil lebar penuh */
+/* margin: 10px; */
+}
+.message-container {
+display: flex;
+justify-content: space-between; /* Mengatur jarak antar elemen */
+margin-bottom: 10px; /* Jarak antar pesan */
+}
+
+.jawaban{
+display: inline-block; /* Menyesuaikan ukuran dengan teks */
+background-color: #000000; /* Warna latar belakang */
+color: white; /* Warna teks */
+padding: 10px 20px; /* Jarak dalam lingkaran */
+border-radius: 50px; /* Membuat lingkaran panjang */
+text-align: left; /* Memusatkan teks */
+font-size: 16px; /* Ukuran font */
+margin-top: 80px;
+margin-bottom: 300px;
+}
+
+.user-message, .ai-response {
+padding: 10px 20px;
+border-radius: 20px;
+font-size: 16px;
+margin-bottom: 10px;
+max-width: 60%;
+}
+
+.user-message {
+background-color: #FCCC3D; /* Warna pesan pengguna */
+border-radius: 15px; /* Membulatkan sudut */
+padding: 10px; /* Jarak dalam lingkaran */
+max-width: 80%; /* Mengatur lebar maksimum */
+margin-left: auto; /* Memindahkan pesan ke kanan */
+display: flex;
+color: black;
+align-items: center; /* Mengatur agar ikon dan teks sejajar */
+}
 
     
 /* Dark mode */
@@ -395,173 +395,173 @@
  
         
 
-        @keyframes bounce {
-            to {
-                transform: translateY(-10px);
-            }
-        }
+@keyframes bounce {
+    to {
+        transform: translateY(-10px);
+    }
+}
 
-        .footer {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            background-color: #000000;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            border-radius: 20px;
-            width: calc(100% - 60px);
-            max-width: 900px;
-        }
-        .chat-footer {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            background-color: #000000;
-            color: #FFFFFF;
-            padding: 10px 20px;
-            border-radius: 20px 20px 0 0;
-            width: calc(100% - 60px);
-            max-width: 900px;
-            max-height: 900px;
-            width: 950px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        .chat-footer img {
-            width: 50%;
-            max-height: 30vh;
-            transition: filter 0.3s ease;
-            border-radius: 20px;
-            max-width: 350px;
-        }
-        .img-send {
-            
-            width: 50%;
-            max-height: 30vh;
-            transition: filter 0.3s ease;
-            border-radius: 20px;
-        }
-        
-        .remove-icon {
-            position: absolute;
-            color: #FFFFFF;
-            font-size: 30px;
-            display: none;
-            cursor: pointer;
-        }
-        .chat-footer:hover .remove-icon {
-            display: block;
-            top: 15%;
-            left: 23%;
-            transform: translate(-50%, -50%);
-        }
-        
+.footer {
+position: fixed;
+bottom: 30px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+align-items: center;
+background-color: #000000;
+color: #FFFFFF;
+padding: 10px 20px;
+border-radius: 20px;
+width: calc(100% - 60px);
+max-width: 900px;
+}
+.chat-footer {
+position: fixed;
+bottom: 30px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+align-items: center;
+background-color: #000000;
+color: #FFFFFF;
+padding: 10px 20px;
+border-radius: 20px 20px 0 0;
+width: calc(100% - 60px);
+max-width: 900px;
+max-height: 900px;
+width: 950px;
+margin-bottom: 30px;
+overflow: hidden;
+}
+.chat-footer img {
+width: 50%;
+max-height: 30vh;
+transition: filter 0.3s ease;
+border-radius: 20px;
+max-width: 350px;
+}
+.img-send {
+
+width: 50%;
+max-height: 30vh;
+transition: filter 0.3s ease;
+border-radius: 20px;
+}
+
+.remove-icon {
+position: absolute;
+color: #FFFFFF;
+font-size: 30px;
+display: none;
+cursor: pointer;
+}
+.chat-footer:hover .remove-icon {
+display: block;
+top: 15%;
+left: 23%;
+transform: translate(-50%, -50%);
+}
 
 
-        .footer input {
-            border: none;
-            background: none;
-            color: #FFFFFF;
-            font-size: 16px;
-            outline: none;
-            flex-grow: 1;
-            margin: 0 10px;
-        }
 
-        .send-button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--color-default);
-            color: white;
-            cursor: pointer;
-        }
+.footer input {
+border: none;
+background: none;
+color: #FFFFFF;
+font-size: 16px;
+outline: none;
+flex-grow: 1;
+margin: 0 10px;
+}
 
-        .quick-questions {
-            margin-bottom: 20px;
-            margin-top: 100px;
-            margin-left: 220px;
-            transition: opacity 0.5s ease;
-        }
+.send-button {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 40px;
+height: 40px;
+border-radius: 50%;
+background-color: var(--color-default);
+color: white;
+cursor: pointer;
+}
 
-        .quick-questions.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+.quick-questions {
+margin-bottom: 20px;
+margin-top: 100px;
+margin-left: 220px;
+transition: opacity 0.5s ease;
+}
 
-        .quick-question {
-            background-color: var(--color-default);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            display: inline-block;
-            margin-right: 10px;
-            transition: background-color 0.3s;
-        }
+.quick-questions.hidden {
+opacity: 0;
+pointer-events: none;
+}
 
-        .quick-question:hover {
-            background-color: #ffbc00;
-        }
+.quick-question {
+background-color: var(--color-default);
+color: white;
+padding: 10px 15px;
+border-radius: 15px;
+cursor: pointer;
+display: inline-block;
+margin-right: 10px;
+transition: background-color 0.3s;
+}
 
-        .history {
-            margin-left: 10px;
-            margin-top: 10px;
-            display: none;
-            max-height: 500px;
-            overflow-y: auto;
-            background-color: #ffd153;  /* untuk warna kotak history pertayaan */
-            border-radius: 5px;
-            padding: 10px;
-        }
+.quick-question:hover {
+background-color: #ffbc00;
+}
 
-        .history h3 {
-            margin-bottom: 10px;
-            display: flex;
-            /* justify-content: space-between; */
-        }
+.history {
+margin-left: 10px;
+margin-top: 10px;
+display: none;
+max-height: 500px;
+overflow-y: auto;
+background-color: #ffd153;  /* untuk warna kotak history pertayaan */
+border-radius: 5px;
+padding: 10px;
+}
 
-        .history ul {
-            list-style-type: none;
-            padding: 0;
-            cursor: pointer;
-        }
+.history h3 {
+margin-bottom: 10px;
+display: flex;
+/* justify-content: space-between; */
+}
 
-        .history li {
-            background-color: var(--color-default);
-            color: rgb(255, 255, 255);
-            padding: 5px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            cursor: pointer;
-        }
+.history ul {
+list-style-type: none;
+padding: 0;
+cursor: pointer;
+}
 
-        .clear-history {
-            cursor: pointer;
-            color: red;
-            font-size: 20px;
-        }
+.history li {
+background-color: var(--color-default);
+color: rgb(255, 255, 255);
+padding: 5px 10px;
+border-radius: 5px;
+margin-bottom: 5px;
+cursor: pointer;
+}
 
-        .loader-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+.clear-history {
+cursor: pointer;
+color: red;
+font-size: 20px;
+}
 
-      .loader {
-    display: flex;
-    flex-direction: column; /* Mengatur agar spinner dan teks berada di kolom yang sama */
-    align-items: center; /* Memusatkan item secara horizontal */
-    margin: 10px 0; /* Jarak antar pesan */
+.loader-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+.loader {
+display: flex;
+flex-direction: column; /* Mengatur agar spinner dan teks berada di kolom yang sama */
+align-items: center; /* Memusatkan item secara horizontal */
+margin: 10px 0; /* Jarak antar pesan */
 }
 
 .spinner {
@@ -890,13 +890,12 @@ input:checked + .slider:before {
     .icon-button{
         margin-right: 10px;
         margin-top: 10px;
-        
     }
     .quick-questions {
         margin-left: 0; /* Menghilangkan margin kiri */
         margin-top: 20px; /* Margin atas untuk jarak */
     }
-
+   
     .history {
         max-height: 300px; /* Membatasi tinggi history untuk mobile */
     }
@@ -921,6 +920,22 @@ input:checked + .slider:before {
     .header p {
         font-size: 18px; /* Ukuran font untuk desktop */
     }
+}
+
+.icon-button img{
+    cursor: pointer;
+}
+
+.icon-button1 img {
+    width: 40px;
+    height:40px;
+    margin-left: -60px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#image-input{
+    display: none;
 }
 
 #user-input {

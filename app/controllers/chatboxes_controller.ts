@@ -107,6 +107,28 @@ export default class ChatboxesController {
       return response.status(500).json({ error: 'Error communicating with OpenAI' });
     }
   }
+
+  async upload({request, response}: HttpContext){
+    const image = request.file('image');
+    console.log('Image:', image); // Cek apa yang diterima
+
+    if (!image) {
+      return response.status(400).send('No file uploaded'); // Mengembalikan error jika tidak ada file
+  }
+
+  // Menentukan nama file dan lokasi penyimpanan
+  const fileName = `${new Date().getTime()}.${image.extname}`; // Menggunakan timestamp untuk nama file
+  await image.move('storage/uploads', {
+      name: fileName,
+      overwrite: true
+  });
+
+  // Mengembalikan respons sukses
+  return response.json({
+    imageName: fileName
+  })
+}
+  
   /**
    * Display form to create a new record
    */
@@ -115,17 +137,8 @@ export default class ChatboxesController {
   /**
    * Handle form submission for the create action
    */
-  async store({ request }: HttpContext) {
-    const inputImage = request.file('image', {
-      size: '5mb',
-      extnames: ['jpg', 'png', 'jpeg']
-    })
-
-    if(inputImage){
-      await inputImage.move(app.makePath('storage/uploads'))
-    }
-
-    console.log(inputImage)
+  async store({ response }: HttpContext) {
+   
   }
 
   /**
